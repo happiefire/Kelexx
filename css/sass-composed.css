@@ -262,6 +262,7 @@ body, select, input, textarea {
 .pb-list li > a {
   display: table-cell;
   text-align: center;
+  line-height: 1;
   color: #333333;
   background-color: whitesmoke;
   border-radius: 5px;
@@ -270,7 +271,7 @@ body, select, input, textarea {
   height: 50px;
   vertical-align: middle;
 }
-/* line 26, ../sass/pages/_standard.sass */
+/* line 27, ../sass/pages/_standard.sass */
 .pb-list li > a:hover {
   text-decoration: none;
   cursor: pointer;
@@ -278,20 +279,20 @@ body, select, input, textarea {
   border-color: #cccccc;
 }
 
-/* line 32, ../sass/pages/_standard.sass */
+/* line 33, ../sass/pages/_standard.sass */
 .pb-group {
   margin-bottom: 20px;
 }
 
-/* line 35, ../sass/pages/_standard.sass */
-.pb-error {
+/* line 36, ../sass/pages/_standard.sass */
+.pb-wrong {
   background-color: #fdf7f7 !important;
   color: #d9534f !important;
   border-color: #d9534f !important;
 }
 
-/* line 40, ../sass/pages/_standard.sass */
-.lolipop {
+/* line 41, ../sass/pages/_standard.sass */
+.popover {
   margin-top: 10px;
   position: absolute;
   top: 45px;
@@ -309,8 +310,8 @@ body, select, input, textarea {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   white-space: normal;
 }
-/* line 58, ../sass/pages/_standard.sass */
-.lolipop .arrow {
+/* line 59, ../sass/pages/_standard.sass */
+.popover .arrow {
   position: absolute;
   top: -10px;
   left: 15px;
@@ -323,8 +324,8 @@ body, select, input, textarea {
   _border-color: black black #999999 black;
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
-/* line 72, ../sass/pages/_standard.sass */
-.lolipop .arrow:after {
+/* line 73, ../sass/pages/_standard.sass */
+.popover .arrow:after {
   content: "";
   position: absolute;
   margin-left: -10px;
@@ -338,23 +339,23 @@ body, select, input, textarea {
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
-/* line 85, ../sass/pages/_standard.sass */
-.lolipop-content {
+/* line 86, ../sass/pages/_standard.sass */
+.popover-content {
   padding: 10px 0px;
   min-width: 120px;
 }
-/* line 88, ../sass/pages/_standard.sass */
-.lolipop-content a {
+/* line 89, ../sass/pages/_standard.sass */
+.popover-content a {
   padding: 2px 14px;
   display: block;
 }
-/* line 91, ../sass/pages/_standard.sass */
-.lolipop-content a:hover {
+/* line 92, ../sass/pages/_standard.sass */
+.popover-content a:hover {
   text-decoration: none;
   background-color: #eeeeee;
 }
 
-/* line 98, ../sass/pages/_standard.sass */
+/* line 99, ../sass/pages/_standard.sass */
 .state-panel {
   z-index: 100;
   position: fixed;

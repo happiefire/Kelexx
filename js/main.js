@@ -1,4 +1,4 @@
-function main_width(){
+function modify_main_width(){
   var width = $(window).width() - $(".state-panel").width();
   $(".main-view").css("width", width);
 }
@@ -13,27 +13,12 @@ function hehe(){
 }
 
 $(function(){
-  main_width();
-  $(window).resize(main_width);
-  $(".pb-list").find("a").click(function(){
-    $(this).toggleClass("pb-error");
-  });
+  modify_main_width();
+  $(window).resize(modify_main_width);
 
-  $("#aaa").popover({
-    animation: false,
-    content: "you motherfucker"
-  });
-
-  $("#aaa").mouseover(function(){
-    $(this).popover("show");
-  });
-  $("#bbb").popover({
-    animation: false,
-    content: "you yo"
-  });
-
-  $("#bbb").mouseover(function(){
-    $(this).popover("show");
+  var pb_target = ".pb-list li>a";
+  $(pb_target).click(function(){
+    $(this).toggleClass("pb-wrong");
   });
 
 
