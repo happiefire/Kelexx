@@ -1,0 +1,48 @@
+@import compass/css3
+
+//-----------------------------------------------
+// The following html5-boilerplate styles should
+// probably be customized for each site
+//-----------------------------------------------
+body, select, input, textarea
+  color: $font-color
+  // Set your base font here, to apply evenly
+  // font-family: Georgia, serif;
+
+//-----------------------------------
+// Add your own custom styles below
+//-----------------------------------
+
+$nav-panel-width: 240px
+.nav-panel
+  background-color: $nav-panel-color
+  position: fixed
+  top: 0
+  width: $nav-panel-width
+  height: 100%
+  a
+    display: block
+    font-size: 18px
+    color: #9b9b9b
+    padding: 20px 15px
+    &:hover, &:focus
+      text-decoration: none
+      color: $font-color
+    &.active
+      background-color: #fff
+      color: $font-color
+
+.main
+  position: relative
+  margin-left: $nav-panel-width
+  padding: 30px 30px 
+  header
+    margin-bottom: 30px  
+  .control-label
+    text-align: left
+
+.no-record
+  position: absolute
+  top: 300px
+  right: 50%
+

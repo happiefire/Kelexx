@@ -1,0 +1,366 @@
+/* ==========================================================================
+   Vincent's custom styles, 
+   large part of which learned from Bootstrap and h5bp.
+   ========================================================================== */
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+/* line 7, ../sass/partials/_h5bp-custom.scss */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/* line 12, ../sass/partials/_h5bp-custom.scss */
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+/* line 21, ../sass/partials/_h5bp-custom.scss */
+hr {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+/* line 40, ../sass/partials/_h5bp-custom.scss */
+audio,
+canvas,
+img,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+/* line 48, ../sass/partials/_h5bp-custom.scss */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+/* line 58, ../sass/partials/_h5bp-custom.scss */
+textarea {
+  resize: vertical;
+}
+
+/*
+ * Box-sizing set to border-box on everything.
+ * Overide normalize.css
+ */
+/* line 69, ../sass/partials/_h5bp-custom.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 75, ../sass/partials/_h5bp-custom.scss */
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 81, ../sass/partials/_h5bp-custom.scss */
+input[type="search"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+/* line 3, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .form-group {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+/* line 8, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .form-control {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* line 13, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .input-group > .form-control {
+  width: 100%;
+}
+
+/* line 16, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .control-label {
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+/* line 21, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .radio,
+.form-inline .checkbox {
+  display: inline-block;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+/* line 29, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .radio input[type="radio"],
+.form-inline .checkbox input[type="checkbox"] {
+  float: none;
+  margin-left: 0;
+}
+
+/* line 33, ../sass/partials/_bootstrap-takeaways.scss */
+.form-inline .has-feedback .form-control-feedback {
+  top: 0;
+}
+
+/* line 5, ../sass/partials/_typography.scss */
+html,
+button,
+input,
+select,
+textarea {
+  color: #333333;
+}
+
+/* line 9, ../sass/partials/_typography.scss */
+html {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* line 14, ../sass/partials/_typography.scss */
+a {
+  text-decoration: none;
+  color: #428bca;
+}
+/* line 18, ../sass/partials/_typography.scss */
+a:hover, a:focus {
+  color: #2a6496;
+  text-decoration: underline;
+}
+/* line 22, ../sass/partials/_typography.scss */
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+/* line 13, ../sass/partials/_general-style.scss */
+body {
+  min-width: 1024px;
+  position: relative;
+}
+
+/* line 18, ../sass/partials/_general-style.scss */
+.state-panel {
+  color: white;
+}
+
+/* line 7, ../sass/pages/_index.sass */
+body, select, input, textarea {
+  color: #333333;
+}
+
+/* line 17, ../sass/pages/_index.sass */
+.nav-panel {
+  background-color: #f2f2f2;
+  position: fixed;
+  top: 0;
+  width: 240px;
+  height: 100%;
+}
+/* line 23, ../sass/pages/_index.sass */
+.nav-panel a {
+  display: block;
+  font-size: 18px;
+  color: #9b9b9b;
+  padding: 20px 15px;
+}
+/* line 28, ../sass/pages/_index.sass */
+.nav-panel a:hover, .nav-panel a:focus {
+  text-decoration: none;
+  color: #333333;
+}
+/* line 31, ../sass/pages/_index.sass */
+.nav-panel a.active {
+  background-color: white;
+  color: #333333;
+}
+
+/* line 35, ../sass/pages/_index.sass */
+.main {
+  position: relative;
+  margin-left: 240px;
+  padding: 30px 30px;
+}
+/* line 39, ../sass/pages/_index.sass */
+.main header {
+  margin-bottom: 30px;
+}
+/* line 41, ../sass/pages/_index.sass */
+.main .control-label {
+  text-align: left;
+}
+
+/* line 44, ../sass/pages/_index.sass */
+.no-record {
+  position: absolute;
+  top: 300px;
+  right: 50%;
+}
+
+/* line 2, ../sass/pages/_standard.sass */
+.main-view {
+  position: relative;
+  padding: 30px;
+}
+/* line 5, ../sass/pages/_standard.sass */
+.main-view header {
+  margin-bottom: 30px;
+}
+
+/* line 8, ../sass/pages/_standard.sass */
+.pb-list {
+  padding-left: 0;
+  list-style: none;
+}
+/* line 11, ../sass/pages/_standard.sass */
+.pb-list li + li {
+  margin-left: 10px;
+}
+/* line 13, ../sass/pages/_standard.sass */
+.pb-list li {
+  display: inline-block;
+  position: relative;
+}
+/* line 16, ../sass/pages/_standard.sass */
+.pb-list li > a {
+  display: table-cell;
+  text-align: center;
+  color: #333333;
+  background-color: whitesmoke;
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+/* line 26, ../sass/pages/_standard.sass */
+.pb-list li > a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #eeeeee;
+  border-color: #cccccc;
+}
+
+/* line 32, ../sass/pages/_standard.sass */
+.pb-group {
+  margin-bottom: 20px;
+}
+
+/* line 35, ../sass/pages/_standard.sass */
+.pb-error {
+  background-color: #fdf7f7 !important;
+  color: #d9534f !important;
+  border-color: #d9534f !important;
+}
+
+/* line 40, ../sass/pages/_standard.sass */
+.lolipop {
+  margin-top: 10px;
+  position: absolute;
+  top: 45px;
+  left: 0;
+  z-index: 1024;
+  max-width: 276px;
+  padding: 1px;
+  text-align: left;
+  background-color: white;
+  background-clip: padding-box;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  white-space: normal;
+}
+/* line 58, ../sass/pages/_standard.sass */
+.lolipop .arrow {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #999999 transparent;
+  line-height: 0px;
+  _border-color: black black #999999 black;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+/* line 72, ../sass/pages/_standard.sass */
+.lolipop .arrow:after {
+  content: "";
+  position: absolute;
+  margin-left: -10px;
+  margin-top: 1px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0px 10px 10px 10px;
+  border-color: transparent transparent white transparent;
+  _border-color: black black white black;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+
+/* line 85, ../sass/pages/_standard.sass */
+.lolipop-content {
+  padding: 10px 0px;
+  min-width: 120px;
+}
+/* line 88, ../sass/pages/_standard.sass */
+.lolipop-content a {
+  padding: 2px 14px;
+  display: block;
+}
+/* line 91, ../sass/pages/_standard.sass */
+.lolipop-content a:hover {
+  text-decoration: none;
+  background-color: #eeeeee;
+}
+
+/* line 98, ../sass/pages/_standard.sass */
+.state-panel {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #333333;
+  height: 100%;
+  width: 300px;
+}

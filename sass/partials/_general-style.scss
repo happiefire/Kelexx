@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Vincent's custom styles, 
+   large part of which learned from Bootstrap and h5bp.
+   ========================================================================== */
+
+// First to show respect to h5bp
+@import "h5bp-custom.scss";
+// Here comes in our bootstrap takeaways
+@import "bootstrap-takeaways.scss";
+// Let's talk Typography
+@import "typography.scss";
+
+body {
+  min-width: 1024px;
+  position: relative;
+}
+
+.state-panel {
+  color: #ffffff
+}
+
+
+
+
+
