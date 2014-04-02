@@ -1,13 +1,23 @@
+
+// 记住以下先是javascript，然后是jQuery
+var timeout_hide, timeout_show;
 function popover_show(target){
-  setTimeout(function(){jQuery(target).find(".popover").show();}, 3000);
+  timeout_show = window.setTimeout(function(){
+    jQuery(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
+  }, 400);
+  window.clearTimeout(timeout_hide);
 }
 
 function popover_hide(target){
-  setTimeout(function(){jQuery(target).find(".popover").hide();}, 3000);
+  timeout_hide = window.setTimeout(function(){
+    jQuery(target).find(".popover").removeClass("popover-show").addClass("popover-hide");
+  }, 400);
 }
 
+// 记住以上先是javascript，然后是jQuery
+
+
 $(function(){
-  $(".test .popover").css("display","none");
 
   $(".test").mouseover(function(){
     popover_show($(this));
@@ -16,3 +26,17 @@ $(function(){
     popover_hide($(this));
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+

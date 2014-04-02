@@ -178,7 +178,22 @@ body {
 
 /* line 18, ../sass/partials/_general-style.scss */
 .state-panel {
-  color: white;
+  color: #ffffff;
+}
+
+/* line 22, ../sass/partials/_general-style.scss */
+.popover {
+  display: none;
+}
+
+/* line 26, ../sass/partials/_general-style.scss */
+.popover-show {
+  display: block;
+}
+
+/* line 29, ../sass/partials/_general-style.scss */
+.popover-hide {
+  display: none;
 }
 
 /* line 7, ../sass/pages/_index.sass */
@@ -310,7 +325,7 @@ body, select, input, textarea {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   white-space: normal;
 }
-/* line 59, ../sass/pages/_standard.sass */
+/* line 60, ../sass/pages/_standard.sass */
 .popover .arrow {
   position: absolute;
   top: -10px;
@@ -324,7 +339,7 @@ body, select, input, textarea {
   _border-color: black black #999999 black;
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
-/* line 73, ../sass/pages/_standard.sass */
+/* line 74, ../sass/pages/_standard.sass */
 .popover .arrow:after {
   content: "";
   position: absolute;
@@ -339,23 +354,23 @@ body, select, input, textarea {
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
-/* line 86, ../sass/pages/_standard.sass */
+/* line 87, ../sass/pages/_standard.sass */
 .popover-content {
   padding: 10px 0px;
   min-width: 120px;
 }
-/* line 89, ../sass/pages/_standard.sass */
+/* line 90, ../sass/pages/_standard.sass */
 .popover-content a {
   padding: 2px 14px;
   display: block;
 }
-/* line 92, ../sass/pages/_standard.sass */
+/* line 93, ../sass/pages/_standard.sass */
 .popover-content a:hover {
   text-decoration: none;
   background-color: #eeeeee;
 }
 
-/* line 99, ../sass/pages/_standard.sass */
+/* line 100, ../sass/pages/_standard.sass */
 .state-panel {
   z-index: 100;
   position: fixed;
