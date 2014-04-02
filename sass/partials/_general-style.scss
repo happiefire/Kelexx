@@ -15,16 +15,15 @@ body {
   position: relative;
 }
 
-.state-panel {
-  color: #ffffff;
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+  &:before, &:after {
+    display: table;
+    content: " ";
+  }
+  &:after{
+    clear: both;
+  }
 }
-
-.popover-show {
-  display: block;
-}
-
-.popover-hide {
-  display: none;
-}
-
 

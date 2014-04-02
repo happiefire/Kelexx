@@ -1,63 +1,99 @@
-// 记住以下先是javascript，然后是jQuery
+var cf = 0;
+var count = 0;
 var timeout_hide, timeout_show;
 
-function popover_show(target){
+function popover_show(target) {
   timeout_show = window.setTimeout(function(){
     $(".popover-show").removeClass("popover-show").addClass("popover-hide");
     $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
   }, 300);
   window.clearTimeout(timeout_hide);
+}
 
-function popover_hide(target){
+function popover_hide(target) {
   timeout_hide = window.setTimeout(function(){
     $(target).find(".popover").removeClass("popover-show").addClass("popover-hide");
   }, 400);
 }
 
+function do_focus() {
+  cf.focus();
+  popover_show(cf); // 不应该把这两步分开吗？?
+}
+
+function press_right() {
+  if (cf == 0) {
+    // cf = 第一个
+    cf = $(".pb-list").find(".each-pb").first();
+    do_focus();
+  } else {
+    if (cf.is(":last-child")){
+      if (cf.parent().is(":last-child")) {
+        cf = cf;
+      } else {
+        cf = cf.parent().next(".pb-group").find(".each-pb").first();
+        do_focus();
+      }
+    } else {
+      cf = cf.next(".each-pb");
+      do_focus();
+    }
+  }
+} 
+
+function press_left() {
+  if (cf == 0) {
+    cf = $(".pb-list").find(".each-pb").first();
+    do_focus();
+  } else {
+    if (cf.is(":first-child")){
+      if (cf.parent().is(":first-child")) {
+        cf = cf;
+      } else {
+        cf = cf.parent().prev(".pb-group").find(".each-pb").last();
+        do_focus();
+      }
+    } else {
+      cf = cf.prev(".each-pb");
+      do_focus();
+    }
+  }
+}
 
 
-//快捷键
+
+
+
+
 function hotkeys(){
   KeyboardJS.on('1>2', function() {
-    popover_show($("#button12"));
-});
+    popover_show($("#bp-12"));
+  });
   KeyboardJS.on('1', function() {
-    popover_show($("#button1"));
-});
+    cf = $("#pb-1");
+    do_focus();
+  });
   KeyboardJS.on('2', function() {
-    popover_show($("#button2"));
-});
-//  KeyboardJS.on('left', function() {
-//     currentfocus = $(currentfocus).next();
-// //right为prev()
-// //全局变量currentfocus:必须在click，show之后，将currentfocus进行重新赋值，赋的值为一个元素
-//     popover_show($(currentfocus));
-// });
-  
+    cf = $("#pb-2");
+    do_focus();
+  });
+
+  KeyboardJS.on('right', press_right);
+  KeyboardJS.on('left', press_left);
 }
 
 $(function(){
+
   window.onload = function(){
     hotkeys();
   }
-  $(".test").mouseover(function(){
-    popover_show($(this));
+  $(".each-pb").mouseover(function(){
+    cf = $(this);
+    do_focus();
   });
-  $(".test").mouseout(function(){
+  $(".each-pb").mouseout(function(){
     popover_hide($(this));
   });
+
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,0 +1,59 @@
+<!-- http://stackoverflow.com/questions/4495626/making-custom-right-click-context-menus-for-my-web-app -->
+<style>
+  .custom-menu {
+    display: none;
+    z-index:1000;
+    position: absolute;
+    background-color:#EEE;
+    border: 1px solid #888;
+    overflow: hidden;
+    width: 120px;
+    white-space:nowrap;
+    font-family: sans-serif;
+}
+
+.custom-menu li {
+    padding: 5px;
+}
+
+.custom-menu li:hover {
+    background-color: #DDD;
+    cursor: pointer;
+}
+</style>
+<ul class='custom-menu'>
+  <li data-action = "first">First thing</li>
+  <li data-action = "second">Second thing</li>
+  <li data-action = "third">Third thing</li>
+</ul>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+  // Trigger action when the contexmenu is about to be shown
+$(document).bind("contextmenu", function (event) {
+    // Avoid the real one
+    event.preventDefault();
+    // Show contextmenu
+    $(".custom-menu").toggle(100).
+    // In the right position (the mouse)
+    css({
+        top: event.pageY + "px",
+        left: event.pageX + "px"
+    });
+});
+
+// If the document is clicked somewhere
+$(document).bind("mousedown", function () {
+    $(".custom-menu").hide(100);
+});
+
+$(".custom-menu li").click(function(){
+    // This is the triggered action name
+    switch($(this).attr("data-action")) {
+        // A case for each action. Should personalize to your actions
+        case "first": alert("first"); break;
+        case "second": alert("second"); break;
+        case "third": alert("third"); break;
+    }
+  });
+</script>
