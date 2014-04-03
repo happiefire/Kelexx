@@ -287,10 +287,14 @@ body, select, input, textarea {
 }
 
 /* line 32, ../sass/pages/_standard.sass */
-.each-pb > a {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
+.pb-wrong {
+  background-color: #fdf7f7 !important;
+  color: #d9534f !important;
+  border-color: #d9534f !important;
+}
+
+/* line 37, ../sass/pages/_standard.sass */
+.pb-target {
   line-height: 1;
   color: #333333;
   background-color: whitesmoke;
@@ -298,39 +302,61 @@ body, select, input, textarea {
   border: 1px solid #dddddd;
   width: 50px;
   height: 50px;
+  padding: 3px;
 }
-/* line 43, ../sass/pages/_standard.sass */
-.each-pb > a:hover {
+/* line 46, ../sass/pages/_standard.sass */
+.pb-target:hover {
   text-decoration: none;
   cursor: pointer;
   background-color: #eeeeee;
   border-color: #cccccc;
 }
-
-/* line 49, ../sass/pages/_standard.sass */
-.pb-wrong {
-  background-color: #fdf7f7 !important;
-  color: #d9534f !important;
-  border-color: #d9534f !important;
+/* line 51, ../sass/pages/_standard.sass */
+.pb-target:focus {
+  outline: none;
 }
-
-/* line 54, ../sass/pages/_standard.sass */
-.pb-info {
+/* line 53, ../sass/pages/_standard.sass */
+.pb-target table, .pb-target tr {
   width: 100%;
-  font-size: 8px;
-  line-height: 1;
-  color: #aaaaaa;
-  position: absolute;
-  margin-top: 5px;
+}
+/* line 55, ../sass/pages/_standard.sass */
+.pb-target table {
+  height: 100%;
 }
 
-/* line 63, ../sass/pages/_standard.sass */
-.color-label-indicator {
-  vertical-align: middle;
-  padding-right: 5px;
+/* line 58, ../sass/pages/_standard.sass */
+.pb-focus {
+  border-style: dashed;
 }
-/* line 67, ../sass/pages/_standard.sass */
-.color-label-indicator span {
+
+/* line 61, ../sass/pages/_standard.sass */
+.tag-focus {
+  background-color: #98d3fd;
+  color: white;
+}
+
+/* line 65, ../sass/pages/_standard.sass */
+.pb-num {
+  vertical-align: top;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+/* line 70, ../sass/pages/_standard.sass */
+.score-indicator {
+  font-size: 10px;
+  color: #aaaaaa;
+  vertical-align: bottom;
+  text-align: right;
+}
+
+/* line 76, ../sass/pages/_standard.sass */
+.color-indicator {
+  vertical-align: top;
+  width: 5px;
+}
+/* line 80, ../sass/pages/_standard.sass */
+.color-indicator span {
   display: block;
   float: left;
   width: 5px;
@@ -340,44 +366,38 @@ body, select, input, textarea {
   margin-left: 1px;
   margin-bottom: 1px;
 }
-/* line 76, ../sass/pages/_standard.sass */
-.color-label-indicator .red {
+/* line 90, ../sass/pages/_standard.sass */
+.color-indicator .red {
   background-color: #fd8b8c;
   border-color: #d56a6b;
 }
-/* line 79, ../sass/pages/_standard.sass */
-.color-label-indicator .orange {
+/* line 93, ../sass/pages/_standard.sass */
+.color-indicator .orange {
   background-color: #fec74b;
   border-color: #fd9a2c;
 }
-/* line 82, ../sass/pages/_standard.sass */
-.color-label-indicator .yellow {
+/* line 96, ../sass/pages/_standard.sass */
+.color-indicator .yellow {
   background-color: #feee43;
   border-color: #e5d02e;
 }
-/* line 85, ../sass/pages/_standard.sass */
-.color-label-indicator .green {
+/* line 99, ../sass/pages/_standard.sass */
+.color-indicator .green {
   background-color: #bfee3f;
   border-color: #a1cb33;
 }
-/* line 88, ../sass/pages/_standard.sass */
-.color-label-indicator .blue {
+/* line 102, ../sass/pages/_standard.sass */
+.color-indicator .blue {
   background-color: #98d3fd;
   border-color: #6ba1cb;
 }
-/* line 91, ../sass/pages/_standard.sass */
-.color-label-indicator .violet {
+/* line 105, ../sass/pages/_standard.sass */
+.color-indicator .violet {
   background-color: #eab6fd;
   border-color: #d673fc;
 }
 
-/* line 95, ../sass/pages/_standard.sass */
-.score-indicator {
-  vertical-align: middle;
-  text-align: right;
-}
-
-/* line 103, ../sass/pages/_standard.sass */
+/* line 114, ../sass/pages/_standard.sass */
 .popover {
   margin-top: 10px;
   position: absolute;
@@ -396,7 +416,7 @@ body, select, input, textarea {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   white-space: normal;
 }
-/* line 121, ../sass/pages/_standard.sass */
+/* line 132, ../sass/pages/_standard.sass */
 .popover .arrow {
   position: absolute;
   top: -10px;
@@ -410,7 +430,7 @@ body, select, input, textarea {
   _border-color: black black #999999 black;
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
-/* line 135, ../sass/pages/_standard.sass */
+/* line 146, ../sass/pages/_standard.sass */
 .popover .arrow:after {
   content: "";
   position: absolute;
@@ -425,33 +445,33 @@ body, select, input, textarea {
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
-/* line 148, ../sass/pages/_standard.sass */
+/* line 159, ../sass/pages/_standard.sass */
 .popover-content {
   padding: 10px 0px;
   min-width: 120px;
 }
-/* line 151, ../sass/pages/_standard.sass */
+/* line 162, ../sass/pages/_standard.sass */
 .popover-content a {
   padding: 2px 14px;
   display: block;
 }
-/* line 154, ../sass/pages/_standard.sass */
+/* line 165, ../sass/pages/_standard.sass */
 .popover-content a:hover {
   text-decoration: none;
-  background-color: #eeeeee;
+  color: white;
 }
 
-/* line 158, ../sass/pages/_standard.sass */
+/* line 169, ../sass/pages/_standard.sass */
 .popover-show {
   display: block;
 }
 
-/* line 161, ../sass/pages/_standard.sass */
+/* line 172, ../sass/pages/_standard.sass */
 .popover-hide {
   display: none;
 }
 
-/* line 166, ../sass/pages/_standard.sass */
+/* line 177, ../sass/pages/_standard.sass */
 .state-panel {
   z-index: 100;
   position: fixed;
