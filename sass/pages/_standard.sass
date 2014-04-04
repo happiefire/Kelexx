@@ -14,7 +14,7 @@ $pb-gap: 8px
 .pb-group
   margin-left: $pb-gap * -1
   margin-right: $pb-gap * -1
-  margin-bottom: 30px
+  margin-bottom: 5px
   &:before, &:after
     display: table
     content: " "
@@ -27,12 +27,15 @@ $pb-gap: 8px
   position: relative
   margin-left: $pb-gap
   margin-right: $pb-gap
-  margin-bottom: 30px
+  margin-bottom: 5px
 
-.pb-wrong
+.pb-selected
   background-color: #fdf7f7 !important
   color: #d9534f !important
   border-color: #d9534f !important
+
+.tag-selected
+  color: #d9534f
 
 .pb-target
   line-height: 1
@@ -107,8 +110,11 @@ $pb-gap: 8px
     border-color: #d673fc
 
 
-
-
+.score-input
+  position: absolute
+  display: none
+  input[type="text"]
+    width: 100%
 
 
 .popover
@@ -164,13 +170,14 @@ $pb-gap: 8px
     display: block
     &:hover
       text-decoration: none
-      color: #ffffff
 
 .popover-show
   display: block
 
 .popover-hide 
   display: none
+
+
 
 // state panel style
 $state-panel-width: 300px

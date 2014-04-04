@@ -37,7 +37,6 @@ function popover_hide(target) {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   cf_tag = 0;
   $(".tag-focus").removeClass("tag-focus");
-  console.log(count++);
 }
 
 
@@ -99,6 +98,7 @@ function press_left() {
   }
 }
 
+// up & down 对于cf的选择，还没有写
 function press_down() {
   if (cf == 0) {
     cf = $(".pb-list").find(".each-pb").first();
@@ -123,53 +123,188 @@ function press_down() {
   }
 }
 
+function press_up() {
+  if (cf == 0) {
+    cf = $(".pb-list").find(".each-pb").first();
+    do_focus();
+  } else {
+    if ( cf.find(".popover").hasClass("popover-show") ){
+      // focus 到children里选择tag
+      if (cf_tag == 0){
+        cf_tag = cf.find(".each-tag").last();
+        do_tag_focus();
+      } else {
+        if (cf_tag.is(":first-child")){
+          cf_tag = cf_tag;
+        } else {
+          cf_tag = cf_tag.prev();
+          do_tag_focus();
+        }
+      }
+    } else {
+      // 跳到下一行
+    }
+  }
+}
+
+function press_enter(){
+  if (cf_tag == 0){
+    if (cf == 0){}
+      else{
+        clickpb(cf.find(".pb-target"));
+      }
+  } else{
+    clicktag(cf_tag);
+  };
+}
+
+function press_shift(){
+  if(cf.find(".popover").hasClass("popover-show") == true){
+//此处应写成hide this
+    popover_hide();
+  } else
+  {do_focus();};
+}
+
+function press_number(target){
+  cf = $(target);
+  do_focus();
+}
 
 function hotkeys(){
-  KeyboardJS.on('1>2', function() {
-    popover_show($("#bp-12"));
-  });
-  KeyboardJS.on('1', function() {
-    cf = $("#pb-1");
-    do_focus();
-  });
-  KeyboardJS.on('2', function() {
-    cf = $("#pb-2");
-    do_focus();
-  });
-
   KeyboardJS.on('right', press_right);
   KeyboardJS.on('left', press_left);
   KeyboardJS.on('down', press_down);
+  KeyboardJS.on('up', press_up);
+  KeyboardJS.on('1', function() {press_number($("#pb-1"))});
+  KeyboardJS.on('2', function() {press_number($("#pb-2"))});
+  KeyboardJS.on('3', function() {press_number($("#pb-3"))});
+  KeyboardJS.on('4', function() {press_number($("#pb-4"))});
+  KeyboardJS.on('5', function() {press_number($("#pb-5"))});
+  KeyboardJS.on('6', function() {press_number($("#pb-6"))});
+  KeyboardJS.on('7', function() {press_number($("#pb-7"))});
+  KeyboardJS.on('8', function() {press_number($("#pb-8"))});
+  KeyboardJS.on('9', function() {press_number($("#pb-9"))});
+  KeyboardJS.on('1>0', function() {press_number($("#pb-10"))});
+  KeyboardJS.on('space + 1', function() {press_number($("#pb-11"))});
+  KeyboardJS.on('1>2', function() {press_number($("#pb-12"))});
+  KeyboardJS.on('1>3', function() {press_number($("#pb-13"))});
+  KeyboardJS.on('1>4', function() {press_number($("#pb-14"))});
+  KeyboardJS.on('1>5', function() {press_number($("#pb-15"))});
+  KeyboardJS.on('1>6', function() {press_number($("#pb-16"))});
+  KeyboardJS.on('1>7', function() {press_number($("#pb-17"))});
+  KeyboardJS.on('1>8', function() {press_number($("#pb-18"))});
+  KeyboardJS.on('1>9', function() {press_number($("#pb-19"))});
+  KeyboardJS.on('2>0', function() {press_number($("#pb-20"))});
+  KeyboardJS.on('2>1', function() {press_number($("#pb-21"))});
+  KeyboardJS.on('space + 2', function() {press_number($("#pb-22"))});
+  KeyboardJS.on('2>3', function() {press_number($("#pb-23"))});
+  KeyboardJS.on('2>4', function() {press_number($("#pb-24"))});
+  KeyboardJS.on('2>5', function() {press_number($("#pb-25"))});
+  KeyboardJS.on('2>6', function() {press_number($("#pb-26"))});
+  KeyboardJS.on('2>7', function() {press_number($("#pb-27"))});
+  KeyboardJS.on('2>8', function() {press_number($("#pb-28"))});
+  KeyboardJS.on('2>9', function() {press_number($("#pb-29"))});
+  KeyboardJS.on('3>0', function() {press_number($("#pb-30"))});
+  KeyboardJS.on('shift',press_shift);
+  KeyboardJS.on('enter',press_enter);
 }
 
-$(function(){
+//有关click的一堆
+function clickpb(target){
+  $(target).parent(".each-pb").find(".pb-target").toggleClass("pb-selected");
+  popover_hide();
+  //下面一行如果删掉，用户可以将错误类型用作中性标签
+  $(target).parent().find(".each-tag").removeClass("tag-selected");
+}
 
+function selectpb(target){
+  $(target).parent().parent().prev().addClass("pb-selected");
+}
+
+function clicktag(target){
+  if ($(target).hasClass("tag-selected")){
+    $(target).removeClass("tag-selected");
+  } else{
+    $(target).addClass("tag-selected");
+    selectpb($(target));
+  }
+  popover_hide(); 
+}
+// 以上为有关click的一堆结束
+
+// 以下是input的事情
+function score_input_hide(){
+  $(".score-input").css("display","none");
+}
+
+
+$(".has-score").on("click", function(){
+  score_input_focus(this);
+});
+
+//target必须是each pb
+function score_input_focus(target){
+  score_input_hide();
+  $(target).find(".score-input").css("display","block").find("input").focus();
+  current_input = $(target);
+}
+
+//target必须是each pb
+function score_input_blur(target){
+  $(target).find(".score-input input").blur().parent().css("display","none");
+}
+
+function event_in_eachpb(){
+  if ($(event.target).parents(".each-pb").hasClass("each-pb")){return true}
+    else{return false}
+}
+
+$(document).bind("click",function(){
+  if ( event_in_eachpb() ) {
+    //do nothing
+  } else{
+    score_input_hide();
+  }
+})
+
+//以上为有关input的主要事情结束
+
+$(function(){
   window.onload = function(){
     hotkeys();
   }
 
-  $(".each-pb").mouseover(function(){
+  $(".each-pb").mouseenter(function(){
     cf = $(this);
     do_focus();
   });
 
   $(".each-pb").mouseleave(function(){
-    // 也许可以加一个mouseleave出发条件来解决下面那个问题
-    popover_hide();    
+    // popover_hide();  
+    $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
+    cf_tag = 0;
+    $(this).find(".tag-focus").removeClass("tag-focus");  
   });
 
 // click的工作方式，目前只改换了pb-target的样式
-  $(".each-pb").on("click", function(){
-    $(this).find(".pb-target").toggleClass("pb-wrong");
+  $(".pb-target").on("click", function(){
+    clickpb($(this));
   });
 
-// 在tag的条目上mouseover工作方式
-// 我草…这tmd不是跟press_down一模一样的么，为毛还有问题呢为毛呢！
-// chrome里查看那个元素时候.tag-focus就是加不上去！
-// 哦，该不会是因为跟popover_hide里的:
-//   $(".tag-focus").removeClass("tag-focus");
-// 冲突了吧？？
-  $(".each-tag").mouseover(function(){
+ $(".each-tag").on("click", function(){
+    clicktag($(this));
+  });
+
+//问题1:鼠标在tag上时，right，popover昙花一现
+//解决办法：把原因里的hide全局改为hide this
+//原因：当从第一题换到第二题时，cf变为第二题，此时第一题popover消失，然后mouseleave触发，然后hide，然后全部hide了
+
+//问题2:tag无法添加tag_focus类
+//解决办法：将所有mouseover改为mouseenter
+//原因：疑似某个事件触发之后，mouseover被重新执行了一遍，导致了某些蛋疼的问题
+
+  $(".each-tag").mouseenter(function(){
     cf_tag = $(this);
     do_tag_focus();
   });
