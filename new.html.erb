@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label for="class">班级</label>
+        <label for="class">班级&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
         <select name="class" id="class">
           <option value="二年级3班">二年级3班</option>
         </select>
@@ -31,46 +31,27 @@
       <h2>试卷详情设置</h2>
       <hr>
 
-      <div class="form-group pb-info-form" id="pb-info-1">
-        <label>题型&nbsp
-          <select class="pb-info-type">
+      <div class="form-group pb-info-group" id="pb-info-1">
+        <label class="pb-info-type">题型
+          <select>
             <option value="type-tiankong">填空题</option>
             <option value="type-xuanze">选择题</option>
             <option value="type-wenda">问答题</option>
           </select>
         </label>
-        <label>
-          题号范围&nbsp
-          <input class="pb-info-num" type="text" placeholder="例: 1-9,15,17">
+        <label class="pb-info-num">
+          题号范围
+          <input type="text" placeholder="例: 1-9,15,17">
         </label>
-        <label>
-          默认每题分值&nbsp
-          <input class="pb-info-score" type="text">
+        <label class="pb-info-score">
+          默认每题分值
+          <input type="number">
         </label>
-        <a class="btn">生成题号表</a>
+        <a class="btn pb-info-group-gen">生成题号表</a>
       </div>
 
-      <div class="form-group pb-info-form" id="pb-info-2">
-        <label>题型&nbsp
-          <select class="pb-info-type">
-            <option value="type-tiankong">填空题</option>
-            <option value="type-xuanze">选择题</option>
-            <option value="type-wenda">问答题</option>
-          </select>
-        </label>
-        <label>
-          题号范围&nbsp
-          <input class="pb-info-num" type="text" placeholder="例: 1-9,15,17">
-        </label>
-        <label>
-          默认每题分值&nbsp
-          <input class="pb-info-score" type="text">
-        </label>
-        <button class="btn">生成题号表</button>
-
-      </div>
-
-      <a>+ 添加一组题目</a>
+      <div id="new-pb-info-group-placeholder"></div>
+      <a id="add-pb-info-group">+ 添加一组题目</a>
 
 
 
@@ -78,7 +59,7 @@
 
 <!-- 
       <h3>选择题</h3>
-      <div class="form-group pb-info-form" id="xuanze">
+      <div class="form-group pb-info-group" id="xuanze">
         <label for="xuanze-num">题目序号</label>
         <input class="pb-info-num" type="text" id="xuanze-num">
         <label for="xuanze-score">默认分值</label>
@@ -87,7 +68,7 @@
       </div>
 
       <h3>问答题</h3>
-      <div class="form-group pb-info-form" id="wenda">
+      <div class="form-group pb-info-group" id="wenda">
         <label for="wenda-num">题目序号</label>
         <input class="pb-info-num" type="text" id="wenda-num">
         <label for="wenda-score">默认分值</label>

@@ -20,28 +20,7 @@
 // input[type="tel"]
 // input[type="color"]
 
-select {
-  height: $input-height; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
-  padding: $padding-vrt $padding-hrz;
-  font-size: $font-size;
-  line-height: $line-height;
-  // color: $gray;
-  // background-color: #ffffff;
-  // background-image: none;
-  // border: 1px solid #cccccc;
-  border-radius: $border-radius;
-
-  // Disabled and read-only inputs
-  &[disabled],
-  &[readonly],
-  fieldset[disabled] & {
-    cursor: not-allowed;
-    background-color: $gray-lighter;
-    opacity: 1; // iOS fix for unreadable disabled content
-  }
-}
-
-.form-control, input[type="text"], select {
+.form-control, input, select {
   // display: block;
   // width: 100%;
   height: $input-height; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
