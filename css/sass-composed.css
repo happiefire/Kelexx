@@ -91,32 +91,66 @@ input[type="search"] {
   -webkit-appearance: none;
 }
 
-/* line 3, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 23, ../sass/partials/_components.scss */
+select {
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 4px;
+}
+/* line 37, ../sass/partials/_components.scss */
+select[disabled], select[readonly], fieldset[disabled] select {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+
+/* line 44, ../sass/partials/_components.scss */
+.form-control, input[type="text"], select {
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+/* line 65, ../sass/partials/_components.scss */
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control, input[type="text"][disabled], input[type="text"][readonly], fieldset[disabled] input[type="text"], select[disabled], select[readonly], fieldset[disabled] select {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+
+/* line 74, ../sass/partials/_components.scss */
 .form-inline .form-group {
   display: inline-block;
   margin-bottom: 0;
   vertical-align: middle;
 }
 
-/* line 8, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 79, ../sass/partials/_components.scss */
 .form-inline .form-control {
   display: inline-block;
   width: auto;
   vertical-align: middle;
 }
 
-/* line 13, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 84, ../sass/partials/_components.scss */
 .form-inline .input-group > .form-control {
   width: 100%;
 }
 
-/* line 16, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 87, ../sass/partials/_components.scss */
 .form-inline .control-label {
   margin-bottom: 0;
   vertical-align: middle;
 }
 
-/* line 21, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 92, ../sass/partials/_components.scss */
 .form-inline .radio,
 .form-inline .checkbox {
   display: inline-block;
@@ -126,16 +160,49 @@ input[type="search"] {
   vertical-align: middle;
 }
 
-/* line 29, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 100, ../sass/partials/_components.scss */
 .form-inline .radio input[type="radio"],
 .form-inline .checkbox input[type="checkbox"] {
   float: none;
   margin-left: 0;
 }
 
-/* line 33, ../sass/partials/_bootstrap-takeaways.scss */
+/* line 104, ../sass/partials/_components.scss */
 .form-inline .has-feedback .form-control-feedback {
   top: 0;
+}
+
+/* line 110, ../sass/partials/_components.scss */
+button, .btn {
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: 0px;
+  border: 1px solid transparent;
+  border-color: #999999;
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: #333333;
+  background-color: #ffffff;
+}
+/* line 125, ../sass/partials/_components.scss */
+button:hover, button:focus, .btn:hover, .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+/* line 131, ../sass/partials/_components.scss */
+button:active, button.active, .btn:active, .btn.active {
+  outline: 0;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+/* line 138, ../sass/partials/_components.scss */
+button.disabled, button[disabled], fieldset[disabled] button, .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  box-shadow: none;
 }
 
 /* line 5, ../sass/partials/_typography.scss */
@@ -151,23 +218,29 @@ textarea {
 html {
   font-size: 14px;
   line-height: 1.5;
+  font-family: 'Helvetica Neue',Arial,"Hiragino Sans GB",'Microsoft YaHei',sans-serif;
 }
 
-/* line 14, ../sass/partials/_typography.scss */
+/* line 15, ../sass/partials/_typography.scss */
 a {
   text-decoration: none;
   color: #428bca;
 }
-/* line 18, ../sass/partials/_typography.scss */
+/* line 19, ../sass/partials/_typography.scss */
 a:hover, a:focus {
   color: #2a6496;
   text-decoration: underline;
 }
-/* line 22, ../sass/partials/_typography.scss */
+/* line 23, ../sass/partials/_typography.scss */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+}
+
+/* line 30, ../sass/partials/_typography.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
 }
 
 /* line 13, ../sass/partials/_general-style.scss */
@@ -242,6 +315,37 @@ body, select, input, textarea {
   position: absolute;
   top: 300px;
   right: 50%;
+}
+
+/* line 1, ../sass/pages/_new.scss */
+section {
+  margin: 80px 0;
+}
+
+/* line 5, ../sass/pages/_new.scss */
+.form-group {
+  margin-bottom: 12px;
+}
+/* line 7, ../sass/pages/_new.scss */
+.form-group label {
+  margin-right: 10px;
+}
+
+/* line 12, ../sass/pages/_new.scss */
+.pb-info-form {
+  border-radius: 4px;
+  border: 1px dashed #ccc;
+  padding: 10px;
+}
+
+/* line 18, ../sass/pages/_new.scss */
+.pb-info-num {
+  width: 240px;
+}
+
+/* line 22, ../sass/pages/_new.scss */
+.pb-info-score {
+  width: 50px;
 }
 
 /* line 2, ../sass/pages/_standard.sass */

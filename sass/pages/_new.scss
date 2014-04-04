@@ -1,0 +1,25 @@
+section {
+  margin: 80px 0;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  label {
+    margin-right: 10px;
+  }
+}
+
+.pb-info-form {
+  border-radius: $border-radius;
+  border: 1px dashed #ccc;
+  padding: 10px;
+}
+
+.pb-info-num {
+  width: 240px;
+}
+
+.pb-info-score {
+  width: 50px;
+}
+
