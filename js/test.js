@@ -1,7 +1,8 @@
-var cf = 0;
+var cf = 0; //指向的是each-pb
 var cf_tag = 0;
 var count = 0;
 var timeout_hide, timeout_show;
+var input_on = 0;
 
 // function popover_show(target) {
 //   timeout_show = window.setTimeout(function(){
@@ -22,6 +23,8 @@ var timeout_hide, timeout_show;
 function popover_show(target) {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
+  score_input_hide();
+
 }
 
 // popover_hide 现在的target参数是用不上的只是没删而已
@@ -85,7 +88,7 @@ function press_left() {
   if (cf == 0) {
     cf = $(".pb-list").find(".each-pb").first();
     do_focus();
-  } else if (cf.is(":first-child")){
+  } else if (cf.prev().is(":first-child")){ //注意，此处题型的h4影响了child的位置，故做了.prev的修改
     if (cf.parent().is(":first-child")) {
       cf = cf;
     } else {
@@ -98,7 +101,6 @@ function press_left() {
   }
 }
 
-// up & down 对于cf的选择，还没有写
 function press_down() {
   if (cf == 0) {
     cf = $(".pb-list").find(".each-pb").first();
@@ -118,7 +120,8 @@ function press_down() {
         }
       }
     } else {
-      // 跳到下一行
+      cf = cf.parent().next(".pb-group").find(".each-pb").first();
+      do_focus();
     }
   }
 }
@@ -142,7 +145,8 @@ function press_up() {
         }
       }
     } else {
-      // 跳到下一行
+      cf = cf.parent().prev(".pb-group").find(".each-pb").first();
+      do_focus();
     }
   }
 }
@@ -151,7 +155,7 @@ function press_enter(){
   if (cf_tag == 0){
     if (cf == 0){}
       else{
-        clickpb(cf.find(".pb-target"));
+        clickpb();
       }
   } else{
     clicktag(cf_tag);
@@ -160,7 +164,6 @@ function press_enter(){
 
 function press_shift(){
   if(cf.find(".popover").hasClass("popover-show") == true){
-//此处应写成hide this
     popover_hide();
   } else
   {do_focus();};
@@ -169,6 +172,11 @@ function press_shift(){
 function press_number(target){
   cf = $(target);
   do_focus();
+}
+
+function press_space(){
+  score_input_focus(cf);
+  popover_hide();
 }
 
 function hotkeys(){
@@ -186,7 +194,7 @@ function hotkeys(){
   KeyboardJS.on('8', function() {press_number($("#pb-8"))});
   KeyboardJS.on('9', function() {press_number($("#pb-9"))});
   KeyboardJS.on('1>0', function() {press_number($("#pb-10"))});
-  KeyboardJS.on('space + 1', function() {press_number($("#pb-11"))});
+  KeyboardJS.on('. + 1', function() {press_number($("#pb-11"))});
   KeyboardJS.on('1>2', function() {press_number($("#pb-12"))});
   KeyboardJS.on('1>3', function() {press_number($("#pb-13"))});
   KeyboardJS.on('1>4', function() {press_number($("#pb-14"))});
@@ -197,7 +205,7 @@ function hotkeys(){
   KeyboardJS.on('1>9', function() {press_number($("#pb-19"))});
   KeyboardJS.on('2>0', function() {press_number($("#pb-20"))});
   KeyboardJS.on('2>1', function() {press_number($("#pb-21"))});
-  KeyboardJS.on('space + 2', function() {press_number($("#pb-22"))});
+  KeyboardJS.on('. + 2', function() {press_number($("#pb-22"))});
   KeyboardJS.on('2>3', function() {press_number($("#pb-23"))});
   KeyboardJS.on('2>4', function() {press_number($("#pb-24"))});
   KeyboardJS.on('2>5', function() {press_number($("#pb-25"))});
@@ -208,14 +216,31 @@ function hotkeys(){
   KeyboardJS.on('3>0', function() {press_number($("#pb-30"))});
   KeyboardJS.on('shift',press_shift);
   KeyboardJS.on('enter',press_enter);
+  KeyboardJS.on('space',press_space);
 }
 
 //有关click的一堆
-function clickpb(target){
-  $(target).parent(".each-pb").find(".pb-target").toggleClass("pb-selected");
-  popover_hide();
+function clickpb(){
+  if (cf.hasClass("has-score")){
+    score_input_focus(cf);
+    cf.find(".pb-target").toggleClass("pb-selected");
+    popover_hide();
   //下面一行如果删掉，用户可以将错误类型用作中性标签
-  $(target).parent().find(".each-tag").removeClass("tag-selected");
+    cf.find(".each-tag").removeClass("tag-selected");
+  }
+    else{
+    cf.find(".pb-target").toggleClass("pb-selected");
+    popover_hide();
+  //下面一行如果删掉，用户可以将错误类型用作中性标签
+    cf.find(".each-tag").removeClass("tag-selected");
+  }
+  // console.log(target);
+  // console.log(target.parent());
+  // score_input_focus(target.parent());
+  // $(target).parent(".each-pb").find(".pb-target").toggleClass("pb-selected");
+  // popover_hide();
+  // //下面一行如果删掉，用户可以将错误类型用作中性标签
+  // $(target).parent().find(".each-tag").removeClass("tag-selected");
 }
 
 function selectpb(target){
@@ -234,20 +259,22 @@ function clicktag(target){
 // 以上为有关click的一堆结束
 
 // 以下是input的事情
+// $(".has-score").on("click", function(){
+//   score_input_focus(this);//不可以写成$(this)
+// });
+
 function score_input_hide(){
   $(".score-input").css("display","none");
+  KeyboardJS.enable();
+  input_on = 0;
 }
-
-
-$(".has-score").on("click", function(){
-  score_input_focus(this);
-});
 
 //target必须是each pb
 function score_input_focus(target){
   score_input_hide();
   $(target).find(".score-input").css("display","block").find("input").focus();
-  current_input = $(target);
+  KeyboardJS.disable();
+  input_on = 1;
 }
 
 //target必须是each pb
@@ -262,7 +289,7 @@ function event_in_eachpb(){
 
 $(document).bind("click",function(){
   if ( event_in_eachpb() ) {
-    //do nothing
+    //这一段仍然需要，否则input点不开
   } else{
     score_input_hide();
   }
@@ -276,20 +303,35 @@ $(function(){
   }
 
   $(".each-pb").mouseenter(function(){
+    // if (input_on == 1){}
+    //   else{
+    //     cf = $(this);
+    //     do_focus();
+    //   }
     cf = $(this);
     do_focus();
   });
 
   $(".each-pb").mouseleave(function(){
-    // popover_hide();  
-    $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
-    cf_tag = 0;
-    $(this).find(".tag-focus").removeClass("tag-focus");  
-  });
+    // if (input_on == 1){}
+    //   else{ 
+    //     $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
+    //     cf_tag = 0;
+    //     $(this).find(".tag-focus").removeClass("tag-focus");  
+    //   }
+      $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
+      cf_tag = 0;
+      $(this).find(".tag-focus").removeClass("tag-focus");
+});
 
 // click的工作方式，目前只改换了pb-target的样式
   $(".pb-target").on("click", function(){
-    clickpb($(this));
+    // if (input_on == 1){}
+    //   else{
+    //     clickpb();
+    //     score_input_hide();
+    //   }
+    clickpb();
   });
 
  $(".each-tag").on("click", function(){
