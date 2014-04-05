@@ -22,8 +22,7 @@ var timeout_hide, timeout_show;
 function popover_show(target) {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
-  if (cf.hasClass("input-on")){}
-    else{ score_input_hide();}
+  score_input_hide();
 
 }
 
@@ -176,7 +175,6 @@ function press_number(target){
 
 function press_space(){
   score_input_focus(cf);
-  popover_hide();
 }
 
 function hotkeys(){
@@ -297,12 +295,38 @@ $(function(){
     hotkeys();
   }
 
-//此函数为了实现：有input框的cf，当鼠标绕一圈重新enter时不执行mouseenter而进行了一些修改，凡时与input-on类有关的均参与了此修改
+//此函数用于处理score input打开时候的键盘行为监视
+  $(function(){
+    $(".score-input input").keydown(function(event){
+      if (event.keyCode == 13){
+        score_input_hide();
+        return false; //这一行不加，将导致pbselect被取消
+      }
+      else{
+        //do nothing
+      }
+    })
+  });
+
+//此函数为了实现：有input框的cf，当鼠标绕一圈重新enter时不执行mouseenter而进行了一些修改。主要是，当enter其他东西的时候，原来的cf的input-on要删除。其他时候这个删除操作时针对当前cf写的
+//这样写完之后，input框在任何情况下不可能出现失去焦点但是却没有消失的情况  
   $(".each-pb").mouseenter(function(){
-    cf = $(this);
-    do_focus();
-    // if (cf.hasClass("input-on")){}
-    //   else{do_focus();}
+    var ccff; 
+    if (cf == 0){
+      cf = $(this);
+      do_focus();
+    }
+    else{
+      ccff = cf;
+      cf = $(this);
+      if (cf.hasClass("input-on")){
+        //do nothing
+      }
+      else{
+        do_focus();
+        ccff.removeClass("input-on");
+      }
+    }
   });
 
   $(".each-pb").mouseleave(function(){
