@@ -175,6 +175,12 @@ function press_number(target){
 
 function press_space(){
   score_input_focus(cf);
+  if(cf.hasClass("input-on")){
+    //do nothing
+  }
+  else{
+    popover_hide();
+  }
 }
 
 function hotkeys(){
