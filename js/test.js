@@ -2,6 +2,8 @@ var cf = 0; //指向的是each-pb
 var cf_tag = 0;
 var count = 0;
 var timeout_hide, timeout_show;
+var motherpb = 0;
+var current_subpb = 0;
 
 // function popover_show(target) {
 //   timeout_show = window.setTimeout(function(){
@@ -22,8 +24,13 @@ var timeout_hide, timeout_show;
 function popover_show(target) {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
-  score_input_hide();
+  score_input_hide(target);
+}
 
+//与楼上的差别：不执行score_input_hide()
+function subpb_popover_show(target){
+  $(".popover-show").removeClass("popover-show").addClass("popover-hide");
+  $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
 }
 
 // popover_hide 现在的target参数是用不上的只是没删而已
@@ -35,12 +42,11 @@ function popover_show(target) {
 // 同时把cf_tag 重置到 0
 // ct_tag 是全局var，只在.popover-show展开的时候才有必要存在
 // 每次.popover-show被关掉时reset成0
-function popover_hide(target) {
+function popover_hide() {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   cf_tag = 0;
   $(".tag-focus").removeClass("tag-focus");
 }
-
 
 // 使用.pb-focus样式来标示目前cf里存着的对象，在_standard.sass里头，下面的tag-focus样式也是
 // .pb-focus应作用在pb-target上，而非each-pb
@@ -54,9 +60,42 @@ function do_focus() {
   popover_hide();
   $(".pb-focus").removeClass("pb-focus");
   cf.find(".pb-target").addClass("pb-focus");
-  popover_show(cf); // 不应该把这两步分开吗？?
+  popover_show(cf); 
+//此选择结构为了保证快捷键时候，没有触发mouseenter的情况下，motherpb能够进行更新
+  if (cf.hasClass("sub-pb")){
+    find_mother();
+  }
+  else{};
 }
 
+//与do_focus的差别：不执行score_input_hide()
+function subpb_do_focus(){
+  popover_hide();
+  $(".pb-focus").removeClass("pb-focus");
+  cf.find(".pb-target").addClass("pb-focus");
+  subpb_popover_show(cf); 
+}
+
+//此函数用于mouseenter中，但是后来被我注释掉了，那里有说原因
+// function nopop_focus(){
+//   popover_hide();
+//   $(".pb-focus").removeClass("pb-focus");
+//   cf.find(".pb-target").addClass("pb-focus");
+// }
+
+//此函数用于：找到小题对应的母题，motherpb为全局变量
+//需要找母题的场景：click subpb，hover subpb
+function find_mother(){
+  motherpb = cf;
+  do
+    {
+      motherpb = motherpb.prev();
+    }
+  while(motherpb.hasClass("has-sub-pb") == false)
+}
+
+// 需要找小题的场景：click motherpb
+function find_subpb(){}
 
 // 找到目前所有开着.tag-focus的，关之
 // 然后只对currentfocus tag加上.tag-focus以标示cf_tag内的内容
@@ -174,13 +213,13 @@ function press_number(target){
 }
 
 function press_space(){
-  score_input_focus(cf);
   if(cf.hasClass("input-on")){
     //do nothing
   }
   else{
     popover_hide();
   }
+  score_input_focus();
 }
 
 function hotkeys(){
@@ -224,25 +263,76 @@ function hotkeys(){
 }
 
 //有关click的一堆，加了selectpb之后，干净多了
+//有关motherpb的事情，为了保证快捷键里面不用再写一遍，写进了此基本函数clickpb
+//此处motherpb各种弹出input。是否应该加上，如果已经输入过分数，则不弹出
+//里面那个选择结构整理一下
 function clickpb(){
     selectpb();
+    //这个选择结构实现了：当取消母题的选中时，小题也被取消选中
+    if (cf.hasClass("has-sub-pb") && pbselection(cf) == false){
+      current_subpb = cf.next();
+      console.log(current_subpb);
+      do
+      {
+        current_subpb.find(".pb-target").removeClass("pb-selected");
+        current_subpb.find(".each-tag").removeClass("tag-selected");
+        current_subpb = current_subpb.next();
+      }
+      while(current_subpb.hasClass("sub-pb") == true)
+    }
+    else{};
     popover_hide();
   //下面一行如果删掉，用户可以将错误类型用作中性标签
     cf.find(".each-tag").removeClass("tag-selected");
 }
 
- function selectpb(){
+//以下函数为了实现选中母题，之所以单独写，是为了保持selectpb等干净，这里要写一堆小题全部取消选中之类的蛋疼东西，防止搞乱其他基本的函数。
+//将来再把selectpb之类的加上target参数，进行整合
+function motherselect(){
+  motherpb.find(".pb-target").toggleClass("pb-selected");
+    if (motherpb.hasClass("has-score") && !motherpb.hasClass("input-on")){
+    score_input_focus(motherpb);
+  } else {
+    if (motherpb.hasClass("input-on")){score_input_hide(motherpb)}
+      else{}
+  }
+}
+
+//以上函数为了实现选中母题
+
+function selectpb(){
+//这个选择结构用于实现：小题选中，母题也选中
+  if (cf.hasClass("sub-pb")){
+    cf.find(".pb-target").toggleClass("pb-selected");
+    if (pbselection(motherpb))
+    {
+      if (pbselection(cf)){
+        score_input_focus(motherpb);
+      }
+      else{
+        motherpb.find("input").focus();
+      }
+    }
+    else{
+      motherselect();
+    }
+  } 
+  else{
     cf.find(".pb-target").toggleClass("pb-selected");
     if (cf.hasClass("has-score") && !cf.hasClass("input-on")){
-    score_input_focus();
-  } else {
-    if (cf.hasClass("input-on")){score_input_hide()}
+      score_input_focus(cf);
+    } 
+    else 
+    {
+      if (cf.hasClass("input-on"))
+        {score_input_hide(cf)}
       else{}
+    }
   }
  }
 
-function pbselection(){
-  if (cf.find(".pb-target").hasClass("pb-selected")){return true;}
+function pbselection(target){
+  if ($(target).find(".pb-target").hasClass("pb-selected")){return true;}
   else{return false;}
 }
 
@@ -251,7 +341,14 @@ function clicktag(target){
     $(target).removeClass("tag-selected");
   } else{
     $(target).addClass("tag-selected");
-    if (pbselection()){}
+    if (pbselection(cf)){
+//此处为了保证input focus
+      if (cf.hasClass("sub-pb")){
+        find_mother();
+        motherpb.find("input").focus();
+      }
+      else{};
+    }
       else{
         selectpb(); 
       }
@@ -260,19 +357,19 @@ function clicktag(target){
 }
 // 以上为有关click的一堆结束
 
-function score_input_hide(){
+function score_input_hide(target){
   $(".score-input").css("display","none");
   KeyboardJS.enable();
-  cf.removeClass("input-on");
+  $(target).removeClass("input-on");
 }
 
 //target必须是each pb
-function score_input_focus(){
-  if (pbselection()){
-    score_input_hide();
-    cf.find(".score-input").css("display","block").find("input").focus();
+function score_input_focus(target){
+  if (pbselection($(target))){
+    score_input_hide($(target));
+    $(target).find(".score-input").css("display","block").find("input").focus();
     KeyboardJS.disable();
-    cf.addClass("input-on");
+    $(target).addClass("input-on");
   } //为了实现，红色的题取消选中，不出现input框
     else{}
 }
@@ -291,7 +388,8 @@ $(document).bind("click",function(){
   if ( event_in_eachpb() ) {
     //这一段仍然需要，否则input点不开
   } else{
-    score_input_hide();
+    score_input_hide(cf);
+    score_input_hide(motherpb);//此处暴力写了这句
   }
 })
 //以上为有关input的主要事情结束
@@ -305,7 +403,7 @@ $(function(){
   $(function(){
     $(".score-input input").keydown(function(event){
       if (event.keyCode == 13){
-        score_input_hide();
+        score_input_hide(cf);
         return false; //这一行不加，将导致pbselect被取消
       }
       else{
@@ -315,7 +413,9 @@ $(function(){
   });
 
 //此函数为了实现：有input框的cf，当鼠标绕一圈重新enter时不执行mouseenter而进行了一些修改。主要是，当enter其他东西的时候，原来的cf的input-on要删除。其他时候这个删除操作时针对当前cf写的
-//这样写完之后，input框在任何情况下不可能出现失去焦点但是却没有消失的情况  
+//这样写完之后，input框在任何情况下不可能出现失去焦点但是却没有消失的情况
+//但是这玩意儿太鸡巴长了，回头要把里面的函数拿出去  
+//我了个擦擦擦
   $(".each-pb").mouseenter(function(){
     var ccff; 
     if (cf == 0){
@@ -326,12 +426,26 @@ $(function(){
       ccff = cf;
       cf = $(this);
       if (cf.hasClass("input-on")){
-        //do nothing
-      }
-      else{
-        do_focus();
-        ccff.removeClass("input-on");
-      }
+          //nopop_focus();
+          //hover应该保证选中，但是此时不应出pop
+          //但是我后来又注释掉，是因为我用下来感觉不做更合适。用快捷键的时候，得分enter完，focus保留在小题上更好。用鼠标应与其保持一致。另外，假如用户比较靠谱，是先输的分数，则这里加不加无所谓，就算他不靠谱，用鼠标进行后续操作，此处做不做差距也几乎没有。保持一致更加重要
+        }
+        else{
+          if (cf.hasClass("sub-pb")){
+            find_mother();
+            if (motherpb.hasClass("input-on")){
+              subpb_do_focus();
+            }
+            else{
+              do_focus();
+              ccff.removeClass("input-on");
+            }
+          }
+          else{
+            do_focus();
+            ccff.removeClass("input-on");
+          }
+        }
     }
   });
 
