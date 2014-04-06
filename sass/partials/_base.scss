@@ -1,0 +1,44 @@
+// Basic
+
+
+$font-size: 14px;
+$line-height: 1.5;
+$line-height-px: ($line-height * $font-size);
+
+$padding-vrt: 6px;
+$padding-hrz: 12px;
+
+$border-radius: 4px;
+
+
+// Swatch
+
+$gray-darker:            lighten(#000, 13.5%) !default; // #222
+$gray-dark:              lighten(#000, 20%) !default;   // #333
+$gray:                   lighten(#000, 33.5%) !default; // #555
+$gray-light:             lighten(#000, 60%) !default;   // #999
+$gray-lighter:           lighten(#000, 93.5%) !default; // #eee
+
+$blue-light: #f4f8fa;
+$red-light: #fdf7f7;
+$yellow-light: #fcf8f2;
+
+$blue-sat: #5bc0de;
+$red-sat: #d9534f;
+$yellow-sat: #f0ad4e;
+
+
+$font-color: #333333;
+$font-color-light: #aaaaaa;
+
+$link-color: #428bca;
+$link-hover-color: #2a6496;
+
+$state-panel-color: #333333;
+$nav-panel-color: #f2f2f2;
+
+
+
+
+// Forms and inputs
+$input-height: ($line-height-px + $padding-vrt * 2 + 2);

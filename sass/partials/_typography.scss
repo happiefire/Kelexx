@@ -7,8 +7,9 @@ textarea {
 }
 
 html {
-    font-size: $base-font-size;
+    font-size: $font-size;
     line-height: $line-height;
+    font-family: 'Helvetica Neue',Arial,"Hiragino Sans GB",'Microsoft YaHei',sans-serif;
 }
 
 a {
@@ -26,3 +27,6 @@ a {
   }
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
