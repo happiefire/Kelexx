@@ -48,7 +48,19 @@ function popover_hide() {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   $(".tag-focus").removeClass("tag-focus");
   cf_tag=0;
-  remove_new_tag();
+//这是为了防止，当score input被打开时，hide执行，以至于快捷键被enable
+//第二个if是为了处理以下蛋疼的情况：母题score input打开时，跑去点小题添加标签。此时若不加处理，mouseleave小题之后，会将快捷键给enable
+  if(cf.hasClass("has-sub-pb")){
+    $("#new-tag").remove();
+  }
+  else{
+    //do_focus里面，已经确保一旦cf为小题，母题已经被找过。
+    if(cf.hasClass("sub-pb")){
+      // find_mother();
+      $("#new-tag").remove();
+    }
+    else{remove_new_tag();}
+  }
 }
 
 // 使用.pb-focus样式来标示目前cf里存着的对象，在_standard.sass里头，下面的tag-focus样式也是
@@ -79,12 +91,12 @@ function subpb_do_focus(){
   subpb_popover_show(cf); 
 }
 
-//此函数用于mouseenter中，但是后来被我注释掉了，那里有说原因
-// function nopop_focus(){
-//   popover_hide();
-//   $(".pb-focus").removeClass("pb-focus");
-//   cf.find(".pb-target").addClass("pb-focus");
-// }
+//此函数用于mouseenter中
+function nopop_focus(){
+  popover_hide();
+  $(".pb-focus").removeClass("pb-focus");
+  cf.find(".pb-target").addClass("pb-focus");
+}
 
 //此函数用于：找到小题对应的母题，motherpb为全局变量
 //需要找母题的场景：click subpb，hover subpb
@@ -222,7 +234,7 @@ function press_space(){
   else{
     popover_hide();
   }
-  score_input_focus();
+  score_input_focus(cf);
 }
 
 function hotkeys(){
@@ -352,7 +364,7 @@ function new_tag_input(target){
 }
 
 //监测new_tag输入框是否enter
-function new_tag_enter(){
+function new_tag_enter(target){
   $("#new-tag").keydown(function(event){
     if (event.keyCode == 13){
       new_tag_name = $("#new-tag").val();
@@ -365,7 +377,7 @@ function new_tag_enter(){
       }
       else
         {
-          addtag();
+          addtag($(target));
           reload_fn();//此句不加，tag的mouseenter将没有被载入
           remove_new_tag();
           cf_tag = $(".new-added");
@@ -381,8 +393,8 @@ function new_tag_enter(){
 }
 
 //此函数仅完成加tag和加小点点
-function addtag(){
-  $(".add-tag").before("<a class='each-tag new-added'>" + String(new_tag_name) + "</a>");
+function addtag(target){
+  $(target).before("<a class='each-tag new-added'>" + String(new_tag_name) + "</a>");
   //以下用来加彩色点点
   var tag_number = cf.find(".color-indicator").children().length;
   if(tag_number==0){
@@ -425,12 +437,16 @@ function reload_fn(){
   });
 }
 
+//以下为编辑tag的内容
+function edit_tag(){
+
+}
+
 function clicktag(target){
-  console.log($(target));
   if ($(target).hasClass("add-tag")){
     new_tag_input($(target));
   //下面这段函数必须写在这里，如果写在其他地方，载入js的时候，估计没有弄进去，效果就发挥不出来了
-    new_tag_enter();
+    new_tag_enter($(target));
     reload_fn();//此句不加，最新加的tag的onclick将没有被载入，老tag的onclick将在tag enter函数中加载tag mouseenter时被载入
   }
   else{
@@ -440,6 +456,12 @@ function clicktag(target){
     else{
       if ($(target).hasClass("tag-selected")){
         $(target).removeClass("tag-selected");
+        //此处为了保证input focus
+        if (cf.hasClass("sub-pb")){
+          find_mother();
+          motherpb.find("input").focus();
+        }
+        else{};
       } 
       else{
         $(target).addClass("tag-selected");
@@ -475,7 +497,7 @@ function score_input_focus(target){
     KeyboardJS.disable();
     $(target).addClass("input-on");
   } //为了实现，红色的题取消选中，不出现input框
-    else{}
+  else{}
 }
 
 //这段貌似没有用到
@@ -526,11 +548,10 @@ $(".score-input input").keydown(function(event){
     }
     else{
       ccff = cf;
-      cf = $(this);
-      if (cf.hasClass("input-on")){
-          //nopop_focus();
+      cf=$(this);
+      if ($(this).hasClass("input-on")){
+          nopop_focus();
           //hover应该保证选中，但是此时不应出pop
-          //但是我后来又注释掉，是因为我用下来感觉不做更合适。用快捷键的时候，得分enter完，focus保留在小题上更好。用鼠标应与其保持一致。另外，假如用户比较靠谱，是先输的分数，则这里加不加无所谓，就算他不靠谱，用鼠标进行后续操作，此处做不做差距也几乎没有。保持一致更加重要
         }
         else{
           if (cf.hasClass("sub-pb")){
@@ -552,7 +573,10 @@ $(".score-input input").keydown(function(event){
   });
 
   $(".each-pb").mouseleave(function(){
-      $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
+      // $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
+      //之所以把上面那句注释掉，而改用hide，是因为hide里面有一些除了hide之外的内容。假如此处不用hide，将导致：tag input打开，而鼠标离开，hide没有被执行，因而快捷键没有被enable回来
+      //另外，任何mouseleave，必定事前发生了mouseenter或者方向键选中，cf必定被改写过（现在的情况下，包括score input打开时候mouseenter母题）。且任何时候，只可能存在一个popover
+      popover_hide();
       cf_tag = 0;
       $(this).find(".tag-focus").removeClass("tag-focus");
 });
