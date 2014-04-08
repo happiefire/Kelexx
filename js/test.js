@@ -48,8 +48,13 @@ function popover_hide() {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   $(".tag-focus").removeClass("tag-focus");
   cf_tag=0;
+  conditional_remove_new_tag();
+}
+
 //这是为了防止，当score input被打开时，hide执行，以至于快捷键被enable
 //第二个if是为了处理以下蛋疼的情况：母题score input打开时，跑去点小题添加标签。此时若不加处理，mouseleave小题之后，会将快捷键给enable
+//new_tag_enter里面也有两个这玩意儿
+function conditional_remove_new_tag(){
   if(cf.hasClass("has-sub-pb")){
     $("#new-tag").remove();
   }
@@ -369,9 +374,8 @@ function new_tag_enter(target){
     if (event.keyCode == 13){
       new_tag_name = $("#new-tag").val();
       if (new_tag_name == ""){
-        KeyboardJS.enable();
         cf_tag = cf.find(".each-tag").first();
-        remove_new_tag();
+        conditional_remove_new_tag();
         do_tag_focus();
         return false;
       }
@@ -379,7 +383,7 @@ function new_tag_enter(target){
         {
           addtag($(target));
           reload_fn();//此句不加，tag的mouseenter将没有被载入
-          remove_new_tag();
+          conditional_remove_new_tag();
           cf_tag = $(".new-added");
           cf_tag.removeClass("new-added");
           do_tag_focus();
