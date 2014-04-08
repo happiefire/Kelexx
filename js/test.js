@@ -35,20 +35,18 @@ function subpb_popover_show(target){
   $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
 }
 
-// popover_hide 现在的target参数是用不上的只是没删而已
-// 现在做法是直接全局之内找.popover-show关掉之，不考虑具体哪个开着
-// ====
-// 所以现在popover_hide更确切的名字应该是：
-// popover_hide_all(); 并非popover_show的严格反面
-// ====
-// 同时把cf_tag 重置到 0
-// ct_tag 是全局var，只在.popover-show展开的时候才有必要存在
-// 每次.popover-show被关掉时reset成0
-function popover_hide() {
+// 此函数用于mouseleave。popover hide为全部hide。假如mouseleave处采用全部hide，则当鼠标在option1时，快捷键点开其他题目popover，导致mouseleave原来的each pb，导致popover全部hide，即新pop昙花一现。利用this_hide即可解决这个问题。只有mouseleave处使用了这一函数
+function this_hide(target) {
+  $(target).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
+  $(target).find(".tag-focus").removeClass("tag-focus");
+  cf_tag=0;
+  // conditional_remove_new_tag(); //这一句将导致，非母题者，点开score input后，快捷键被enable。因为在clickpb最后，执行了popover hide。实际上，这一句conditional本来就不算是popover hide的职能，应该在需要处单独跟
+}
+
+function popover_hide(){
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
   $(".tag-focus").removeClass("tag-focus");
   cf_tag=0;
-  conditional_remove_new_tag();
 }
 
 //这是为了防止，当score input被打开时，hide执行，以至于快捷键被enable
@@ -61,8 +59,12 @@ function conditional_remove_new_tag(){
   else{
     //do_focus里面，已经确保一旦cf为小题，母题已经被找过。
     if(cf.hasClass("sub-pb")){
-      // find_mother();
-      $("#new-tag").remove();
+      if (motherpb.hasClass("input-on")){
+        $("#new-tag").remove();
+      }
+      else{
+        remove_new_tag();
+      }
     }
     else{remove_new_tag();}
   }
@@ -496,7 +498,7 @@ function score_input_hide(target){
 //target必须是each pb
 function score_input_focus(target){
   if (pbselection($(target))){
-    score_input_hide($(target));
+    // score_input_hide($(target));
     $(target).find(".score-input").css("display","block").find("input").focus();
     KeyboardJS.disable();
     $(target).addClass("input-on");
@@ -533,6 +535,13 @@ $(function(){
 $(".score-input input").keydown(function(event){
     if (event.keyCode == 13){
       score_input_hide(cf);
+      var score = $(this).val().toString();
+      if (cf.hasClass("sub-pb")){
+        motherpb.find(".score_get").html(score);
+      }
+      else{
+        cf.find(".score_get").html(score);
+      }
       return false; //这一行不加，将导致pbselect被取消
     }
     else{
@@ -577,10 +586,8 @@ $(".score-input input").keydown(function(event){
   });
 
   $(".each-pb").mouseleave(function(){
-      // $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
-      //之所以把上面那句注释掉，而改用hide，是因为hide里面有一些除了hide之外的内容。假如此处不用hide，将导致：tag input打开，而鼠标离开，hide没有被执行，因而快捷键没有被enable回来
-      //另外，任何mouseleave，必定事前发生了mouseenter或者方向键选中，cf必定被改写过（现在的情况下，包括score input打开时候mouseenter母题）。且任何时候，只可能存在一个popover
-      popover_hide();
+      this_hide($(this));
+      conditional_remove_new_tag();
       cf_tag = 0;
       $(this).find(".tag-focus").removeClass("tag-focus");
 });
