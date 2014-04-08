@@ -4,6 +4,8 @@ var count = 0;
 var timeout_hide, timeout_show;
 var motherpb = 0;
 var current_subpb = 0;
+var new_tag_on=0;
+var new_tag_name;
 
 // function popover_show(target) {
 //   timeout_show = window.setTimeout(function(){
@@ -44,8 +46,9 @@ function subpb_popover_show(target){
 // 每次.popover-show被关掉时reset成0
 function popover_hide() {
   $(".popover-show").removeClass("popover-show").addClass("popover-hide");
-  cf_tag = 0;
   $(".tag-focus").removeClass("tag-focus");
+  cf_tag=0;
+  remove_new_tag();
 }
 
 // 使用.pb-focus样式来标示目前cf里存着的对象，在_standard.sass里头，下面的tag-focus样式也是
@@ -271,7 +274,6 @@ function clickpb(){
     //这个选择结构实现了：当取消母题的选中时，小题也被取消选中
     if (cf.hasClass("has-sub-pb") && pbselection(cf) == false){
       current_subpb = cf.next();
-      console.log(current_subpb);
       do
       {
         current_subpb.find(".pb-target").removeClass("pb-selected");
@@ -336,24 +338,126 @@ function pbselection(target){
   else{return false;}
 }
 
-function clicktag(target){
-  if ($(target).hasClass("tag-selected")){
-    $(target).removeClass("tag-selected");
-  } else{
-    $(target).addClass("tag-selected");
-    if (pbselection(cf)){
-//此处为了保证input focus
-      if (cf.hasClass("sub-pb")){
-        find_mother();
-        motherpb.find("input").focus();
+//以下为添加标签的内容
+
+//此函数为了添加new tag input
+function new_tag_input(target){
+  remove_new_tag();//本来全部代码内嵌的时候，并没有这个问题，但是把函数剥离出去之后，不加这句就出bug了
+  $(target).before("<input type='text' id='new-tag'>");
+  $("#new-tag").focus();
+  new_tag_on=1;
+  $(".tag-focus").removeClass("tag-focus");
+  cf_tag = 0;
+  KeyboardJS.disable();
+}
+
+//监测new_tag输入框是否enter
+function new_tag_enter(){
+  $("#new-tag").keydown(function(event){
+    if (event.keyCode == 13){
+      new_tag_name = $("#new-tag").val();
+      if (new_tag_name == ""){
+        KeyboardJS.enable();
+        cf_tag = cf.find(".each-tag").first();
+        remove_new_tag();
+        do_tag_focus();
+        return false;
       }
-      else{};
+      else
+        {
+          addtag();
+          reload_fn();//此句不加，tag的mouseenter将没有被载入
+          remove_new_tag();
+          cf_tag = $(".new-added");
+          cf_tag.removeClass("new-added");
+          do_tag_focus();
+          return false;
+        }
+      }
+    else{
+      //do nothing
     }
-      else{
-        selectpb(); 
-      }
+  });
+}
+
+//此函数仅完成加tag和加小点点
+function addtag(){
+  $(".add-tag").before("<a class='each-tag new-added'>" + String(new_tag_name) + "</a>");
+  //以下用来加彩色点点
+  var tag_number = cf.find(".color-indicator").children().length;
+  if(tag_number==0){
+    $("<span class='red'> </span>").prependTo(cf.find(".color-indicator"));
   }
-  popover_hide(); 
+  else{
+    if (tag_number==1){
+      $("<span class='blue'> </span>").prependTo(cf.find(".color-indicator"));
+    }
+    else{
+      if(tag_number==2){
+       $("<span class='green'> </span>").prependTo(cf.find(".color-indicator"));
+      }
+      else{
+        if(tag_number==3){
+          $("<span class='orange'> </span>").prependTo(cf.find(".color-indicator"));
+        }
+        else{
+          $("<span class='red'> </span>").prependTo(cf.find(".color-indicator"));
+        }
+      }
+    }
+  };
+}
+
+function remove_new_tag(){
+  $("#new-tag").remove();
+  KeyboardJS.enable();
+}
+
+//此函数不可省略
+function reload_fn(){
+  $(".each-tag").mouseenter(function(){
+    cf_tag = $(this);
+    do_tag_focus();
+  });
+
+  $(".each-tag").on("click", function(){
+    clicktag($(this));
+  });
+}
+
+function clicktag(target){
+  console.log($(target));
+  if ($(target).hasClass("add-tag")){
+    new_tag_input($(target));
+  //下面这段函数必须写在这里，如果写在其他地方，载入js的时候，估计没有弄进去，效果就发挥不出来了
+    new_tag_enter();
+    reload_fn();//此句不加，最新加的tag的onclick将没有被载入，老tag的onclick将在tag enter函数中加载tag mouseenter时被载入
+  }
+  else{
+    if($(target).hasClass("edit-tag")){
+
+    }
+    else{
+      if ($(target).hasClass("tag-selected")){
+        $(target).removeClass("tag-selected");
+      } 
+      else{
+        $(target).addClass("tag-selected");
+        if (pbselection(cf)){
+        //此处为了保证input focus
+          if (cf.hasClass("sub-pb")){
+            find_mother();
+            motherpb.find("input").focus();
+          }
+          else{};
+        }
+        else{
+          selectpb(); 
+        }
+      }
+      popover_hide();
+    }
+  }
 }
 // 以上为有关click的一堆结束
 
@@ -400,16 +504,14 @@ $(function(){
   }
 
 //此函数用于处理score input打开时候的键盘行为监视
-  $(function(){
-    $(".score-input input").keydown(function(event){
-      if (event.keyCode == 13){
-        score_input_hide(cf);
-        return false; //这一行不加，将导致pbselect被取消
-      }
-      else{
-        //do nothing
-      }
-    })
+$(".score-input input").keydown(function(event){
+    if (event.keyCode == 13){
+      score_input_hide(cf);
+      return false; //这一行不加，将导致pbselect被取消
+    }
+    else{
+      //do nothing
+    }
   });
 
 //此函数为了实现：有input框的cf，当鼠标绕一圈重新enter时不执行mouseenter而进行了一些修改。主要是，当enter其他东西的时候，原来的cf的input-on要删除。其他时候这个删除操作时针对当前cf写的
