@@ -2,7 +2,9 @@ var cf = 0; //指向的是each-pb
 var current_subpb = 0;
 var timeout_hide, timeout_show;
 var motherpb = 0;
-
+var final_score = 0;
+var data =[];
+var student_number;
 //如无特殊说明，target均必须是each-pb
 
 //用来把题目变红的
@@ -11,14 +13,14 @@ function do_focus(){
   cf.find(".pb-target").addClass("pb-focus");
   //此选择结构为了保证快捷键时候，没有触发mouseenter的情况下，motherpb能够进行更新
   if (cf.hasClass("sub-pb")){
-    find_mother();
+    find_mother(cf);
   }
   else{};
 }
 
 //用来找母题的
-function find_mother(){
-  motherpb = cf;
+function find_mother(target){
+  motherpb = target;
   do
   {
     motherpb = motherpb.prev();
@@ -88,6 +90,33 @@ function selectpb(){
   }
 }
 
+//用于计算这张卷子的总分
+// function calculate_score(){  
+//   var pb_number = $(".each-pb").size();
+//   var c_group = $(document).find(".pb-group").first();
+//   var c_object = $(document).find(".each-pb").first();
+//   var i = 0;
+//   while(i < pb_number)
+//   {
+//     if(c_object.hasClass("has-score")){
+
+//     }
+//     else{
+
+//     }
+
+//     if (c_object.is(":last-child")) {
+//         c_group = c_group.next();
+//         c_object = c_group.find(".each-pb").first();
+//     }
+//     else{
+//       c_object = c_object.next();
+//     }
+//     i++;
+//   }
+//   $("#score").val(final_score);
+// }
+
 //判断是否已经输入过分数
 function scored(target){
   if($(target).find(".score_get").hasClass("done")){
@@ -125,6 +154,14 @@ function score_input_focus(target){
     KeyboardJS.disable();
   } //为了实现，红色的题取消选中，不出现input框
   else{}
+}
+
+//用来判断输入的合法性
+function legal_judge(target){
+  if(!isNaN($(target).val()) && $(target).val()%1 === 0){
+    return true;
+  }
+  else{return false;}
 }
 
 //其中为快捷键相关
@@ -240,7 +277,6 @@ function hotkeys(){
 }
 //其中为快捷键相关
 
-
 //以下为正主儿
 $(function(){
   window.onload = function(){
@@ -254,6 +290,24 @@ $(function(){
       return false;
     }
     else{}
+  });
+
+  //当输分输错的时候，提示问题
+  $(".score-input input, #score").keyup(function(){
+    if(legal_judge($(this))){
+      //do nothing
+    }
+    else{
+      $(this).val("");
+      $(this).focus();
+      if($(this).next().hasClass("input-hint")){}
+      else{
+        $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
+      };
+      $(this).on("blur",function(){
+        $(this).next().remove();
+      });
+    }
   });
 
   $(".score-input input").on("blur",function(){
@@ -287,6 +341,63 @@ $(function(){
 
   $(".pb-target").on("click", function(){
     clickpb();
+  });
+
+  $(".submit-this").on("click", function(){
+    student_number = $("#student input").val();//这个东西是要发送滴
+    var c_group = $(document).find(".pb-group").first();
+    var c_object = c_group.find(".each-pb").first();
+    var pb_number = $(".each-pb").size();
+    var i = 0;
+    while(i < pb_number)
+    {
+      var this_id;
+      var this_score;
+      var this_wrong;
+      if(pbselection(c_object)){
+        this_wrong = "wrong";//表示此题错了
+        if(c_object.hasClass("has-score")){
+          if(scored(c_object)){
+            this_score = c_object.find(".score_get").text();
+          }
+          else{
+            this_score = "unknown";//表示没有输分数
+          }
+        }
+        else{
+          if(c_object.hasClass("sub-pb")){
+            this_score = "no_score";//小题是没有分数滴
+          }
+          else{
+            this_score = "0";//即得零分
+          }
+        }
+      }
+      else{
+        this_wrong = "correct";//表示此题正确
+        if(c_object.hasClass("sub-pb")){
+          this_score = "no_score";//小题是没有分数滴
+        }
+        else{
+          this_score = "full score";//表示得满分
+        }
+      };
+      
+      data[i] = {
+        id: $(c_object).attr("id"),
+        score: this_score,
+        wrong: this_wrong
+      }
+      i++;
+      if (c_object.is(":last-child")) {
+        c_group = c_group.next();
+        c_object = c_group.find(".each-pb").first();
+      }
+      else{
+        c_object = c_object.next();
+      }
+
+    }
   });
 
 });
