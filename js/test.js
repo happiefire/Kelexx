@@ -1,73 +1,178 @@
-var cf = 0;
-var cf_tag = 0;
-var count = 0;
+var cf = 0; //指向的是each-pb
+var current_subpb = 0;
 var timeout_hide, timeout_show;
+var motherpb = 0;
+var final_score = 0;
+var data =[];
+var student_number;
+//如无特殊说明，target均必须是each-pb
 
-// function popover_show(target) {
-//   timeout_show = window.setTimeout(function(){
-//     $(".popover-show").removeClass("popover-show").addClass("popover-hide");
-//     $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
-//   }, 300);
-//   window.clearTimeout(timeout_hide);
-// }
-
-// function popover_hide(target) {
-//   timeout_hide = window.setTimeout(function(){
-//     $(target).find(".popover").removeClass("popover-show").addClass("popover-hide");
-//   }, 400);
-// }
-
-
-// 暂时取消了setTimeout的步骤
-function popover_show(target) {
-  $(".popover-show").removeClass("popover-show").addClass("popover-hide");
-  $(target).find(".popover").removeClass("popover-hide").addClass("popover-show");
-}
-
-// popover_hide 现在的target参数是用不上的只是没删而已
-// 现在做法是直接全局之内找.popover-show关掉之，不考虑具体哪个开着
-// ====
-// 所以现在popover_hide更确切的名字应该是：
-// popover_hide_all(); 并非popover_show的严格反面
-// ====
-// 同时把cf_tag 重置到 0
-// ct_tag 是全局var，只在.popover-show展开的时候才有必要存在
-// 每次.popover-show被关掉时reset成0
-function popover_hide(target) {
-  $(".popover-show").removeClass("popover-show").addClass("popover-hide");
-  cf_tag = 0;
-  $(".tag-focus").removeClass("tag-focus");
-}
-
-
-// 使用.pb-focus样式来标示目前cf里存着的对象，在_standard.sass里头，下面的tag-focus样式也是
-// .pb-focus应作用在pb-target上，而非each-pb
-// ====
-// do_focus 工作逻辑：
-// 先收起所有开着的东西
-// 找到所有现在开着.pb-focus的东西，关之
-// 把.pb-focus移到cf下的pb-target上
-// 最后再展开它下面的popover
-function do_focus() {
-  popover_hide();
+//用来把题目变红的
+function do_focus(){
   $(".pb-focus").removeClass("pb-focus");
   cf.find(".pb-target").addClass("pb-focus");
-  popover_show(cf); // 不应该把这两步分开吗？?
+  //此选择结构为了保证快捷键时候，没有触发mouseenter的情况下，motherpb能够进行更新
+  if (cf.hasClass("sub-pb")){
+    find_mother(cf);
+  }
+  else{};
 }
 
+//用来找母题的
+function find_mother(target){
+  motherpb = target;
+  do
+  {
+    motherpb = motherpb.prev();
+  }
+  while(motherpb.hasClass("has-sub-pb") == false)
+}
 
-// 找到目前所有开着.tag-focus的，关之
-// 然后只对currentfocus tag加上.tag-focus以标示cf_tag内的内容
-function do_tag_focus() {
-  $(".tag-focus").removeClass("tag-focus");
-  cf_tag.addClass("tag-focus");
+//当母题为cf时候，可以执行
+function unselect_subpb(){
+  current_subpb = cf.next();
+  do
+  {
+    current_subpb.find(".pb-target").removeClass("pb-selected");
+    current_subpb = current_subpb.next();
+  }
+  while(current_subpb.hasClass("sub-pb") == true)
+}
+
+//错题被取消判定，成为非错题时，把分数改回满分
+//默认分数要pass进去，未改
+function delete_score(){
+  cf.find(".score_get").removeClass("done");
+  cf.find(".score_get").html("15");
+}
+
+//用来判断题目是否被选为错题
+function pbselection(target){
+  if ($(target).find(".pb-target").hasClass("pb-selected")){return true;}
+  else{return false;}
+}
+
+//在pb onclick里面调用的
+function clickpb(){
+    selectpb();
+    if (cf.hasClass("has-sub-pb") && pbselection(cf) == false){
+      delete_score();
+      unselect_subpb();
+    }
+    else{};
+}
+
+//见里面的注释
+function selectpb(){
+  cf.find(".pb-target").toggleClass("pb-selected");
+  //这个选择结构用于实现：小题选中，母题也选中
+  if (cf.hasClass("sub-pb")){
+    if (pbselection(motherpb))
+    {
+      if (pbselection(cf)){
+        //这为了保证分数如果输入过，则不再显示输入框
+        if(scored(motherpb)){}
+        else{
+          score_input_focus(motherpb);
+        }
+      }
+      else{
+        motherpb.find("input").focus();
+      }
+    }
+    else{
+      motherpb.find(".pb-target").toggleClass("pb-selected");
+      toggle_score_focus(motherpb);
+    }
+  } 
+  else{
+    toggle_score_focus(cf);
+  }
+}
+
+//用于计算这张卷子的总分
+// function calculate_score(){  
+//   var pb_number = $(".each-pb").size();
+//   var c_group = $(document).find(".pb-group").first();
+//   var c_object = $(document).find(".each-pb").first();
+//   var i = 0;
+//   while(i < pb_number)
+//   {
+//     if(c_object.hasClass("has-score")){
+
+//     }
+//     else{
+
+//     }
+
+//     if (c_object.is(":last-child")) {
+//         c_group = c_group.next();
+//         c_object = c_group.find(".each-pb").first();
+//     }
+//     else{
+//       c_object = c_object.next();
+//     }
+//     i++;
+//   }
+//   $("#score").val(final_score);
+// }
+
+//判断是否已经输入过分数
+function scored(target){
+  if($(target).find(".score_get").hasClass("done")){
+    return true;
+  }
+  else{return false;}
+}
+
+//有分但没有出现输入框的，弹出，有分但已经弹出输入框的，隐去。其他的do nothing
+function toggle_score_focus(target){
+  if ($(target).hasClass("has-score") && !$(target).hasClass("input-on")){
+    score_input_focus(target);
+  } 
+  else {
+    if ($(target).hasClass("input-on")){
+      score_input_hide(target);
+    }
+    else{}
+  }
+}
+
+//隐藏得分框，enable快捷键
+function score_input_hide(target){
+  $(target).find(".score-input").css("display","none");
+  $(target).removeClass("input-on");
+  KeyboardJS.enable();
+}
+
+//弹出得分框，disable快捷键
+function score_input_focus(target){
+  if (pbselection(target)){
+    $(target).find(".score-input").css("display","block");
+    $(target).find("input").focus();
+    $(target).addClass("input-on");
+    KeyboardJS.disable();
+  } //为了实现，红色的题取消选中，不出现input框
+  else{}
+}
+
+//用来判断输入的合法性
+function legal_judge(target){
+  if(!isNaN($(target).val()) && $(target).val()%1 === 0){
+    return true;
+  }
+  else{return false;}
+}
+
+//其中为快捷键相关
+function focus_first_pb(){
+  cf = $(".pb-list").find(".each-pb").first();
+  do_focus();
 }
 
 function press_right() {
   if (cf == 0) {
-    // cf = 第一个
-    cf = $(".pb-list").find(".each-pb").first();
-    do_focus();
+    focus_first_pb();
   } else if (cf.is(":last-child")){
     if (cf.parent().is(":last-child")) {
       cf = cf;
@@ -83,9 +188,8 @@ function press_right() {
 
 function press_left() {
   if (cf == 0) {
-    cf = $(".pb-list").find(".each-pb").first();
-    do_focus();
-  } else if (cf.is(":first-child")){
+    focus_first_pb();
+  } else if (cf.prev().is(":first-child")){ //注意，此处题型的h4影响了child的位置，故做了.prev的修改
     if (cf.parent().is(":first-child")) {
       cf = cf;
     } else {
@@ -98,78 +202,40 @@ function press_left() {
   }
 }
 
-// up & down 对于cf的选择，还没有写
 function press_down() {
   if (cf == 0) {
-    cf = $(".pb-list").find(".each-pb").first();
+    focus_first_pb();
+  } 
+  else {
+    cf = cf.parent().next(".pb-group").find(".each-pb").first();
     do_focus();
-  } else {
-    if ( cf.find(".popover").hasClass("popover-show") ){
-      // focus 到children里选择tag
-      if (cf_tag == 0){
-        cf_tag = cf.find(".each-tag").first();
-        do_tag_focus();
-      } else {
-        if (cf_tag.is(":last-child")){
-          cf_tag = cf_tag;
-        } else {
-          cf_tag = cf_tag.next();
-          do_tag_focus();
-        }
-      }
-    } else {
-      // 跳到下一行
-    }
   }
 }
 
 function press_up() {
   if (cf == 0) {
-    cf = $(".pb-list").find(".each-pb").first();
+    focus_first_pb();
+  } 
+  else {
+    cf = cf.parent().prev(".pb-group").find(".each-pb").first();
     do_focus();
-  } else {
-    if ( cf.find(".popover").hasClass("popover-show") ){
-      // focus 到children里选择tag
-      if (cf_tag == 0){
-        cf_tag = cf.find(".each-tag").last();
-        do_tag_focus();
-      } else {
-        if (cf_tag.is(":first-child")){
-          cf_tag = cf_tag;
-        } else {
-          cf_tag = cf_tag.prev();
-          do_tag_focus();
-        }
-      }
-    } else {
-      // 跳到下一行
-    }
   }
 }
 
 function press_enter(){
-  if (cf_tag == 0){
-    if (cf == 0){}
-      else{
-        clickpb(cf.find(".pb-target"));
-      }
-  } else{
-    clicktag(cf_tag);
-  };
-}
-
-function press_shift(){
-  if(cf.find(".popover").hasClass("popover-show") == true){
-//此处应写成hide this
-    popover_hide();
-  } else
-  {do_focus();};
+  if (cf == 0){}
+    else{
+        clickpb();
+    }
 }
 
 function press_number(target){
   cf = $(target);
   do_focus();
 }
+
+//弹出得分框
+function press_space(){score_input_focus(cf);}
 
 function hotkeys(){
   KeyboardJS.on('right', press_right);
@@ -186,7 +252,7 @@ function hotkeys(){
   KeyboardJS.on('8', function() {press_number($("#pb-8"))});
   KeyboardJS.on('9', function() {press_number($("#pb-9"))});
   KeyboardJS.on('1>0', function() {press_number($("#pb-10"))});
-  KeyboardJS.on('space + 1', function() {press_number($("#pb-11"))});
+  KeyboardJS.on('. + 1', function() {press_number($("#pb-11"))});
   KeyboardJS.on('1>2', function() {press_number($("#pb-12"))});
   KeyboardJS.on('1>3', function() {press_number($("#pb-13"))});
   KeyboardJS.on('1>4', function() {press_number($("#pb-14"))});
@@ -197,7 +263,7 @@ function hotkeys(){
   KeyboardJS.on('1>9', function() {press_number($("#pb-19"))});
   KeyboardJS.on('2>0', function() {press_number($("#pb-20"))});
   KeyboardJS.on('2>1', function() {press_number($("#pb-21"))});
-  KeyboardJS.on('space + 2', function() {press_number($("#pb-22"))});
+  KeyboardJS.on('. + 2', function() {press_number($("#pb-22"))});
   KeyboardJS.on('2>3', function() {press_number($("#pb-23"))});
   KeyboardJS.on('2>4', function() {press_number($("#pb-24"))});
   KeyboardJS.on('2>5', function() {press_number($("#pb-25"))});
@@ -206,107 +272,136 @@ function hotkeys(){
   KeyboardJS.on('2>8', function() {press_number($("#pb-28"))});
   KeyboardJS.on('2>9', function() {press_number($("#pb-29"))});
   KeyboardJS.on('3>0', function() {press_number($("#pb-30"))});
-  KeyboardJS.on('shift',press_shift);
   KeyboardJS.on('enter',press_enter);
+  KeyboardJS.on('space',press_space);
 }
+//其中为快捷键相关
 
-//有关click的一堆
-function clickpb(target){
-  $(target).parent(".each-pb").find(".pb-target").toggleClass("pb-selected");
-  popover_hide();
-  //下面一行如果删掉，用户可以将错误类型用作中性标签
-  $(target).parent().find(".each-tag").removeClass("tag-selected");
-}
-
-function selectpb(target){
-  $(target).parent().parent().prev().addClass("pb-selected");
-}
-
-function clicktag(target){
-  if ($(target).hasClass("tag-selected")){
-    $(target).removeClass("tag-selected");
-  } else{
-    $(target).addClass("tag-selected");
-    selectpb($(target));
-  }
-  popover_hide(); 
-}
-// 以上为有关click的一堆结束
-
-// 以下是input的事情
-function score_input_hide(){
-  $(".score-input").css("display","none");
-}
-
-
-$(".has-score").on("click", function(){
-  score_input_focus(this);
-});
-
-//target必须是each pb
-function score_input_focus(target){
-  score_input_hide();
-  $(target).find(".score-input").css("display","block").find("input").focus();
-  current_input = $(target);
-}
-
-//target必须是each pb
-function score_input_blur(target){
-  $(target).find(".score-input input").blur().parent().css("display","none");
-}
-
-function event_in_eachpb(){
-  if ($(event.target).parents(".each-pb").hasClass("each-pb")){return true}
-    else{return false}
-}
-
-$(document).bind("click",function(){
-  if ( event_in_eachpb() ) {
-    //do nothing
-  } else{
-    score_input_hide();
-  }
-})
-
-//以上为有关input的主要事情结束
-
+//以下为正主儿
 $(function(){
   window.onload = function(){
     hotkeys();
   }
+
+  //此函数用于处理score input打开时候的键盘行为监视
+  $(".score-input input").keydown(function(event){
+    if (event.keyCode == 13){
+      score_input_hide($(this).parents(".each-pb"));//不放这儿，放在前面，enable会导致按键还没有弹起的时候，press enter被触发
+      return false;
+    }
+    else{}
+  });
+
+  //当输分输错的时候，提示问题
+  $(".score-input input, #score").keyup(function(){
+    if(legal_judge($(this))){
+      //do nothing
+    }
+    else{
+      $(this).val("");
+      $(this).focus();
+      if($(this).next().hasClass("input-hint")){}
+      else{
+        $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
+      };
+      $(this).on("blur",function(){
+        $(this).next().remove();
+      });
+    }
+  });
+
+  $(".score-input input").on("blur",function(){
+    var target_pb = $(this).parents(".each-pb");
+    score_input_hide(target_pb);
+    var score = $(this).val().toString();
+    //这是为了显示该题的得分没有被输入
+    if(score == ""){
+      score = "?";
+    }
+    else{
+      target_pb.find(".score_get").addClass("done");
+      //此处还应有判断输入是否合法的函数。输入总分之时也可公用。学号的时候就无所谓了，反正是生成一张自由的表格
+    };
+    target_pb.find(".score_get").html(score);
+  });
+
+  //仍然不work
+  $("#student, #score").on("focus", function(){
+    KeyboardJS.disable();
+  });
+
+  $("#student, #score").on("blur",function(){
+    KeyboardJS.enable();
+  });
 
   $(".each-pb").mouseenter(function(){
     cf = $(this);
     do_focus();
   });
 
-  $(".each-pb").mouseleave(function(){
-    // popover_hide();  
-    $(this).find(".popover-show").removeClass("popover-show").addClass("popover-hide");
-    cf_tag = 0;
-    $(this).find(".tag-focus").removeClass("tag-focus");  
-  });
-
-// click的工作方式，目前只改换了pb-target的样式
   $(".pb-target").on("click", function(){
-    clickpb($(this));
+    clickpb();
   });
 
- $(".each-tag").on("click", function(){
-    clicktag($(this));
+  $(".submit-this").on("click", function(){
+    student_number = $("#student input").val();//这个东西是要发送滴
+    var c_group = $(document).find(".pb-group").first();
+    var c_object = c_group.find(".each-pb").first();
+    var pb_number = $(".each-pb").size();
+    var i = 0;
+    while(i < pb_number)
+    {
+      var this_id;
+      var this_score;
+      var this_wrong;
+      if(pbselection(c_object)){
+        this_wrong = "wrong";//表示此题错了
+        if(c_object.hasClass("has-score")){
+          if(scored(c_object)){
+            this_score = c_object.find(".score_get").text();
+          }
+          else{
+            this_score = "unknown";//表示没有输分数
+          }
+        }
+        else{
+          if(c_object.hasClass("sub-pb")){
+            this_score = "no_score";//小题是没有分数滴
+          }
+          else{
+            this_score = "0";//即得零分
+          }
+        }
+      }
+      else{
+        this_wrong = "correct";//表示此题正确
+        if(c_object.hasClass("sub-pb")){
+          this_score = "no_score";//小题是没有分数滴
+        }
+        else{
+          this_score = "full score";//表示得满分
+        }
+      };
+      
+      data[i] = {
+        id: $(c_object).attr("id"),
+        score: this_score,
+        wrong: this_wrong
+      }
+      i++;
+      if (c_object.is(":last-child")) {
+        c_group = c_group.next();
+        c_object = c_group.find(".each-pb").first();
+      }
+      else{
+        c_object = c_object.next();
+      }
+
+    }
   });
 
-//问题1:鼠标在tag上时，right，popover昙花一现
-//解决办法：把原因里的hide全局改为hide this
-//原因：当从第一题换到第二题时，cf变为第二题，此时第一题popover消失，然后mouseleave触发，然后hide，然后全部hide了
-
-//问题2:tag无法添加tag_focus类
-//解决办法：将所有mouseover改为mouseenter
-//原因：疑似某个事件触发之后，mouseover被重新执行了一遍，导致了某些蛋疼的问题
-
-  $(".each-tag").mouseenter(function(){
-    cf_tag = $(this);
-    do_tag_focus();
-  });
 });
+
+
+
 
