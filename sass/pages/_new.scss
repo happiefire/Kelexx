@@ -19,7 +19,39 @@ section {
   width: 240px;
 }
 
-.pb-info-score > input {
+.pb-info-fullscore > input {
   width: 50px;
+}
+
+.pb-map-group {
+  margin-left: $pb-gap * -1;
+  margin-right: $pb-gap * -1;
+  &:before, &:after {
+    display: table;
+    content: " ";
+  }
+  &:after {clear: both;}
+}
+
+.each-pb-info {
+  display: block;
+  float: left;
+  position: relative;
+  margin-left: $pb-gap;
+  margin-right: $pb-gap;
+  margin-bottom: 5px;
+}
+
+.pb-info-target {
+  line-height: 1;
+  color: $font-color;
+  background-color: #f5f5f5;
+  border-radius: $border-radius;
+  border: 1px solid #ddd;
+  width: 50px;
+  height: 50px;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: 900;
 }
 

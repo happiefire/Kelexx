@@ -27,54 +27,41 @@
       </div>
     </section>
 
+    <section id="message"></section>
+
     <section class="exam-setup">
       <h2>试卷详情设置</h2>
       <hr>
 
-      <div class="form-group pb-info-group" id="pb-info-1">
-        <label class="pb-info-type">题型
-          <select>
-            <option value="type-tiankong">填空题</option>
-            <option value="type-xuanze">选择题</option>
-            <option value="type-wenda">问答题</option>
-          </select>
-        </label>
-        <label class="pb-info-num">
-          题号范围
-          <input type="text" placeholder="例: 1-9,15,17">
-        </label>
-        <label class="pb-info-score">
-          默认每题分值
-          <input type="number">
-        </label>
-        <a class="btn pb-info-group-gen">生成题号表</a>
+      <div class="form-group pb-info-group" id="pb-info-group-1">
+        <div class=".pb-info-inputs">
+          <label class="pb-info-type">题型
+            <select>
+              <option value="type-tiankong">填空题</option>
+              <option value="type-xuanze">选择题</option>
+              <option value="type-wenda">问答题</option>
+            </select>
+          </label>
+          <label class="pb-info-num">
+            题号范围
+            <input type="text" placeholder="例: 1-9,15,17">
+          </label>
+          <label class="pb-info-fullscore">
+            默认每题分值
+            <input type="number" id="here">
+          </label>
+          <a class="btn gen-btn">生成题号表</a>
+        </div>
+        
+        <div class="pb-map">
+        </div>
+
       </div>
 
-      <div id="new-pb-info-group-placeholder"></div>
+      
       <a id="add-pb-info-group">+ 添加一组题目</a>
 
 
-
-
-
-<!-- 
-      <h3>选择题</h3>
-      <div class="form-group pb-info-group" id="xuanze">
-        <label for="xuanze-num">题目序号</label>
-        <input class="pb-info-num" type="text" id="xuanze-num">
-        <label for="xuanze-score">默认分值</label>
-        <input class="pb-info-score" type="text" id="xuanze-score">
-        <button>generate</button>
-      </div>
-
-      <h3>问答题</h3>
-      <div class="form-group pb-info-group" id="wenda">
-        <label for="wenda-num">题目序号</label>
-        <input class="pb-info-num" type="text" id="wenda-num">
-        <label for="wenda-score">默认分值</label>
-        <input class="pb-info-score" type="text" id="wenda-score">
-        <button>generate</button>
-      </div> -->
 
 
 
