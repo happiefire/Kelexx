@@ -435,23 +435,24 @@ section {
 
 /* line 61, ../sass/pages/_standard.sass */
 .pb-focus {
-  border-style: dashed;
+  border-style: solid;
+  border-color: blue;
 }
 
-/* line 64, ../sass/pages/_standard.sass */
+/* line 65, ../sass/pages/_standard.sass */
 .tag-focus {
   background-color: #98d3fd;
   color: white;
 }
 
-/* line 68, ../sass/pages/_standard.sass */
+/* line 69, ../sass/pages/_standard.sass */
 .pb-num {
   vertical-align: top;
   font-size: 16px;
   font-weight: 900;
 }
 
-/* line 73, ../sass/pages/_standard.sass */
+/* line 74, ../sass/pages/_standard.sass */
 .score-indicator {
   font-size: 10px;
   color: #aaaaaa;
@@ -459,12 +460,12 @@ section {
   text-align: right;
 }
 
-/* line 79, ../sass/pages/_standard.sass */
+/* line 80, ../sass/pages/_standard.sass */
 .color-indicator {
   vertical-align: top;
   width: 5px;
 }
-/* line 83, ../sass/pages/_standard.sass */
+/* line 84, ../sass/pages/_standard.sass */
 .color-indicator span {
   display: block;
   float: left;
@@ -475,48 +476,48 @@ section {
   margin-left: 1px;
   margin-bottom: 1px;
 }
-/* line 93, ../sass/pages/_standard.sass */
+/* line 94, ../sass/pages/_standard.sass */
 .color-indicator .red {
   background-color: #fd8b8c;
   border-color: #d56a6b;
 }
-/* line 96, ../sass/pages/_standard.sass */
+/* line 97, ../sass/pages/_standard.sass */
 .color-indicator .orange {
   background-color: #fec74b;
   border-color: #fd9a2c;
 }
-/* line 99, ../sass/pages/_standard.sass */
+/* line 100, ../sass/pages/_standard.sass */
 .color-indicator .yellow {
   background-color: #feee43;
   border-color: #e5d02e;
 }
-/* line 102, ../sass/pages/_standard.sass */
+/* line 103, ../sass/pages/_standard.sass */
 .color-indicator .green {
   background-color: #bfee3f;
   border-color: #a1cb33;
 }
-/* line 105, ../sass/pages/_standard.sass */
+/* line 106, ../sass/pages/_standard.sass */
 .color-indicator .blue {
   background-color: #98d3fd;
   border-color: #6ba1cb;
 }
-/* line 108, ../sass/pages/_standard.sass */
+/* line 109, ../sass/pages/_standard.sass */
 .color-indicator .violet {
   background-color: #eab6fd;
   border-color: #d673fc;
 }
 
-/* line 113, ../sass/pages/_standard.sass */
+/* line 114, ../sass/pages/_standard.sass */
 .score-input {
   position: absolute;
   display: none;
 }
-/* line 116, ../sass/pages/_standard.sass */
+/* line 117, ../sass/pages/_standard.sass */
 .score-input input[type="text"] {
   width: 100%;
 }
 
-/* line 120, ../sass/pages/_standard.sass */
+/* line 121, ../sass/pages/_standard.sass */
 .popover {
   margin-top: 10px;
   position: absolute;
@@ -535,7 +536,7 @@ section {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   white-space: normal;
 }
-/* line 138, ../sass/pages/_standard.sass */
+/* line 139, ../sass/pages/_standard.sass */
 .popover .arrow {
   position: absolute;
   top: -10px;
@@ -549,7 +550,7 @@ section {
   _border-color: black black #999999 black;
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
-/* line 152, ../sass/pages/_standard.sass */
+/* line 153, ../sass/pages/_standard.sass */
 .popover .arrow:after {
   content: "";
   position: absolute;
@@ -564,32 +565,32 @@ section {
   _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
 }
 
-/* line 165, ../sass/pages/_standard.sass */
+/* line 166, ../sass/pages/_standard.sass */
 .popover-content {
   padding: 10px 0px;
   min-width: 120px;
 }
-/* line 168, ../sass/pages/_standard.sass */
+/* line 169, ../sass/pages/_standard.sass */
 .popover-content a {
   padding: 2px 14px;
   display: block;
 }
-/* line 171, ../sass/pages/_standard.sass */
+/* line 172, ../sass/pages/_standard.sass */
 .popover-content a:hover {
   text-decoration: none;
 }
 
-/* line 174, ../sass/pages/_standard.sass */
+/* line 175, ../sass/pages/_standard.sass */
 .popover-show {
   display: block;
 }
 
-/* line 177, ../sass/pages/_standard.sass */
+/* line 178, ../sass/pages/_standard.sass */
 .popover-hide {
   display: none;
 }
 
-/* line 184, ../sass/pages/_standard.sass */
+/* line 185, ../sass/pages/_standard.sass */
 .state-panel {
   z-index: 100;
   position: fixed;

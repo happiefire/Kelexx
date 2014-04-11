@@ -279,9 +279,7 @@ function hotkeys(){
 
 //以下为正主儿
 $(function(){
-  window.onload = function(){
     hotkeys();
-  }
 
   //此函数用于处理score input打开时候的键盘行为监视
   $(".score-input input").keydown(function(event){
