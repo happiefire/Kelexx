@@ -2,9 +2,7 @@ var cf = 0; //指向的是each-pb
 var current_subpb = 0;
 var timeout_hide, timeout_show;
 var motherpb = 0;
-var final_score = 0;
 var data =[];
-var student_number;
 var prev_score_input = "";//这个用于储存本次输入前的输入框结果，避免输入错误后整个框的内容被cancel
 var prev_all_score = "";//
 //如无特殊说明，target均必须是each-pb
@@ -382,175 +380,97 @@ function hotkeys(){
 }
 //其中为快捷键相关
 
-//以下为正主儿
+//传数据
+function testUpdateStatisticItems() {
+  var prefix = 'http://42.96.165.209:8192';
+  var url = prefix+'/update/statistic_items';
+  var testPostData = {
+    project_name:'测试项目3',
+    creator_id:'teacher0',
+    student_id:$("#student").val(),
+    totalscore:$("#score").val(),
+    problems:data
+  };
+  $.ajax({
+    url: url,
+    type: 'POST',
+    data: {data: JSON.stringify(testPostData)},
+    crossDomain: true,
+    dataType: "json",
+    success: function(result) {
+      console.log(result);
+    }
+  });
+}
+
+//以下为正主儿。其他玩意儿load进了 new-standard.js
 $(function(){
-    hotkeys();
-
-  //此函数用于处理score input打开时候的键盘行为监视
-  $(".score-input input").keydown(function(event){
-    if (event.keyCode == 13){
-      score_input_hide($(this).parents(".each-pb"));//不放这儿，放在前面，enable会导致按键还没有弹起的时候，press enter被触发
-      return false;
-    }
-    else{}
-  });
-
-  $("#score").keydown(function(event){
-    if (event.keyCode == 13 || event.keyCode == 9){
-      $(this).blur();
-      return false;
-    }
-    else{}
-  });
-
-  //当某题输分输错的时候，提示问题。如果输入－n，按照扣分处理
-  $(".score-input input").keyup(function(){
-    if($(this).val() == "-"){
-      //do nothing
+    $(".submit-this").on("click", function(){
+    if($("#student").val() == ""){
+      alert("请输入学号!");
     }
     else{
-      if(legal_judge($(this))){
-        //do nothing
-      }
-      else{
-        $(this).val(prev_score_input);
-        $(this).focus();
-        if($(this).next().hasClass("input-hint")){}
-        else{
-          $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
-        };
-        $(this).on("blur",function(){
-          $(this).next().remove();//blur时候hint消失
-        });
-      }
-    }
-    prev_score_input = $(this).val();
-  });
-
-  //当总分输分输错的时候，提示问题
-  $("#score").keyup(function(){
-    if(legal_judge($(this))){
-      //do nothing
-    }
-    else{
-      $(this).val(prev_all_score);
-      $(this).focus();
-      if($(this).next().hasClass("input-hint")){}
-      else{
-        $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
-      };
-      $(this).on("blur",function(){
-        $(this).next().remove();//blur时候hint消失
-      });
-    }
-    prev_all_score = $(this).val();
-  });
-
-  //blur的时候算作输分工作完成，进行相应的修改
-  $(".score-input input").on("blur",function(){
-    var target_pb = $(this).parents(".each-pb");
-    score_input_hide(target_pb);
-    var score = Number($(this).val());
-    //这是为了显示该题的得分没有被输入
-    if(score == "" || $(this).val() == "-"){
-      score = "?";
-      $(this).val("");
-    }
-    else{
-      target_pb.find(".score_get").addClass("done");
-      //以下用于判断输入合法性，并处理输入负数表示扣分的情形
-      var this_full_score = Number($(this).parents(".each-pb").find(".full_score").html());
-      if(score < 0){
-        if(score < -this_full_score){
-          score = -this_full_score;
-        }
-        else{};
-        score = this_full_score + score;
-      }
-      else{
-        if(score > this_full_score){
-          score = this_full_score;
-        }
-        else{};
-      }
-    };
-    target_pb.find(".score_get").html(score);
-  });
-
-  $("#student, #score").on("focus", function(){
-    KeyboardJS.disable();
-  });
-
-  $("#student, #score").on("blur",function(){
-    KeyboardJS.enable();
-  });
-
-  $(".each-pb").mouseenter(function(){
-    cf = $(this);
-    do_focus();
-  });
-
-  $(".pb-target").on("click", function(){
-    clickpb();
-  });
-
-  $(".submit-this").on("click", function(){
-    student_number = $("#student input").val();//这个东西是要发送滴
-    var c_group = $(document).find(".pb-group").first();
-    var c_object = c_group.find(".each-pb").first();
-    var pb_number = $(".each-pb").size();
-    var i = 0;
-    while(i < pb_number)
-    {
-      var this_id;
-      var this_score;
-      var this_wrong;
-      if(pbselection(c_object)){
-        this_wrong = "wrong";//表示此题错了
-        if(c_object.hasClass("has-score")){
-          if(scored(c_object)){
-            this_score = c_object.find(".score_get").text();
+      var c_group = $(document).find(".pb-group").first();
+      var c_object = c_group.find(".each-pb").first();
+      var pb_number = $(".each-pb").size();
+      var i = 0;
+      while(i < pb_number)
+      {
+        var this_id;
+        var this_score;
+        var this_wrong;
+        if(pbselection(c_object)){
+          this_wrong = false;//表示此题错了
+          if(c_object.hasClass("has-score")){
+            if(scored(c_object)){
+              this_score = c_object.find(".score_get").text();//有分
+            }
+            else{
+              this_score = "?";//表示没有输分数
+            }
           }
           else{
-            this_score = "?";//表示没有输分数
+            if(c_object.find(".score-indicator").text()==""){
+              this_score = null;//问答题小题是没有分数滴
+            }
+            else{
+              this_score = 0;//即得零分
+            }
           }
         }
         else{
+          this_wrong = true;//表示此题正确
           if(c_object.find(".score-indicator").text()==""){
-            this_score = null;//问答题小题是没有分数滴
+            this_score = null;//该题不统计分数
           }
           else{
-            this_score = "0";//即得零分
+            this_score = c_object.find(".full_score").text();//有分
           }
+        };
+        
+        data[i] = {
+          id: $(c_object).attr("id"),
+          score: this_score,
+          correct: this_wrong
         }
-      }
-      else{
-        this_wrong = "correct";//表示此题正确
-        if(c_object.find(".score-indicator").text()==""){
-          this_score = null;//问答题小题是没有分数滴
+        i++;
+        if (c_object.is(":last-child")) {
+          c_group = c_group.next();
+          c_object = c_group.find(".each-pb").first();
         }
         else{
-          this_score = "0";//即得零分
+          c_object = c_object.next();
         }
-      };
-      
-      data[i] = {
-        id: $(c_object).attr("id"),
-        score: this_score,
-        wrong: this_wrong
-      }
-      i++;
-      if (c_object.is(":last-child")) {
-        c_group = c_group.next();
-        c_object = c_group.find(".each-pb").first();
-      }
-      else{
-        c_object = c_object.next();
       }
 
+      testUpdateStatisticItems();
+
+      //刷新页面
+      $("#placeholder").html("");
+      $("input").val("");
+      generate_standard();
     }
   });
-
 });
 
 
