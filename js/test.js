@@ -5,7 +5,8 @@ var motherpb = 0;
 var final_score = 0;
 var data =[];
 var student_number;
-var prev_input = "";//这个用于储存本次输入前的输入框结果，避免输入错误后整个框的内容被cancel
+var prev_score_input = "";//这个用于储存本次输入前的输入框结果，避免输入错误后整个框的内容被cancel
+var prev_all_score = "";//
 //如无特殊说明，target均必须是each-pb
 
 //用来把题目变红的
@@ -145,16 +146,11 @@ function selectpb(){
   if (cf.hasClass("sub-pb")){
     if (pbselection(motherpb))
     {
-      if (pbselection(cf)){
-        //这为了保证分数如果输入过，则不再显示输入框
-        if(scored(motherpb)){}
+      //这为了保证分数如果输入过，则不再显示输入框
+      if(scored(motherpb)){}
         else{
           score_input_focus(motherpb);
         }
-      }
-      else{
-        motherpb.find("input").focus();
-      }
     }
     else{
       motherpb.find(".pb-target").toggleClass("pb-selected");
@@ -339,8 +335,22 @@ function hotkeys(){
   KeyboardJS.on('left', press_left);
   KeyboardJS.on('down', press_down);
   KeyboardJS.on('up', press_up);
-  KeyboardJS.on('1', function() {press_number($("#1"))});
-  KeyboardJS.on('2', function() {press_number($("#2"))});
+  KeyboardJS.on('1', function() {
+    if($("#1").find(".pb-target").hasClass("pb-focus")){
+      press_number($("#11"))
+    }
+    else{
+      press_number($("#1"));
+    }
+  });
+  KeyboardJS.on('2', function() {
+    if($("#2").find(".pb-target").hasClass("pb-focus")){
+      press_number($("#22"))
+    }
+    else{
+      press_number($("#2"));
+    }
+  });
   KeyboardJS.on('3', function() {press_number($("#3"))});
   KeyboardJS.on('4', function() {press_number($("#4"))});
   KeyboardJS.on('5', function() {press_number($("#5"))});
@@ -349,7 +359,6 @@ function hotkeys(){
   KeyboardJS.on('8', function() {press_number($("#8"))});
   KeyboardJS.on('9', function() {press_number($("#9"))});
   KeyboardJS.on('1>0', function() {press_number($("#10"))});
-  KeyboardJS.on('. + 1', function() {press_number($("#11"))});
   KeyboardJS.on('1>2', function() {press_number($("#12"))});
   KeyboardJS.on('1>3', function() {press_number($("#13"))});
   KeyboardJS.on('1>4', function() {press_number($("#14"))});
@@ -360,7 +369,6 @@ function hotkeys(){
   KeyboardJS.on('1>9', function() {press_number($("#19"))});
   KeyboardJS.on('2>0', function() {press_number($("#20"))});
   KeyboardJS.on('2>1', function() {press_number($("#21"))});
-  KeyboardJS.on('. + 2', function() {press_number($("#22"))});
   KeyboardJS.on('2>3', function() {press_number($("#23"))});
   KeyboardJS.on('2>4', function() {press_number($("#24"))});
   KeyboardJS.on('2>5', function() {press_number($("#25"))});
@@ -405,7 +413,7 @@ $(function(){
         //do nothing
       }
       else{
-        $(this).val("");
+        $(this).val(prev_score_input);
         $(this).focus();
         if($(this).next().hasClass("input-hint")){}
         else{
@@ -416,6 +424,7 @@ $(function(){
         });
       }
     }
+    prev_score_input = $(this).val();
   });
 
   //当总分输分输错的时候，提示问题
@@ -424,7 +433,7 @@ $(function(){
       //do nothing
     }
     else{
-      $(this).val("");
+      $(this).val(prev_all_score);
       $(this).focus();
       if($(this).next().hasClass("input-hint")){}
       else{
@@ -434,6 +443,7 @@ $(function(){
         $(this).next().remove();//blur时候hint消失
       });
     }
+    prev_all_score = $(this).val();
   });
 
   //blur的时候算作输分工作完成，进行相应的修改
@@ -442,8 +452,9 @@ $(function(){
     score_input_hide(target_pb);
     var score = Number($(this).val());
     //这是为了显示该题的得分没有被输入
-    if(score == ""){
+    if(score == "" || $(this).val() == "-"){
       score = "?";
+      $(this).val("");
     }
     else{
       target_pb.find(".score_get").addClass("done");

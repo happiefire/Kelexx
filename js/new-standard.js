@@ -95,7 +95,7 @@ var testPostData = {
       correct: true,
     },
     {
-      id: "6",
+      id: "11",
       type: "问答题",
       fullscore: 10,
       score: 0,
