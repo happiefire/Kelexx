@@ -160,7 +160,10 @@ function generate_standard(){
 			//添加class sub_pb
 			if(all_problems[i].father_id != ""){
 				$(".current_pb").addClass("sub-pb");
-				$(".current_pb").find(".score-indicator").html("");
+				if (all_problems[i].fullscore == null){
+					$(".current_pb").find(".score-indicator").html("");
+				}
+				else{}
 			}
 			else{};
 
@@ -200,7 +203,10 @@ function generate_standard(){
 			//添加class sub_pb
 			if(all_problems[i].father_id != ""){
 				$(".current_pb").addClass("sub-pb");
-				$(".current_pb").find(".score-indicator").html("");
+				if (all_problems[i].fullscore == null){
+					$(".current_pb").find(".score-indicator").html("");
+				}
+				else{}
 			}
 			else{};
 
@@ -212,5 +218,4 @@ function generate_standard(){
 
 $(function(){
 	generate_standard();
-	hotkeys();
 });

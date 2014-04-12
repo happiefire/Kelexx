@@ -5,6 +5,7 @@ var motherpb = 0;
 var final_score = 0;
 var data =[];
 var student_number;
+var prev_input = "";//这个用于储存本次输入前的输入框结果，避免输入错误后整个框的内容被cancel
 //如无特殊说明，target均必须是each-pb
 
 //用来把题目变红的
@@ -28,22 +29,43 @@ function find_mother(target){
   while(motherpb.hasClass("has-sub-pb") == false)
 }
 
-//当母题为cf时候，可以执行
-function unselect_subpb(){
+//当母题为cf时候，可以执行，对问答题的母题也有效
+function unselect_subpbs(){
   current_subpb = cf.next();
   do
   {
     current_subpb.find(".pb-target").removeClass("pb-selected");
+    if(!cf.hasClass("has-score")){
+      current_subpb.find(".score_get").removeClass("done");
+      current_subpb.find(".score_get").html(current_subpb.find(".full_score").text());
+    }
+    else{};
     current_subpb = current_subpb.next();
   }
-  while(current_subpb.hasClass("sub-pb") == true)
+  while(current_subpb.hasClass("sub-pb") == true);
+}
+
+//当母题为cf的时候可以执行,对问答题的母题也有效
+function select_all_subpbs(){
+  current_subpb = cf.next();
+  do
+  {
+    current_subpb.find(".pb-target").addClass("pb-selected");
+    if (!cf.hasClass("has-score")){
+      current_subpb.find(".score_get").html("0");
+      current_subpb.find(".score_get").addClass("done");
+    }
+    else{};
+    current_subpb = current_subpb.next();
+  }
+  while(current_subpb.hasClass("sub-pb") == true);
 }
 
 //错题被取消判定，成为非错题时，把分数改回满分
-//默认分数要pass进去，未改
 function delete_score(){
   cf.find(".score_get").removeClass("done");
-  cf.find(".score_get").html("15");
+  var cf_fullscore = cf.find(".full_score").text();
+  cf.find(".score_get").html(cf_fullscore);
 }
 
 //用来判断题目是否被选为错题
@@ -52,14 +74,68 @@ function pbselection(target){
   else{return false;}
 }
 
+//当点击小题，使得小题对错发生变化时使用的改分函数。此函数需要与delete_score进行整合整理。number()的使用也应更加一致
+function sub_pb_selected(){
+  var cf_fullscore = Number(cf.find(".full_score").text());
+  if(pbselection(cf)){
+    cf.find(".score_get").html("0");
+    cf.find(".score_get").addClass("done");
+    var motherpb_score = Number(motherpb.find(".score_get").text()) - cf_fullscore;
+    motherpb.find(".score_get").html(motherpb_score);
+    //加上done，保证不加重复。此段不加，将导致快捷键问题。疑似done与score-focus有关导致
+    if(motherpb.find(".score_get").hasClass("done")){}
+      else{
+        motherpb.find(".score_get").addClass("done");
+      }
+  }
+  else{
+    cf.find(".score_get").html(cf_fullscore);
+    cf.find(".score_get").removeClass("done");
+    var motherpb_score = Number(motherpb.find(".score_get").text()) + cf_fullscore;
+    motherpb.find(".score_get").html(motherpb_score);
+    //以下保证，非问答题的motherpb因为小题取消点中而成为满分时候，标记成为未登分的题（没有done），并且取消选中
+    if(motherpb.find(".score_get").text() === motherpb.find(".full_score").text()){
+      motherpb.find(".score_get").removeClass("done");
+      motherpb.find(".pb-target").removeClass("pb-selected");
+    }
+    else{};
+  }
+}
+
 //在pb onclick里面调用的
 function clickpb(){
     selectpb();
-    if (cf.hasClass("has-sub-pb") && pbselection(cf) == false){
-      delete_score();
-      unselect_subpb();
+    //用来处理母题选中的情形
+    if (cf.hasClass("has-sub-pb")){
+      if(pbselection(cf)){
+        select_all_subpbs();
+        if(!cf.hasClass("has-score")){
+          cf.find(".score_get").html("0");
+          cf.find(".score_get").addClass("done");
+        }
+        else{};
+      }
+      else{
+        delete_score();
+        unselect_subpbs();
+      }
     }
     else{};
+    //用途见sub_pb_selected的注释
+    if(cf.hasClass("sub-pb") && !motherpb.hasClass("has-score")){
+      sub_pb_selected();
+    }
+    else{};
+    //用来处理选择题的分数变化
+    if(!cf.hasClass("has-sub-pb") && !cf.hasClass("sub-pb")){
+      if(pbselection(cf)){
+        cf.find(".score_get").html("0");
+      }
+      else{
+        var cf_fullscore = Number(cf.find(".full_score").text());
+        cf.find(".score_get").html(cf_fullscore);
+      }
+    }
 }
 
 //见里面的注释
@@ -140,20 +216,26 @@ function toggle_score_focus(target){
 
 //隐藏得分框，enable快捷键
 function score_input_hide(target){
-  $(target).find(".score-input").css("display","none");
-  $(target).removeClass("input-on");
-  KeyboardJS.enable();
+  if($(target).hasClass("has-score")){
+    $(target).find(".score-input").css("display","none");
+    $(target).removeClass("input-on");
+    KeyboardJS.enable();
+  }
+  else{};
 }
 
 //弹出得分框，disable快捷键
 function score_input_focus(target){
-  if (pbselection(target)){
-    $(target).find(".score-input").css("display","block");
-    $(target).find("input").focus();
-    $(target).addClass("input-on");
-    KeyboardJS.disable();
-  } //为了实现，红色的题取消选中，不出现input框
-  else{}
+  if($(target).hasClass("has-score")){
+    if (pbselection(target)){
+      $(target).find(".score-input").css("display","block");
+      $(target).find("input").focus();
+      $(target).addClass("input-on");
+      KeyboardJS.disable();
+    } //为了实现，红色的题取消选中，不出现input框
+    else{}
+  }
+  else{};
 }
 
 //用来判断输入的合法性
@@ -207,8 +289,13 @@ function press_down() {
     focus_first_pb();
   } 
   else {
-    cf = cf.parent().next(".pb-group").find(".each-pb").first();
-    do_focus();
+    if(cf.parent().is(":last-child")){
+      cf = cf;
+    }
+    else{
+      cf = cf.parent().next(".pb-group").find(".each-pb").first();
+      do_focus();
+    }
   }
 }
 
@@ -217,8 +304,13 @@ function press_up() {
     focus_first_pb();
   } 
   else {
-    cf = cf.parent().prev(".pb-group").find(".each-pb").first();
-    do_focus();
+    if(cf.parent().is(":first-child")){
+      cf=cf;
+    }
+    else{
+      cf = cf.parent().prev(".pb-group").find(".each-pb").first();
+      do_focus();
+    }
   }
 }
 
@@ -230,8 +322,13 @@ function press_enter(){
 }
 
 function press_number(target){
-  cf = $(target);
-  do_focus();
+  if($(target).hasClass("each-pb")){
+    cf = $(target);
+    do_focus();
+  }
+  else{
+    cf=cf;
+  }
 }
 
 //弹出得分框
@@ -242,36 +339,36 @@ function hotkeys(){
   KeyboardJS.on('left', press_left);
   KeyboardJS.on('down', press_down);
   KeyboardJS.on('up', press_up);
-  KeyboardJS.on('1', function() {press_number($("#pb-1"))});
-  KeyboardJS.on('2', function() {press_number($("#pb-2"))});
-  KeyboardJS.on('3', function() {press_number($("#pb-3"))});
-  KeyboardJS.on('4', function() {press_number($("#pb-4"))});
-  KeyboardJS.on('5', function() {press_number($("#pb-5"))});
-  KeyboardJS.on('6', function() {press_number($("#pb-6"))});
-  KeyboardJS.on('7', function() {press_number($("#pb-7"))});
-  KeyboardJS.on('8', function() {press_number($("#pb-8"))});
-  KeyboardJS.on('9', function() {press_number($("#pb-9"))});
-  KeyboardJS.on('1>0', function() {press_number($("#pb-10"))});
-  KeyboardJS.on('. + 1', function() {press_number($("#pb-11"))});
-  KeyboardJS.on('1>2', function() {press_number($("#pb-12"))});
-  KeyboardJS.on('1>3', function() {press_number($("#pb-13"))});
-  KeyboardJS.on('1>4', function() {press_number($("#pb-14"))});
-  KeyboardJS.on('1>5', function() {press_number($("#pb-15"))});
-  KeyboardJS.on('1>6', function() {press_number($("#pb-16"))});
-  KeyboardJS.on('1>7', function() {press_number($("#pb-17"))});
-  KeyboardJS.on('1>8', function() {press_number($("#pb-18"))});
-  KeyboardJS.on('1>9', function() {press_number($("#pb-19"))});
-  KeyboardJS.on('2>0', function() {press_number($("#pb-20"))});
-  KeyboardJS.on('2>1', function() {press_number($("#pb-21"))});
-  KeyboardJS.on('. + 2', function() {press_number($("#pb-22"))});
-  KeyboardJS.on('2>3', function() {press_number($("#pb-23"))});
-  KeyboardJS.on('2>4', function() {press_number($("#pb-24"))});
-  KeyboardJS.on('2>5', function() {press_number($("#pb-25"))});
-  KeyboardJS.on('2>6', function() {press_number($("#pb-26"))});
-  KeyboardJS.on('2>7', function() {press_number($("#pb-27"))});
-  KeyboardJS.on('2>8', function() {press_number($("#pb-28"))});
-  KeyboardJS.on('2>9', function() {press_number($("#pb-29"))});
-  KeyboardJS.on('3>0', function() {press_number($("#pb-30"))});
+  KeyboardJS.on('1', function() {press_number($("#1"))});
+  KeyboardJS.on('2', function() {press_number($("#2"))});
+  KeyboardJS.on('3', function() {press_number($("#3"))});
+  KeyboardJS.on('4', function() {press_number($("#4"))});
+  KeyboardJS.on('5', function() {press_number($("#5"))});
+  KeyboardJS.on('6', function() {press_number($("#6"))});
+  KeyboardJS.on('7', function() {press_number($("#7"))});
+  KeyboardJS.on('8', function() {press_number($("#8"))});
+  KeyboardJS.on('9', function() {press_number($("#9"))});
+  KeyboardJS.on('1>0', function() {press_number($("#10"))});
+  KeyboardJS.on('. + 1', function() {press_number($("#11"))});
+  KeyboardJS.on('1>2', function() {press_number($("#12"))});
+  KeyboardJS.on('1>3', function() {press_number($("#13"))});
+  KeyboardJS.on('1>4', function() {press_number($("#14"))});
+  KeyboardJS.on('1>5', function() {press_number($("#15"))});
+  KeyboardJS.on('1>6', function() {press_number($("#16"))});
+  KeyboardJS.on('1>7', function() {press_number($("#17"))});
+  KeyboardJS.on('1>8', function() {press_number($("#18"))});
+  KeyboardJS.on('1>9', function() {press_number($("#19"))});
+  KeyboardJS.on('2>0', function() {press_number($("#20"))});
+  KeyboardJS.on('2>1', function() {press_number($("#21"))});
+  KeyboardJS.on('. + 2', function() {press_number($("#22"))});
+  KeyboardJS.on('2>3', function() {press_number($("#23"))});
+  KeyboardJS.on('2>4', function() {press_number($("#24"))});
+  KeyboardJS.on('2>5', function() {press_number($("#25"))});
+  KeyboardJS.on('2>6', function() {press_number($("#26"))});
+  KeyboardJS.on('2>7', function() {press_number($("#27"))});
+  KeyboardJS.on('2>8', function() {press_number($("#28"))});
+  KeyboardJS.on('2>9', function() {press_number($("#29"))});
+  KeyboardJS.on('3>0', function() {press_number($("#30"))});
   KeyboardJS.on('enter',press_enter);
   KeyboardJS.on('space',press_space);
 }
@@ -290,8 +387,39 @@ $(function(){
     else{}
   });
 
-  //当输分输错的时候，提示问题
-  $(".score-input input, #score").keyup(function(){
+  $("#score").keydown(function(event){
+    if (event.keyCode == 13 || event.keyCode == 9){
+      $(this).blur();
+      return false;
+    }
+    else{}
+  });
+
+  //当某题输分输错的时候，提示问题。如果输入－n，按照扣分处理
+  $(".score-input input").keyup(function(){
+    if($(this).val() == "-"){
+      //do nothing
+    }
+    else{
+      if(legal_judge($(this))){
+        //do nothing
+      }
+      else{
+        $(this).val("");
+        $(this).focus();
+        if($(this).next().hasClass("input-hint")){}
+        else{
+          $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
+        };
+        $(this).on("blur",function(){
+          $(this).next().remove();//blur时候hint消失
+        });
+      }
+    }
+  });
+
+  //当总分输分输错的时候，提示问题
+  $("#score").keyup(function(){
     if(legal_judge($(this))){
       //do nothing
     }
@@ -303,27 +431,41 @@ $(function(){
         $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
       };
       $(this).on("blur",function(){
-        $(this).next().remove();
+        $(this).next().remove();//blur时候hint消失
       });
     }
   });
 
+  //blur的时候算作输分工作完成，进行相应的修改
   $(".score-input input").on("blur",function(){
     var target_pb = $(this).parents(".each-pb");
     score_input_hide(target_pb);
-    var score = $(this).val().toString();
+    var score = Number($(this).val());
     //这是为了显示该题的得分没有被输入
     if(score == ""){
       score = "?";
     }
     else{
       target_pb.find(".score_get").addClass("done");
-      //此处还应有判断输入是否合法的函数。输入总分之时也可公用。学号的时候就无所谓了，反正是生成一张自由的表格
+      //以下用于判断输入合法性，并处理输入负数表示扣分的情形
+      var this_full_score = Number($(this).parents(".each-pb").find(".full_score").html());
+      if(score < 0){
+        if(score < -this_full_score){
+          score = -this_full_score;
+        }
+        else{};
+        score = this_full_score + score;
+      }
+      else{
+        if(score > this_full_score){
+          score = this_full_score;
+        }
+        else{};
+      }
     };
     target_pb.find(".score_get").html(score);
   });
 
-  //仍然不work
   $("#student, #score").on("focus", function(){
     KeyboardJS.disable();
   });
@@ -359,12 +501,12 @@ $(function(){
             this_score = c_object.find(".score_get").text();
           }
           else{
-            this_score = "unknown";//表示没有输分数
+            this_score = "?";//表示没有输分数
           }
         }
         else{
-          if(c_object.hasClass("sub-pb")){
-            this_score = "no_score";//小题是没有分数滴
+          if(c_object.find(".score-indicator").text()==""){
+            this_score = null;//问答题小题是没有分数滴
           }
           else{
             this_score = "0";//即得零分
@@ -373,11 +515,11 @@ $(function(){
       }
       else{
         this_wrong = "correct";//表示此题正确
-        if(c_object.hasClass("sub-pb")){
-          this_score = "no_score";//小题是没有分数滴
+        if(c_object.find(".score-indicator").text()==""){
+          this_score = null;//问答题小题是没有分数滴
         }
         else{
-          this_score = "full score";//表示得满分
+          this_score = "0";//即得零分
         }
       };
       
