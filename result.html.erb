@@ -1,9 +1,25 @@
+<script src="/js/result.js"></script>
+
 <style>
 
 	td, th{
 		padding: 6px 12px;
 		text-align: center;	
 	}
+
+	a{
+		margin-left:14px;
+		font-size:12px;
+	}
+
+	.student-statistics{
+		display: none;
+	}
+
+	.pb-statistics{
+		display: none;
+	}
+
 </style>
 
 <nav class="nav-panel">
@@ -13,80 +29,41 @@
 </nav>
 <div class="main">
   <header>
-    <h1>2014春季期中 试卷分析</h1> 
+    <h1></h1> 
   </header>
 
   <div>
-  	<h3>试卷情况统计</h3>
+  	<h3>试卷情况统计<a class="show-item-sta">展开</a><a class="hide-item-sta">隐藏</a></h3>
   	<table class="item-statistics">
   	  <thead>
+  	  	<th>满分</th>
   	  	<th>平均分</th>
   	  	<th>标准差</th>
-  	  	<th>得分中位数</th>
+<!--   	  	<th>得分中位数</th> -->
   	  	<th>试卷难度</th>
   	  	<th>试卷区分度</th>
   	  </thead>
-  	  <tr>
-  	  	<td>80</td>
-  	  	<td>6</td>
-  	  	<td>83</td>
-  	  	<td>0.74</td>
-  	  	<td>0.6</td>
-  	  </tr>
+  	  <tr></tr>
   	</table>
   </div>
 
   <div>
-  	<h3>题目情况统计</h3>
+  	<h3>题目情况统计<a class="show-pb-sta">展开</a><a class="hide-pb-sta">隐藏</a></h3>
   	<table class="pb-statistics">
   	  <thead>
   	  	<th>题号</th>
+  	  	<th>题型</th>
   	  	<th>错误人数</th>
   	  	<th>错误率</th>
   	  	<th>难度</th>
   	  	<th>区分度</th>
   	  </thead>
-	  <tr id="1">
-  	  	<td>1</td>
-  	  	<td>30</td>
-  	  	<td>0.07</td>
-  	  	<td>0.93</td>
-  	  	<td>0.85</td>
-  	  </tr>
-  	  <tr id="2">
-  	  	<td>2</td>
-  	  	<td>30</td>
-  	  	<td>0.07</td>
-  	  	<td>0.93</td>
-  	  	<td>0.85</td>
-  	  </tr>
-  	  <tr id="3">
-  	  	<td>3</td>
-  	  	<td>30</td>
-  	  	<td>0.07</td>
-  	  	<td>0.93</td>
-  	  	<td>0.85</td>
-  	  </tr>
-  	  <tr id="3.1">
-  	  	<td>3.1</td>
-  	  	<td>30</td>
-  	  	<td>0.07</td>
-  	  	<td>0.93</td>
-  	  	<td>0.85</td>
-  	  </tr>
-  	  <tr id="3.2">
-  	  	<td>3.2</td>
-  	  	<td>30</td>
-  	  	<td>0.07</td>
-  	  	<td>0.93</td>
-  	  	<td>0.85</td>
-  	  </tr>
   	</table>
   </div>
 
   <div>
-  	<h3>学生情况统计</h3>
-  	<p>全部 &nbsp 1班 &nbsp 2班 &nbsp ... &nbsp n班</p>
+  	<h3>学生情况统计<a class="show-stu-sta">展开</a><a class="hide-stu-sta">隐藏</a></h3>
+ <!--  	<p>全部 &nbsp 1班 &nbsp 2班 &nbsp ... &nbsp n班</p> -->
   	<table class="student-statistics">
   	  <thead>
   	  	<th>班级</th>
@@ -94,24 +71,6 @@
   	  	<th>分数</th>
   	  	<th>排名</th>
   	  </thead>
-  	  <tr id="student-1">
-  	  	<td>2班</td>
-  	  	<td>8</td>
-  	  	<td>142</td>
-  	  	<td>1</td>
-  	  </tr>
-  	  <tr id="student-2">
-  	  	<td>1班</td>
-  	  	<td>8</td>
-  	  	<td>142</td>
-  	  	<td>1</td>
-  	  </tr>
-  	  <tr id="student-3">
-  	  	<td>1班</td>
-  	  	<td>8</td>
-  	  	<td>142</td>
-  	  	<td>1</td>
-  	  </tr>
   	</table>
   </div>
 

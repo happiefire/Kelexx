@@ -1,4 +1,7 @@
 var current_type = 0;
+var projName = "";
+var totalfullscore = 0;
+var classlist = [];
 
 
 var add_pb_group_html = "<div class='pb-group current_pb_group'>"
@@ -28,16 +31,25 @@ var score_input_html = '<div class="score-input">'
 var all_problems;
 
 function testFetchProblems() {
+  var doc_href = ""+(document.location.href);
+  for(var i = doc_href.indexOf("=")+1; i < doc_href.length; i++){
+    projName += doc_href[i];
+  }
+  // console.log(projName);
+
   var prefix = 'http://42.96.165.209:8192';
   var url = prefix+'/fetch/problems';
   $.ajax({
     url: url,
     type: 'POST',
-    data: {project_name:'测试项目1-1', creator_id:'teacher0'},
+    data: {project_name:projName, creator_id:'teacher0'},
     crossDomain: true,
     dataType: "json",
     success: function(result) {
       all_problems = result.problems;
+      classlist = result.class_list;
+      totalfullscore = result.totalscore;
+      console.log(result);
       generate_standard();
     }
   });
@@ -45,7 +57,11 @@ function testFetchProblems() {
 
 
 function generate_standard(){
-	$(".item_name").html("测试项目1-1");
+	$(".item_name").html(projName);
+  $(".class-list option").remove();
+  for(var i=0;i<classlist.length;i++){
+    $("<option value='" + classlist[i] + "'>" + classlist[i] + "</option>").appendTo($(".class-list"));
+  };
 	for(var i=0;i<all_problems.length;i++){
 		if(all_problems[i].type == current_type){
 			//他妈的为什么不是after！
@@ -133,6 +149,8 @@ function generate_standard(){
 function load_function(){
   hotkeys();
   total_fullscore();
+  totalscore_switch();
+  // $("#score").prop("readonly",true);//本句已经写入totalscore_switch()
 
   //此函数用于处理score input打开时候的键盘行为监视
   $(".score-input input").keydown(function(event){
@@ -165,11 +183,11 @@ function load_function(){
         $(this).focus();
         if($(this).next().hasClass("input-hint")){}
         else{
-          $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
+          // $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
         };
-        $(this).on("blur",function(){
-          $(this).next().remove();//blur时候hint消失
-        });
+        // $(this).on("blur",function(){
+          // $(this).next().remove();//blur时候hint消失
+        // });
       }
     }
     prev_score_input = $(this).val();
@@ -185,11 +203,11 @@ function load_function(){
       $(this).focus();
       if($(this).next().hasClass("input-hint")){}
       else{
-        $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
+        // $(this).after("<p class='input-hint'>亲，只能输入整数哦～</p>");
       };
-      $(this).on("blur",function(){
-        $(this).next().remove();//blur时候hint消失
-      });
+      // $(this).on("blur",function(){
+        // $(this).next().remove();//blur时候hint消失
+      // });
     }
     prev_all_score = $(this).val();
   });
@@ -224,13 +242,14 @@ function load_function(){
       }
     };
     target_pb.find(".score_get").html(score);
+    calculate_score();
   });
 
-  $("#student, #score").on("focus", function(){
+  $("#student, #score, #switch input").on("focus", function(){
     KeyboardJS.disable();
   });
 
-  $("#student, #score").on("blur",function(){
+  $("#student, #score, #switch input").on("blur",function(){
     KeyboardJS.enable();
   });
 
@@ -243,10 +262,8 @@ function load_function(){
     clickpb();
   });
 
-  $(".calculate").on("click",function(){
-    calculate_score();
-  });
 }
+
 
 $(function(){
   testFetchProblems();

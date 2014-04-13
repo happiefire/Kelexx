@@ -3,7 +3,6 @@ var current_subpb = 0;
 var timeout_hide, timeout_show;
 var motherpb = 0;
 var data =[];
-var totalfullscore = 0;
 var total_score_switch = 1;//1表示自动计算，0表示手动输入
 var prev_score_input = "";//这个用于储存本次输入前的输入框结果，避免输入错误后整个框的内容被cancel
 var prev_all_score = "";//
@@ -130,13 +129,16 @@ function clickpb(){
     //用来处理选择题的分数变化
     if(!cf.hasClass("has-sub-pb") && !cf.hasClass("sub-pb")){
       if(pbselection(cf)){
-        cf.find(".score_get").html("0");
+        if(cf.hasClass("has-score")){}
+          else{cf.find(".score_get").html("0")}
       }
       else{
         var cf_fullscore = Number(cf.find(".full_score").text());
         cf.find(".score_get").html(cf_fullscore);
       }
     }
+    else{};
+    calculate_score();
 }
 
 //见里面的注释
@@ -172,6 +174,7 @@ function student_scored(){
   }
 }
 
+
 //用来判断是否有不计分的题目
 function calculate_able(){
   var pb_number = $(".each-pb").size();
@@ -204,75 +207,94 @@ function calculate_able(){
 
 //用于计算试卷总的满分
 function total_fullscore(){
-  totalfullscore = 0;
-  var pb_number = $(".each-pb").size();
-  var c_group = $(document).find(".pb-group").first();
-  var c_object = $(document).find(".each-pb").first();
-  var i = 0;
-  while(i < pb_number)
-  {
-    if(c_object.find(".score-indicator").html() == "" && c_object.hasClass("sub-pb")){
-      //do nothing
-    }
-    else{
-      totalfullscore = totalfullscore + Number(c_object.find(".full_score").text());
-    }
-    if (c_object.is(":last-child")) {
-        c_group = c_group.next();
-        c_object = c_group.find(".each-pb").first();
-    }
-    else{
-      c_object = c_object.next();
-    }
-    i++;
-  }
+  // totalfullscore = 0;
+  // var pb_number = $(".each-pb").size();
+  // var c_group = $(document).find(".pb-group").first();
+  // var c_object = $(document).find(".each-pb").first();
+  // var i = 0;
+  // while(i < pb_number)
+  // {
+  //   if(c_object.find(".score-indicator").html() == "" && c_object.hasClass("sub-pb")){
+  //     //do nothing
+  //   }
+  //   else{
+  //     totalfullscore = totalfullscore + Number(c_object.find(".full_score").text());
+  //   }
+  //   if (c_object.is(":last-child")) {
+  //       c_group = c_group.next();
+  //       c_object = c_group.find(".each-pb").first();
+  //   }
+  //   else{
+  //     c_object = c_object.next();
+  //   }
+  //   i++;
+  // }
   $("#score").val(totalfullscore);
 }
 
 //用于计算这张卷子的总分
 function calculate_score(){  
-  var pb_number = $(".each-pb").size();
-  var c_group = $(document).find(".pb-group").first();
-  var c_object = $(document).find(".each-pb").first();
-  var i = 0;
-  // total_fullscore();
-  var final_score = totalfullscore;
-  while(i < pb_number)
-  {
-    if(c_object.find(".score-indicator").html() == "" && c_object.hasClass("sub-pb")){
-      //do nothing
-    }
-    else{
-      if(c_object.find(".score_get").html() == "?"){
-        // return 0//表示某题没有输入分数
-        // 您没有输入某题的得分
+  if($("input[name='switch-score-mode']:checked").val() == "manipulate" || !calculate_able()){}//此处也要考虑switch off时候，第一个逻辑将被判假
+  else{
+    var pb_number = $(".each-pb").size();
+    var c_group = $(document).find(".pb-group").first();
+    var c_object = $(document).find(".each-pb").first();
+    var i = 0;
+    var final_score = totalfullscore;
+    while(i < pb_number)
+    {
+      if(c_object.find(".score-indicator").html() == "" && c_object.hasClass("sub-pb")){
+        //do nothing
       }
       else{
-        final_score = final_score - Number(c_object.find(".full_score").text()) + Number(c_object.find(".score_get").text());
+        if(c_object.find(".score_get").html() == "?"){
+          //do nothing
+        }
+        else{
+          final_score = final_score - Number(c_object.find(".full_score").text()) + Number(c_object.find(".score_get").text());
+        }
       }
-    }
 
-    if (c_object.is(":last-child")) {
-        c_group = c_group.next();
-        c_object = c_group.find(".each-pb").first();
+      if (c_object.is(":last-child")) {
+          c_group = c_group.next();
+          c_object = c_group.find(".each-pb").first();
+      }
+      else{
+        c_object = c_object.next();
+      }
+      i++;
     }
-    else{
-      c_object = c_object.next();
-    }
-    i++;
+    $("#score").val(final_score);
   }
-  $("#score").val(final_score);
-  // return 1;
 }
 
-//确定总分自动计算与手动输入的切换开关是否显示
+//确定总分自动计算与手动输入的切换开关是否显示.如果显示，自动选中自动计算，并且将分数框标成不可编辑
 function totalscore_switch(){
   if(calculate_able()){
-    $(".switch").css("display","block");
+    $("#switch").css("display","inline");
+    $("#score").prop("readonly",true);
+    load_switch_function();//使得radio开关可用
   }
   else{
-    $(".switch").css("display","none");
+    $("#switch").css("display","none");
   }
+}
+
+//手动/自动输分的开关函数
+function load_switch_function(){
+  $("#switch input").on("click",function(){
+    if($("input[name='switch-score-mode']:checked").val() == "manipulate"){
+      $("#score").val("");
+      $("#score").removeClass("score-label");
+      $("#score").prop("readonly",false);
+    }
+    else{
+      $("#score").addClass("score-label");
+      $("#score").prop("readonly",true);
+      total_fullscore();
+      calculate_score();
+    }
+  });
 }
 
 //判断题目是否已经输入过分数
@@ -473,9 +495,9 @@ function testUpdateStatisticItems() {
   var prefix = 'http://42.96.165.209:8192';
   var url = prefix+'/update/statistic_items';
   var testPostData = {
-    project_name:'测试项目1-1f',
+    project_name:projName,
     creator_id:'teacher0',
-    student_id:$("#student").val(),
+    student_id:$("#student").val() + '/' + $(".class-list").val(),
     totalscore:Number($("#score").val()),
     problems:data
   };
@@ -494,70 +516,89 @@ function testUpdateStatisticItems() {
 //以下为正主儿。其他玩意儿load进了 new-standard.js
 $(function(){
     $(".submit-this").on("click", function(){
-    if($("#student").val() == ""){
-      alert("请输入学号!");
-    }
-    else{
-      var c_group = $(document).find(".pb-group").first();
-      var c_object = c_group.find(".each-pb").first();
-      var pb_number = $(".each-pb").size();
-      var i = 0;
-      while(i < pb_number)
-      {
-        var this_id;
-        var this_score;
-        var this_wrong;
-        if(pbselection(c_object)){
-          this_wrong = false;//表示此题错了
-          if(c_object.hasClass("has-score")){
-            if(scored(c_object)){
-              this_score = Number(c_object.find(".score_get").text());//有分
+      if($("#student").val() == ""){
+        alert("请输入学号!");
+      }
+      else{
+        console.log($("#student").val());
+        var c_group = $(document).find(".pb-group").first();
+        var c_object = c_group.find(".each-pb").first();
+        var pb_number = $(".each-pb").size();
+        var i = 0;
+        var skiped_pbs = 0;
+        while(i < pb_number)
+        {
+          var this_id;
+          var this_score;
+          var this_wrong;
+          if(pbselection(c_object)){
+            this_wrong = false;//表示此题错了
+            if(c_object.hasClass("has-score")){
+              if(scored(c_object)){
+                this_score = Number(c_object.find(".score_get").text());//有分
+              }
+              else{
+                this_score = "?";//表示没有输分数
+                skiped_pbs++;
+              }
             }
             else{
-              this_score = "?";//表示没有输分数
+              if(c_object.find(".score-indicator").text()==""){
+                this_score = null;//问答题小题是没有分数滴
+              }
+              else{
+                this_score = 0;//即得零分
+              }
             }
           }
           else{
+            this_wrong = true;//表示此题正确
             if(c_object.find(".score-indicator").text()==""){
-              this_score = null;//问答题小题是没有分数滴
+              this_score = null;//该题不统计分数
             }
             else{
-              this_score = 0;//即得零分
+              this_score = Number(c_object.find(".full_score").text());//有分
             }
+          };
+          
+          data[i] = {
+            id: $(c_object).attr("id"),
+            score: this_score,
+            correct: this_wrong
           }
-        }
-        else{
-          this_wrong = true;//表示此题正确
-          if(c_object.find(".score-indicator").text()==""){
-            this_score = null;//该题不统计分数
+          i++;
+          if (c_object.is(":last-child")) {
+            c_group = c_group.next();
+            c_object = c_group.find(".each-pb").first();
           }
           else{
-            this_score = Number(c_object.find(".full_score").text());//有分
+            c_object = c_object.next();
           }
-        };
-        
-        data[i] = {
-          id: $(c_object).attr("id"),
-          score: this_score,
-          correct: this_wrong
         }
-        i++;
-        if (c_object.is(":last-child")) {
-          c_group = c_group.next();
-          c_object = c_group.find(".each-pb").first();
+
+        if(skiped_pbs == 0 || $("input[name='switch-score-mode']:checked").val() == "manipulate"){
+          testUpdateStatisticItems();
+          //刷新页面
+          $("#placeholder").html("");
+          $("input").val("");
+          generate_standard();
         }
         else{
-          c_object = c_object.next();
+          // 这句逻辑有点复杂。主要是为了处理switch off的时候的情况，等价于calculate able返回false
+          if(($("input[name='switch-score-mode']:checked").val() == "manipulate" && $("#score").val()!="")|| !calculate_able()){
+            testUpdateStatisticItems();
+            //刷新页面
+            $("#placeholder").html("");
+            $("input").val("");
+            generate_standard();
+          }
+          else{
+            alert("本卷有" + skiped_pbs + "道错题尚未输入得分。您可以选择输入这些题的得分，或手工输入本卷总分以进入下一位同学的统计。")
+          }
         }
+
       }
 
-      testUpdateStatisticItems();
-
-      //刷新页面
-      $("#placeholder").html("");
-      $("input").val("");
-      generate_standard();
-    }
   });
 });
 
