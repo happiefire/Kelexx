@@ -33,7 +33,7 @@ function testFetchProblems() {
   $.ajax({
     url: url,
     type: 'POST',
-    data: {project_name:'测试项目3', creator_id:'teacher0'},
+    data: {project_name:'测试项目1-1', creator_id:'teacher0'},
     crossDomain: true,
     dataType: "json",
     success: function(result) {
@@ -45,7 +45,7 @@ function testFetchProblems() {
 
 
 function generate_standard(){
-	$(".item_name").html("测试项目3");
+	$(".item_name").html("测试项目1-1");
 	for(var i=0;i<all_problems.length;i++){
 		if(all_problems[i].type == current_type){
 			//他妈的为什么不是after！
@@ -132,6 +132,7 @@ function generate_standard(){
 //函数与参数均到test.js里找
 function load_function(){
   hotkeys();
+  total_fullscore();
 
   //此函数用于处理score input打开时候的键盘行为监视
   $(".score-input input").keydown(function(event){
@@ -240,6 +241,10 @@ function load_function(){
 
   $(".pb-target").on("click", function(){
     clickpb();
+  });
+
+  $(".calculate").on("click",function(){
+    calculate_score();
   });
 }
 
