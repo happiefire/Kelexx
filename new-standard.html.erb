@@ -1,0 +1,91 @@
+<script src="/js/new-standard.js"></script>
+<script src="/js/test.js"></script>
+
+<style>
+  .mistake-marker{
+    /*width:660px;*/
+  }
+
+  .submit-this {
+    margin-top: 25px;
+    padding: 10px 10px 10px 0;
+    display: inline-block;
+
+  }
+
+  .check-result {
+    margin-top: 25px;
+    margin-left: 5px;
+    padding: 10px;
+    display: inline-block;
+  }
+
+</style>
+
+<div class="state-panel">
+   测试项目
+</div>
+
+<div class="main-view">
+  <header>
+    <h1 class="item_name"></h1>
+    
+  </header>
+
+  <hr>
+
+  <form class="form-inline" method="post" role="form">
+
+    <div class="form-group">
+      <label class="control-label" for="student">学生：</label>
+      <input id="student" class="form-control" type="text" placeholder="请输入学号或拼音查找" style="width: 300px">
+    </div>
+
+    <div class="form-group">
+
+      <select class="class-list">
+        
+      </select>
+
+    </div>
+
+    <div class="form-group student-score">
+      &nbsp&nbsp&nbsp&nbsp&nbsp
+      <label class="control-label" for="score">分数：</label>
+      <input id="score" maxlength="3" class="form-control" type="text" style="width: 60px">
+    </div>
+
+    <div class="form-group" id="switch">
+      <label>
+        <input type="radio" name="switch-score-mode" value="automatic" checked="checked">
+        自动计算总分
+      </label>
+      <label>
+        <input type="radio" name="switch-score-mode" value="manipulate">
+        手工输入总分
+      </label>
+    </div>
+
+  </form>
+
+  <br>
+  <div class="mistake-marker">
+    <div><h4>标注错题</h4></div>
+    <ul class="pb-list">
+      <div id="placeholder">
+
+      </div>
+    </ul>
+
+      
+    <div class="submit-this">
+      <button>下一个</button>
+    </div>
+    <div class="check-result">
+      <a href="result.html"><button>查看结果</button></a>
+    </div>
+  </div>
+
+
+
+</div>
