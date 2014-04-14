@@ -17,8 +17,6 @@ function range(start, end) {
 
 
 
-
-
 // 1. pass进一个 pb-info-group，收集其中的 input value
 function get_pb_info_input_val (target) {
   var numVal = $(target).find(".pb-info-num input").val()+",";
@@ -235,7 +233,6 @@ function testCreateStatistic() {
   // var prefix = 'http://localhost:8192';
   var url = prefix+'/create/statistic';
   // fields and default values of a 'problem': id, type, score=0, has_part_score=False, is_sub=False, parent_id=None
-
   
   var PostData = {
     project_name: "",
@@ -247,6 +244,7 @@ function testCreateStatistic() {
   PostData.project_name = $("#project-name").val();
   PostData.class_list = get_class_list();
   PostData.problems = problemsArray;
+  PostData.totalscore = $(".total-fullscore").val();
 
   $.ajax({
     url: url,
@@ -256,9 +254,11 @@ function testCreateStatistic() {
     dataType: "json",
     success: function(result) {
       console.log(result);
+      return result;
     }
   });
 }
+
 
 function need_score(checkbox){
   var scoreConfigHtml = ''+
@@ -811,7 +811,7 @@ function activate_gen_function () {
 $(document).ready(function(){
   
   activate_gen_function();
-  configPanel.input();
+  // configPanel.input();
   $(".gen-btn").on("click", function(){
     do_gen($(this).parents(".pb-info-group"));
   });
@@ -828,5 +828,11 @@ $(document).ready(function(){
     gen_sub($(this));
   });
 
+  $(".next-step").click(function(){
+    var result = testCreateStatistic();
+    if (result.ok) {
+      document.location.href = "new-standard?="+$("#project-name").val();
+    } else {alert(result.reason);}
+  });
 
 });
