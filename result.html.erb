@@ -1,0 +1,77 @@
+<script src="/js/result.js"></script>
+
+<style>
+
+	td, th{
+		padding: 6px 12px;
+		text-align: center;	
+	}
+
+	a{
+		margin-left:14px;
+		font-size:12px;
+	}
+
+	.student-statistics{
+		display: none;
+	}
+
+	.pb-statistics{
+		display: none;
+	}
+
+</style>
+
+<nav class="nav-panel">
+  <a href="#" class="active">统计项目</a>
+  <a href="#">班级管理</a>
+  <a href="#">设置</a>
+</nav>
+<div class="main">
+  <header>
+    <h1></h1> 
+  </header>
+
+  <div>
+  	<h3>试卷情况统计<a class="show-item-sta">展开</a><a class="hide-item-sta">隐藏</a></h3>
+  	<table class="item-statistics">
+  	  <thead>
+  	  	<th>满分</th>
+  	  	<th>平均分</th>
+  	  	<th>标准差</th>
+<!--   	  	<th>得分中位数</th> -->
+  	  	<th>试卷难度</th>
+  	  	<th>试卷区分度</th>
+  	  </thead>
+  	  <tr></tr>
+  	</table>
+  </div>
+
+  <div>
+  	<h3>题目情况统计<a class="show-pb-sta">展开</a><a class="hide-pb-sta">隐藏</a></h3>
+  	<table class="pb-statistics">
+  	  <thead>
+  	  	<th>题号</th>
+  	  	<th>题型</th>
+  	  	<th>错误人数</th>
+  	  	<th>错误率</th>
+  	  	<th>难度</th>
+  	  	<th>区分度</th>
+  	  </thead>
+  	</table>
+  </div>
+
+  <div>
+  	<h3>学生情况统计<a class="show-stu-sta">展开</a><a class="hide-stu-sta">隐藏</a></h3>
+ <!--  	<p>全部 &nbsp 1班 &nbsp 2班 &nbsp ... &nbsp n班</p> -->
+  	<table class="student-statistics">
+  	  <thead>
+  	  	<th>班级</th>
+  	  	<th>学号</th>
+  	  	<th>分数</th>
+  	  	<th>排名</th>
+  	  </thead>
+  	</table>
+  </div>
+
+</div>
