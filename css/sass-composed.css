@@ -1,86 +1,910 @@
+/* ==========================================================================
+   Vincent's custom styles, 
+   large part of which learned from Bootstrap and h5bp.
+   ========================================================================== */
 /*
-Syntax error: File to import not found or unreadable: pages/standard.
-              Load paths:
-                /Users/Vincent/repos/Git/Kelexx/sass
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-0.10.4/stylesheets
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp-0.1.1/stylesheets
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-normalize-1.4.3/stylesheets
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.2.1/vendor/assets/stylesheets
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.9/sass
-                /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.3.1/scss
-                Compass::SpriteImporter
-                /Applications/vendor/assets/stylesheets
-        on line 6 of /Users/Vincent/repos/Git/Kelexx/sass/sass-composed.sass
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+/* line 7, ../sass/partials/_h5bp-custom.scss */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
 
-1: /Users/Vincent/repos/Git/Kelexx/sass/sass-composed.sass
+/* line 12, ../sass/partials/_h5bp-custom.scss */
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
 
-Backtrace:
-/Users/Vincent/repos/Git/Kelexx/sass/sass-composed.sass:6
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/import_node.rb:67:in `import'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/import_node.rb:65:in `import'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/import_node.rb:28:in `imported_file'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/import_node.rb:36:in `css_import?'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:217:in `visit_import'
-org/jruby/RubyKernel.java:2109:in `send'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:100:in `visit'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-org/jruby/RubyArray.java:2339:in `collect'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:109:in `visit_children'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
-org/jruby/RubyKernel.java:2109:in `send'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:100:in `visit'
-org/jruby/RubyKernel.java:2109:in `send'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/visitors/perform.rb:7:in `visit'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/tree/root_node.rb:20:in `render'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/engine.rb:315:in `_render'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/sass-3.2.10/lib/sass/engine.rb:262:in `render'
-file:/Applications/Dev Tools/Fire.app/Contents/Resources/Java/fire-app.jar!/compass_patch.rb:168:in `compile'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/compiler.rb:126:in `timed'
-file:/Applications/Dev Tools/Fire.app/Contents/Resources/Java/fire-app.jar!/compass_patch.rb:167:in `compile'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/logger.rb:45:in `red'
-file:/Applications/Dev Tools/Fire.app/Contents/Resources/Java/fire-app.jar!/compass_patch.rb:166:in `compile'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/compiler.rb:118:in `compile_if_required'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/compiler.rb:103:in `run'
-org/jruby/RubyArray.java:1620:in `each'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/compiler.rb:101:in `run'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/compiler.rb:126:in `timed'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/lib/compass/compiler.rb:100:in `run'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/backport_from_0.13/lib/compass/watcher/compiler.rb:25:in `compile'
-org/jruby/RubyKernel.java:2105:in `send'
-(__FORWARDABLE__):3:in `compile'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/backport_from_0.13/lib/compass/watcher/project_watcher.rb:108:in `sass_removed'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/backport_from_0.13/lib/compass/watcher/project_watcher.rb:92:in `sass_callback'
-org/jruby/RubyMethod.java:133:in `call'
-org/jruby/RubyProc.java:270:in `call'
-org/jruby/RubyProc.java:220:in `call'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/backport_from_0.13/lib/compass/watcher/watch.rb:17:in `run_callback'
-file:/Applications/Dev Tools/Fire.app/Contents/Resources/Java/fire-app.jar!/app_watcher.rb:34:in `listen_callback'
-org/jruby/RubyArray.java:1620:in `each'
-file:/Applications/Dev Tools/Fire.app/Contents/Resources/Java/fire-app.jar!/app_watcher.rb:29:in `listen_callback'
-org/jruby/RubyArray.java:1620:in `each'
-file:/Applications/Dev Tools/Fire.app/Contents/Resources/Java/fire-app.jar!/app_watcher.rb:28:in `listen_callback'
-org/jruby/RubyMethod.java:133:in `call'
-org/jruby/RubyProc.java:270:in `call'
-org/jruby/RubyProc.java:220:in `call'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/jruby/listen-0.7.3/lib/listen/listener.rb:212:in `on_change'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/jruby/listen-0.7.3/lib/listen/listener.rb:221:in `initialize_adapter'
-org/jruby/RubyProc.java:270:in `call'
-org/jruby/RubyProc.java:220:in `call'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/jruby/listen-0.7.3/lib/listen/adapter.rb:198:in `report_changes'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/jruby/listen-0.7.3/lib/listen/adapter.rb:210:in `poll_changed_dirs'
-/Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/jruby/listen-0.7.3/lib/listen/adapters/darwin.rb:38:in `start'
-org/jruby/RubyProc.java:270:in `call'
-org/jruby/RubyProc.java:224:in `call'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Syntax error: File to import not found or unreadable: pages/standard.\A               Load paths:\A                 /Users/Vincent/repos/Git/Kelexx/sass\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/blueprint/stylesheets\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-960-plugin-0.10.4/stylesheets\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-h5bp-0.1.1/stylesheets\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/compass-normalize-1.4.3/stylesheets\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/bootstrap-sass-2.3.2.1/vendor/assets/stylesheets\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/susy-1.0.9/sass\A                 /Applications/Dev Tools/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.3.1/scss\A                 Compass::SpriteImporter\A                 /Applications/vendor/assets/stylesheets\A         on line 6 of /Users/Vincent/repos/Git/Kelexx/sass/sass-composed.sass\A \A 1: /Users/Vincent/repos/Git/Kelexx/sass/sass-composed.sass"; }
+/*
+ * A better looking default horizontal rule
+ */
+/* line 21, ../sass/partials/_h5bp-custom.scss */
+hr {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+/* line 40, ../sass/partials/_h5bp-custom.scss */
+audio,
+canvas,
+img,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+/* line 48, ../sass/partials/_h5bp-custom.scss */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+/* line 58, ../sass/partials/_h5bp-custom.scss */
+textarea {
+  resize: vertical;
+}
+
+/*
+ * Box-sizing set to border-box on everything.
+ * Overide normalize.css
+ */
+/* line 69, ../sass/partials/_h5bp-custom.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 75, ../sass/partials/_h5bp-custom.scss */
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 81, ../sass/partials/_h5bp-custom.scss */
+input[type="search"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+/* line 1, ../sass/partials/_toggle-checkbox.scss */
+* {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* line 8, ../sass/partials/_toggle-checkbox.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 12, ../sass/partials/_toggle-checkbox.scss */
+.b {
+  display: block;
+}
+
+/* line 16, ../sass/partials/_toggle-checkbox.scss */
+.toggle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 40px;
+  border-radius: 100px;
+  background-color: #ddd;
+  margin: -20px -40px;
+  overflow: hidden;
+  box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* line 29, ../sass/partials/_toggle-checkbox.scss */
+.check {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 6;
+}
+
+/* line 41, ../sass/partials/_toggle-checkbox.scss */
+.check:checked ~ .track {
+  box-shadow: inset 0 0 0 20px #4bd863;
+}
+
+/* line 45, ../sass/partials/_toggle-checkbox.scss */
+.check:checked ~ .switch {
+  right: 2px;
+  left: 22px;
+  transition: 0.35s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition-property: left, right;
+  transition-delay: .05s, 0s;
+}
+
+/* line 53, ../sass/partials/_toggle-checkbox.scss */
+.switch {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  right: 22px;
+  background-color: #fff;
+  border-radius: 36px;
+  z-index: 1;
+  transition: 0.35s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition-property: left, right;
+  transition-delay: 0s, .05s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* line 68, ../sass/partials/_toggle-checkbox.scss */
+.track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.35s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.05);
+  border-radius: 40px;
+}
+
+/* line 25, ../sass/partials/_components.scss */
+input[type="text"], select {
+  min-height: 35px;
+  padding: 6px 12px;
+  line-height: 1.5;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+/* line 46, ../sass/partials/_components.scss */
+input[type="text"][disabled], input[type="text"][readonly], fieldset[disabled] input[type="text"], select[disabled], select[readonly], fieldset[disabled] select {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+
+/* line 55, ../sass/partials/_components.scss */
+.form-inline .form-group {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+/* line 60, ../sass/partials/_components.scss */
+.form-inline .form-control {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* line 68, ../sass/partials/_components.scss */
+.form-inline .control-label {
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+/* line 73, ../sass/partials/_components.scss */
+.form-inline .radio,
+.form-inline .checkbox {
+  display: inline-block;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+/* line 81, ../sass/partials/_components.scss */
+.form-inline .radio input[type="radio"],
+.form-inline .checkbox input[type="checkbox"] {
+  float: none;
+  margin-left: 0;
+}
+
+/* line 85, ../sass/partials/_components.scss */
+.form-inline .has-feedback .form-control-feedback {
+  top: 0;
+}
+
+/* line 91, ../sass/partials/_components.scss */
+button, .btn {
+  display: inline-block;
+  font-weight: normal;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: 0px;
+  border: 1px solid transparent;
+  border-color: #999999;
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: #333333;
+  background-color: #ffffff;
+}
+/* line 106, ../sass/partials/_components.scss */
+button:hover, button:focus, .btn:hover, .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+/* line 112, ../sass/partials/_components.scss */
+button:active, button.active, .btn:active, .btn.active {
+  outline: 0;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+/* line 119, ../sass/partials/_components.scss */
+button.disabled, button[disabled], fieldset[disabled] button, .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  box-shadow: none;
+}
+
+/* line 5, ../sass/partials/_typography.scss */
+html,
+button,
+input,
+select,
+textarea {
+  color: #333333;
+}
+
+/* line 9, ../sass/partials/_typography.scss */
+html {
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: 'Helvetica Neue',Arial,"Hiragino Sans GB",'Microsoft YaHei',sans-serif;
+}
+
+/* line 15, ../sass/partials/_typography.scss */
+a {
+  text-decoration: none;
+  color: #428bca;
+}
+/* line 19, ../sass/partials/_typography.scss */
+a:hover, a:focus {
+  color: #2a6496;
+  text-decoration: underline;
+}
+/* line 23, ../sass/partials/_typography.scss */
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+/* line 30, ../sass/partials/_typography.scss */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+/* line 13, ../sass/partials/_general-style.scss */
+body {
+  min-width: 1024px;
+  position: relative;
+}
+
+/* line 18, ../sass/partials/_general-style.scss */
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+/* line 21, ../sass/partials/_general-style.scss */
+.row:before, .row:after {
+  display: table;
+  content: " ";
+}
+/* line 25, ../sass/partials/_general-style.scss */
+.row:after {
+  clear: both;
+}
+
+/* line 7, ../sass/pages/_index.sass */
+body, select, input, textarea {
+  color: #333333;
+}
+
+/* line 17, ../sass/pages/_index.sass */
+.nav-panel {
+  background-color: #f2f2f2;
+  position: fixed;
+  top: 0;
+  width: 240px;
+  height: 100%;
+}
+/* line 23, ../sass/pages/_index.sass */
+.nav-panel a {
+  display: block;
+  font-size: 18px;
+  color: #9b9b9b;
+  padding: 20px 15px;
+}
+/* line 28, ../sass/pages/_index.sass */
+.nav-panel a:hover, .nav-panel a:focus {
+  text-decoration: none;
+  color: #333333;
+}
+/* line 31, ../sass/pages/_index.sass */
+.nav-panel a.active {
+  background-color: white;
+  color: #333333;
+}
+
+/* line 35, ../sass/pages/_index.sass */
+.main {
+  position: relative;
+  margin-left: 240px;
+  padding: 30px 30px;
+}
+/* line 39, ../sass/pages/_index.sass */
+.main header {
+  margin-bottom: 30px;
+}
+/* line 41, ../sass/pages/_index.sass */
+.main .control-label {
+  text-align: left;
+}
+
+/* line 44, ../sass/pages/_index.sass */
+.no-record {
+  position: absolute;
+  top: 300px;
+  right: 50%;
+}
+
+/* line 1, ../sass/pages/_new.scss */
+::selection {
+  background-color: transparent;
+}
+
+/* line 4, ../sass/pages/_new.scss */
+::-moz-selection {
+  background-color: transparent;
+}
+
+/* line 8, ../sass/pages/_new.scss */
+section {
+  margin: 80px 0;
+}
+
+/* line 13, ../sass/pages/_new.scss */
+.project-setup td {
+  padding: 3px 10px 3px 0px;
+}
+/* line 16, ../sass/pages/_new.scss */
+.project-setup input {
+  margin-right: 6px;
+}
+/* line 18, ../sass/pages/_new.scss */
+.project-setup input.each-class, .project-setup input.total-fullscore {
+  width: 100px;
+}
+/* line 21, ../sass/pages/_new.scss */
+.project-setup input#project-name {
+  width: 300px;
+}
+
+/* line 27, ../sass/pages/_new.scss */
+.form-group {
+  margin-bottom: 12px;
+}
+
+/* line 31, ../sass/pages/_new.scss */
+.pb-info-group {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+/* line 35, ../sass/pages/_new.scss */
+.pb-info-group input, .pb-info-group select {
+  margin: 0 6px;
+}
+
+/* line 42, ../sass/pages/_new.scss */
+.group-as-inline {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+/* line 45, ../sass/pages/_new.scss */
+.group-as-inline input[type="checkbox"] {
+  margin-left: 0px;
+}
+
+/* line 52, ../sass/pages/_new.scss */
+.input-tooltip-wrapper {
+  position: relative;
+}
+
+/* line 54, ../sass/pages/_new.scss */
+.success-tick {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: -2px;
+  color: #1ac71a;
+}
+
+/* line 62, ../sass/pages/_new.scss */
+.error-cross {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: -5px;
+  color: #b80015;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* line 73, ../sass/pages/_new.scss */
+.tooltip {
+  background-color: rgba(0, 0, 0, 0.75);
+  display: none;
+  opacity: 0;
+  position: absolute;
+  top: 30px;
+  z-index: 365;
+  padding: 6px;
+  min-width: 50px;
+  max-width: 210px;
+  min-height: 20px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
+/* line 91, ../sass/pages/_new.scss */
+.tooltip .arrow {
+  position: absolute;
+  top: -8px;
+  left: 15px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
+  line-height: 0px;
+  _border-color: black black rgba(0, 0, 0, 0.75) black;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+
+/* line 106, ../sass/pages/_new.scss */
+.pb-info-type {
+  position: relative;
+}
+/* line 108, ../sass/pages/_new.scss */
+.pb-info-type input {
+  width: 80px;
+}
+/* line 109, ../sass/pages/_new.scss */
+.pb-info-type .pb-type-select-wrapper {
+  z-index: 365;
+  position: absolute;
+  left: 38px;
+  top: 28px;
+}
+/* line 115, ../sass/pages/_new.scss */
+.pb-info-type .pb-type-select {
+  width: 80px;
+  padding: 7px 0;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+/* line 121, ../sass/pages/_new.scss */
+.pb-info-type .pb-type-select a {
+  display: block;
+  text-align: center;
+  padding: 3px 12px;
+  text-decoration: none;
+}
+/* line 126, ../sass/pages/_new.scss */
+.pb-info-type .pb-type-select a.valid-type {
+  cursor: pointer;
+}
+
+/* line 132, ../sass/pages/_new.scss */
+.pb-info-num input {
+  width: 200px;
+}
+
+/* line 136, ../sass/pages/_new.scss */
+.pb-info-fullscore input {
+  width: 70px;
+}
+
+/* line 140, ../sass/pages/_new.scss */
+.pb-map-group {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+/* line 145, ../sass/pages/_new.scss */
+.pb-map-group:before, .pb-map-group:after {
+  display: table;
+  content: " ";
+}
+/* line 149, ../sass/pages/_new.scss */
+.pb-map-group:after {
+  clear: both;
+}
+
+/* line 152, ../sass/pages/_new.scss */
+.each-pb-info {
+  display: block;
+  float: left;
+  position: relative;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+
+/* line 161, ../sass/pages/_new.scss */
+.pb-info-target {
+  line-height: 1;
+  color: #333333;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 50px;
+  height: 50px;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: 900;
+}
+/* line 173, ../sass/pages/_new.scss */
+.pb-info-target.selected {
+  background-color: #d5ecf5;
+  border-color: #7fa8d7;
+  color: #2c538c;
+}
+
+/* line 181, ../sass/pages/_new.scss */
+.pb-info-target-score {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  font-size: 10px;
+  font-weight: normal;
+  color: #aaaaaa;
+  text-align: right;
+}
+
+/* line 195, ../sass/pages/_new.scss */
+.pb-info-config {
+  font-size: 13px;
+  margin-top: 10px;
+}
+/* line 199, ../sass/pages/_new.scss */
+.pb-info-config input[type="text"] {
+  padding: 3px 6px;
+  line-height: 1;
+  min-height: inherit;
+  width: 30px;
+}
+/* line 206, ../sass/pages/_new.scss */
+.pb-info-config .input-group + .input-group {
+  margin-left: 10px;
+}
+
+/* line 211, ../sass/pages/_new.scss */
+.pb-icon-wrapper {
+  position: relative;
+  margin-right: 20px;
+  min-width: 50px;
+  height: 50px;
+}
+/* line 217, ../sass/pages/_new.scss */
+.pb-icon-wrapper .pb-icon-basestyle {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  border-width: 1px;
+  border-color: #ddd;
+  border-style: dashed;
+}
+/* line 228, ../sass/pages/_new.scss */
+.pb-icon-wrapper .pb-icon {
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+  color: #aaaaaa;
+  padding: 3px;
+}
+/* line 236, ../sass/pages/_new.scss */
+.pb-icon-wrapper .pb-icon-on {
+  background-color: #d5ecf5;
+  border-color: #7fa8d7;
+  border-style: solid;
+  color: #2c538c;
+}
+
+/* line 247, ../sass/pages/_new.scss */
+.pb-info-title .pb-type-title {
+  font-size: 18px;
+}
+
+/* line 2, ../sass/pages/_standard.sass */
+.main-view {
+  position: relative;
+  padding: 30px;
+}
+/* line 5, ../sass/pages/_standard.sass */
+.main-view header {
+  margin-bottom: 30px;
+}
+
+/* line 8, ../sass/pages/_standard.sass */
+.pb-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+/* line 12, ../sass/pages/_standard.sass */
+.pb-group {
+  margin-left: -8px;
+  margin-right: -8px;
+  margin-bottom: 5px;
+}
+/* line 16, ../sass/pages/_standard.sass */
+.pb-group:before, .pb-group:after {
+  display: table;
+  content: " ";
+}
+/* line 19, ../sass/pages/_standard.sass */
+.pb-group:after {
+  clear: both;
+}
+
+/* line 22, ../sass/pages/_standard.sass */
+.each-pb {
+  display: block;
+  float: left;
+  position: relative;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+
+/* line 30, ../sass/pages/_standard.sass */
+.pb-selected {
+  background-color: #fdf7f7 !important;
+  color: #d9534f !important;
+  border-color: #d9534f !important;
+}
+
+/* line 35, ../sass/pages/_standard.sass */
+.tag-selected {
+  color: #d9534f;
+}
+
+/* line 38, ../sass/pages/_standard.sass */
+.pb-target {
+  line-height: 1;
+  color: #333333;
+  background-color: whitesmoke;
+  border-radius: 4px;
+  border: 1px solid #dddddd;
+  width: 50px;
+  height: 50px;
+  padding: 3px;
+}
+/* line 47, ../sass/pages/_standard.sass */
+.pb-target:hover {
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #eeeeee;
+  border-color: #cccccc;
+}
+/* line 52, ../sass/pages/_standard.sass */
+.pb-target:focus {
+  outline: none;
+}
+/* line 54, ../sass/pages/_standard.sass */
+.pb-target table, .pb-target tr {
+  width: 100%;
+}
+/* line 56, ../sass/pages/_standard.sass */
+.pb-target table {
+  height: 100%;
+}
+
+/* line 59, ../sass/pages/_standard.sass */
+.pb-focus {
+  border-style: solid;
+  border-color: blue;
+}
+
+/* line 63, ../sass/pages/_standard.sass */
+.tag-focus {
+  background-color: #98d3fd;
+  color: white;
+}
+
+/* line 67, ../sass/pages/_standard.sass */
+.pb-num {
+  vertical-align: top;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+/* line 72, ../sass/pages/_standard.sass */
+.score-indicator {
+  font-size: 10px;
+  color: #aaaaaa;
+  vertical-align: bottom;
+  text-align: right;
+}
+
+/* line 78, ../sass/pages/_standard.sass */
+.color-indicator {
+  vertical-align: top;
+  width: 5px;
+}
+/* line 82, ../sass/pages/_standard.sass */
+.color-indicator span {
+  display: block;
+  float: left;
+  width: 5px;
+  height: 5px;
+  border: 1px solid transparent;
+  border-radius: 100%;
+  margin-left: 1px;
+  margin-bottom: 1px;
+}
+/* line 92, ../sass/pages/_standard.sass */
+.color-indicator .red {
+  background-color: #fd8b8c;
+  border-color: #d56a6b;
+}
+/* line 95, ../sass/pages/_standard.sass */
+.color-indicator .orange {
+  background-color: #fec74b;
+  border-color: #fd9a2c;
+}
+/* line 98, ../sass/pages/_standard.sass */
+.color-indicator .yellow {
+  background-color: #feee43;
+  border-color: #e5d02e;
+}
+/* line 101, ../sass/pages/_standard.sass */
+.color-indicator .green {
+  background-color: #bfee3f;
+  border-color: #a1cb33;
+}
+/* line 104, ../sass/pages/_standard.sass */
+.color-indicator .blue {
+  background-color: #98d3fd;
+  border-color: #6ba1cb;
+}
+/* line 107, ../sass/pages/_standard.sass */
+.color-indicator .violet {
+  background-color: #eab6fd;
+  border-color: #d673fc;
+}
+
+/* line 112, ../sass/pages/_standard.sass */
+.score-input {
+  position: absolute;
+  display: none;
+}
+/* line 115, ../sass/pages/_standard.sass */
+.score-input input[type="text"] {
+  width: 100%;
+}
+
+/* line 119, ../sass/pages/_standard.sass */
+.popover {
+  margin-top: 10px;
+  position: absolute;
+  top: 43px;
+  left: 0;
+  z-index: 1024;
+  max-width: 276px;
+  padding: 1px;
+  text-align: left;
+  background-color: white;
+  background-clip: padding-box;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  white-space: normal;
+}
+/* line 137, ../sass/pages/_standard.sass */
+.popover .arrow {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #999999 transparent;
+  line-height: 0px;
+  _border-color: black black #999999 black;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+/* line 151, ../sass/pages/_standard.sass */
+.popover .arrow:after {
+  content: "";
+  position: absolute;
+  margin-left: -10px;
+  margin-top: 1px;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0px 10px 10px 10px;
+  border-color: transparent transparent white transparent;
+  _border-color: black black white black;
+  _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+}
+
+/* line 164, ../sass/pages/_standard.sass */
+.popover-content {
+  padding: 10px 0px;
+  min-width: 120px;
+}
+/* line 167, ../sass/pages/_standard.sass */
+.popover-content a {
+  padding: 2px 14px;
+  display: block;
+}
+/* line 170, ../sass/pages/_standard.sass */
+.popover-content a:hover {
+  text-decoration: none;
+}
+
+/* line 173, ../sass/pages/_standard.sass */
+.popover-show {
+  display: block;
+}
+
+/* line 176, ../sass/pages/_standard.sass */
+.popover-hide {
+  display: none;
+}
+
+/* line 182, ../sass/pages/_standard.sass */
+.state-panel {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #333333;
+  height: 100%;
+  width: 300px;
+}
