@@ -20,12 +20,14 @@
 // input[type="tel"]
 // input[type="color"]
 
-.form-control, input, select {
+@import "toggle-checkbox";
+
+input[type="text"], select {
   // display: block;
   // width: 100%;
-  height: $input-height; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  min-height: $input-height; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
   padding: $padding-vrt $padding-hrz;
-  font-size: $font-size;
+  // font-size: $font-size;
   line-height: $line-height;
   color: $gray;
   background-color: #ffffff;
@@ -60,9 +62,9 @@
   width: auto;
   vertical-align: middle;
 }
-.form-inline .input-group > .form-control {
-  width: 100%;
-}
+// .form-inline .input-group > .form-control {
+//   width: 100%;
+// }
 .form-inline .control-label {
   margin-bottom: 0;
   vertical-align: middle;

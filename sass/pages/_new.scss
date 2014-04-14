@@ -1,5 +1,27 @@
+::selection {
+  background-color: transparent;
+}
+::-moz-selection{ 
+  background-color: transparent;
+}
+
 section {
   margin: 80px 0;
+}
+
+.project-setup {
+  td{
+    padding: 3px 10px 3px 0px;
+  }
+  input {
+    margin-right: 6px;
+    &.each-class, &.total-fullscore {
+      width: 100px;
+    }
+    &#project-name{
+      width: 300px;
+    }
+  }
 }
 
 .form-group{
@@ -8,22 +30,116 @@ section {
 
 .pb-info-group {
   border-radius: $border-radius;
-  border: 1px dashed #ccc;
+  border: 1px solid #ccc;
   padding: 10px;
   input, select {
-    margin: 0 6px
+    margin: 0 6px;
   }
 }
 
-.pb-info-num > input {
-  width: 240px;
+
+
+.group-as-inline {
+  display: inline-block;
+  margin-bottom: 10px;
+  input[type="checkbox"] {
+    margin-left: 0px;
+  }
 }
 
-.pb-info-fullscore > input {
-  width: 50px;
+
+
+.input-tooltip-wrapper { position: relative; }
+
+.success-tick{
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: -2px;
+  color: #1ac71a;
+}
+
+.error-cross{
+  display: none;
+  position: absolute;
+  right: 20px;
+  
+  top: -5px;
+  color: #b80015;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.tooltip {
+  $tooltip-color: rgba(0,0,0,0.75);
+  background-color: $tooltip-color;
+  display: none;
+  opacity: 0;
+
+  position: absolute;
+  top: 30px;
+  z-index: 365;
+
+  padding: 6px;
+  min-width: 50px;
+  max-width: 210px;
+  min-height: 20px;
+
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  .arrow {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent $tooltip-color transparent;
+    line-height: 0px;
+    _border-color: #000000 #000000 $tooltip-color #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+}
+
+.pb-info-type {
+  position: relative;
+  input{width: 80px;}
+  .pb-type-select-wrapper{
+    z-index: 365;
+    position: absolute;
+    left: 38px;
+    top: 28px;
+  }
+  .pb-type-select {
+    width: 80px;
+    padding: 7px 0;
+    background-color: #ffffff;
+    border-radius:$border-radius;
+    border: 1px solid #ddd;
+    a{
+      display: block;
+      text-align: center;
+      padding: 3px 12px;
+      text-decoration: none;
+      &.valid-type {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.pb-info-num input{
+  width: 200px;
+}
+
+.pb-info-fullscore input {
+  width: 70px;
 }
 
 .pb-map-group {
+  margin-top: 15px;
+  margin-bottom: 10px;
   margin-left: $pb-gap * -1;
   margin-right: $pb-gap * -1;
   &:before, &:after {
@@ -53,5 +169,83 @@ section {
   padding: 3px;
   font-size: 16px;
   font-weight: 900;
+
+  &.selected{
+    background-color: #d5ecf5;
+    border-color: #7fa8d7;
+    color: #2c538c;
+
+  }
+}
+
+.pb-info-target-score {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  font-size: 10px;
+  font-weight: normal;
+  color: #aaaaaa;
+  text-align: right;
+}
+
+
+
+
+
+.pb-info-config {
+  font-size: 13px;
+  margin-top: 10px;
+
+  input[type="text"] {
+    padding: 3px 6px;
+    line-height: 1;
+    min-height: inherit;
+    width: 30px;
+  }
+  
+  .input-group+.input-group{
+    margin-left: 10px;
+  }
+}
+
+.pb-icon-wrapper {
+  position: relative;
+  margin-right: 20px;
+  min-width: 50px;
+  height: 50px;
+
+  .pb-icon-basestyle {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: $border-radius;
+    background-color: #f5f5f5;
+    border-width: 1px;
+    border-color: #ddd;
+    border-style: dashed;
+  }
+
+  .pb-icon {
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    color: #aaaaaa;
+    padding: 3px;
+  }
+
+  .pb-icon-on{
+    background-color: #d5ecf5;
+    border-color: #7fa8d7;
+    border-style: solid;
+    color: #2c538c;
+  }
+}
+
+
+.pb-info-title {
+  // margin-bottom: 10px;
+  .pb-type-title {
+    font-size: 18px;
+  }
 }
 

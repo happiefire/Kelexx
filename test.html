@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script>
+			// function testCall() {
+			// 	var prefix = 'http://42.96.165.209:8192';
+			// 	var prefix = 'http://localhost:8192';
+			// 	// var url = prefix+'/test/call?callback=showResult';
+			// 	// $.ajax({
+			// 	// 	url: url,
+			// 	// 	dataType: 'jsonp'
+			// 	// });
+			// 	var url = prefix+'/test/call';
+			// 	var testPostData = [
+			// 		{id:1, type:'choice', score:20, sub:3},
+			// 		{id:5, type:'fill-in', score:10, sub:1}
+			// 	];
+			// 	$.ajax({
+			// 		url: url,
+			// 		type: 'POST',
+			// 		data: {data: JSON.stringify(testPostData)},
+			// 		crossDomain: true,
+			// 		dataType: "json",
+			// 		success: function(result) {
+			// 			console.log(result);
+			// 		}
+			// 	});
+			// }
+			// function showResult(result) {
+			// 	console.log(result);
+			// }
+			function testCreateStatistic() {
+				var prefix = 'http://42.96.165.209:8192';
+				// var prefix = 'http://localhost:8192';
+				var url = prefix+'/create/statistic';
+				// fields and default values of a 'problem': id, type, score=0, has_part_score=False, is_sub=False, parent_id=None
+				var testPostData = {
+					name:'2014春季-期中考试',
+					creator:'teacher0',
+					class_list:['school0/class0', 'school0/class1'],
+					problems:[
+						{id:'0', type:'choice', score:1, has_part_score:false},
+						{id:'1', type:'choice', score:1},
+						{id:'2', type:'choice', score:2},
+						{id:'2-1', type:'choice', score:1, is_sub:true, parent_id:'2'},
+						{id:'2-2', type:'choice', score:1, is_sub:true, parent_id:'2'}
+					]
+				};
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: {data: JSON.stringify(testPostData)},
+					crossDomain: true,
+					dataType: "json",
+					success: function(result) {
+						console.log(result);
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<!-- <a href="javascript:testCall()">Test</a> -->
+		<a href="javascript:testCreateStatistic()">Create Statistic</a>
+	</body>
+</html>
