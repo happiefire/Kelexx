@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/sass-composed.css">
+    <!-- <script src="/js/vendor/modernizr-2.6.2.min.js"></script> -->
+    
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p>您的浏览器版本号太老了，希望您升级到至少IE 8以上，以获取最好的使用效果！</p>
+    <![endif]-->
+
+    
+
+<style>
+
+	td, th{
+		padding: 6px 12px;
+		text-align: center;	
+	}
+
+	a{
+		margin-left:14px;
+		font-size:12px;
+	}
+
+	.student-statistics{
+		display: none;
+	}
+
+	.pb-statistics{
+		display: none;
+	}
+
+</style>
+
+<nav class="nav-panel">
+  <a href="#" class="active">统计项目</a>
+  <a href="#">班级管理</a>
+  <a href="#">设置</a>
+</nav>
+<div class="main">
+  <header>
+    <h1></h1> 
+  </header>
+
+  <div>
+  	<h3>试卷情况统计<a class="show-item-sta">展开</a><a class="hide-item-sta">隐藏</a></h3>
+  	<table class="item-statistics">
+  	  <thead>
+  	  	<th>满分</th>
+  	  	<th>平均分</th>
+  	  	<th>标准差</th>
+<!--   	  	<th>得分中位数</th> -->
+  	  	<th>试卷难度</th>
+  	  	<th>试卷区分度</th>
+  	  </thead>
+  	  <tr></tr>
+  	</table>
+  </div>
+
+  <div>
+  	<h3>题目情况统计<a class="show-pb-sta">展开</a><a class="hide-pb-sta">隐藏</a></h3>
+  	<table class="pb-statistics">
+  	  <thead>
+  	  	<th>题号</th>
+  	  	<th>题型</th>
+  	  	<th>错误人数</th>
+  	  	<th>错误率</th>
+  	  	<th>难度</th>
+  	  	<th>区分度</th>
+  	  </thead>
+  	</table>
+  </div>
+
+  <div>
+  	<h3>学生情况统计<a class="show-stu-sta">展开</a><a class="hide-stu-sta">隐藏</a></h3>
+ <!--  	<p>全部 &nbsp 1班 &nbsp 2班 &nbsp ... &nbsp n班</p> -->
+  	<table class="student-statistics">
+  	  <thead>
+  	  	<th>班级</th>
+  	  	<th>学号</th>
+  	  	<th>分数</th>
+  	  	<th>排名</th>
+  	  </thead>
+  	</table>
+  </div>
+
+</div>
+
+
+
+
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/vendor/keyboard.js"></script>
+    <script src="js/vendor/underscore.js"></script><script src="js/result.js"></script>
+    
+  </body>
+</html>
