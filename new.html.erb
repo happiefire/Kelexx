@@ -1,0 +1,161 @@
+<nav class="nav-panel">
+  <a href="#" class="active">统计项目</a>
+  <a href="#">班级管理</a>
+  <a href="#">设置</a>
+</nav>
+<div class="main">
+  <header>
+    <h1>新建统计项目</h1> 
+  </header>
+
+
+  <section class="project-setup">
+
+    <h2>项目metadata设置</h2>
+    <hr>
+    <table>
+      <tr>
+        <td>
+          <label for="project-name">项目名称</label>
+        </td>
+        <td>
+          <input id="project-name" type="text">
+        </td>
+      </tr>
+      <tr>
+        <td>班级</td>
+        <td>
+          <div id="class-list">
+            <input type="text" class="each-class"><a class="add-class-btn">+ 添加一个班级</a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>总分</td>
+        <td>
+          <div>
+            <input class="total-fullscore" type="text">
+          </div>
+        </td>
+      </tr>
+    </table>    
+    
+  </section>
+
+  <section class="exam-setup">
+    <h2>试卷详情设置</h2>
+    <hr>
+
+
+
+    <!-- PB GROUP 1 -->
+    <div class="form-group pb-info-group" id="pb-info-group-1">
+      <!-- Title placeholder -->
+      <div class="pb-info-title"></div>
+
+      <!-- 一组题型整体设定的input -->
+      <div class="pb-info-inputs">
+        <div class="group-as-inline">
+          <label class="pb-info-type">题型
+            <input type="text">
+            <div class="pb-type-select-wrapper">
+            </div>
+          </label>
+          <label class="pb-info-num">
+            题号范围
+            <span class="input-tooltip-wrapper">
+              <input type="text" placeholder="例: 1-9,15,17">
+              <div class="success-tick">ok</div>
+              <div class="error-cross">&#215</div>
+              <div class="tooltip"><div class="arrow"></div><div class="tooltip-content"></div></div>
+            </span>
+          </label>
+          
+          <label><input class="need-score" type="checkbox" value="true">统计分数&nbsp</label>
+          <a class="btn gen-btn">生成题号表</a>
+        </div>
+        
+        <div class="need-score-config"> 
+          
+        </div>
+
+      </div>
+      
+      <!-- 题号列表placeholder -->
+      <div class="pb-map">
+      </div>
+
+      <!-- 题目设定面板，“状态栏” -->      
+      <div class="pb-info-config" style="display:none;">
+        <hr>
+        <table>
+          <tr>
+            <td rowspan="2">
+              <div class="pb-icon-wrapper">
+                <div class="pb-icon-basestyle pb-icon">?</div>
+                
+              </div>
+            </td>
+          
+            <td class="config-detail">
+              <span class="input-group"><label>添加小题<input type="checkbox" class="each-sub-toggle"> </label></span>
+
+              <span class="input-group each-sub-config" style="display:none;"><label>本题下有<input type="text" maxlength="2" class="each-sub-input">小题&nbsp&nbsp</label>
+                <a class="gen-sub-btn">生成小题</a>
+              </span>
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td class="config-detail">
+              <span class="input-group"><label>统计分数<input type="checkbox" class="each-fullscore-toggle"> </label></span>
+              
+              <span class="each-fullscore-config" style="display:none;">
+                <span class="input-group"><label>本题分值<input type="text" class="each-fullscore-input"></label></span>
+
+                <span class="input-group">计分方式
+                  <label><input type="radio" name="nanny" checked="checked" class="each-input-mode" value="">错则0分</label>
+
+                  <label><input type="radio" name="nanny" class="each-input-mode" value="true">输入得分</label>
+                </span>
+              </span>
+
+            </td>
+            
+            
+            <td class="config-null">
+              点选上面的题号可对其单独设置参数
+            </td>
+            
+
+          </tr>
+
+        </table>
+        
+      </div>
+
+    </div>
+
+    
+    <a id="add-pb-info-group">+ 添加一组题目</a>
+
+
+
+
+  </section>
+
+  <div class="form-group">
+    <br>
+    <br>
+    <div class="col-md-12">
+      <a href="standard.html">开始统计</a>
+      <button type="submit">保存并退出</button>
+      <a href="javascript:testCreateStatistic()">Create Statistic</a>
+    </div>
+  </div>
+
+  
+
+</div>

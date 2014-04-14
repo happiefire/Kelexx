@@ -1,0 +1,194 @@
+// main view style
+.main-view
+  position: relative
+  padding: 30px
+  header
+    margin-bottom: 30px
+
+.pb-list
+  padding-left: 0
+  list-style: none
+
+.pb-group
+  margin-left: $pb-gap * -1
+  margin-right: $pb-gap * -1
+  margin-bottom: 5px
+  &:before, &:after
+    display: table
+    content: " "
+  &:after
+    clear: both
+
+.each-pb
+  display: block
+  float: left
+  position: relative
+  margin-left: $pb-gap
+  margin-right: $pb-gap
+  margin-bottom: 5px
+
+.pb-selected
+  background-color: #fdf7f7 !important
+  color: #d9534f !important
+  border-color: #d9534f !important
+
+.tag-selected
+  color: #d9534f
+
+.pb-target
+  line-height: 1
+  color: $font-color
+  background-color: #f5f5f5
+  border-radius: $border-radius
+  border: 1px solid #ddd
+  width: 50px
+  height: 50px
+  padding: 3px
+  &:hover
+    text-decoration: none
+    cursor: pointer
+    background-color: #eee
+    border-color: #ccc
+  &:focus
+    outline: none
+  table, tr
+    width: 100%
+  table
+    height: 100%
+
+.pb-focus
+  border-style: dashed
+
+.tag-focus
+  background-color: #98d3fd
+  color: #ffffff
+
+.pb-num
+  vertical-align: top
+  font-size: 16px
+  font-weight: 900
+
+.score-indicator
+  font-size: 10px
+  color: $font-color-light
+  vertical-align: bottom
+  text-align: right
+
+.color-indicator
+  vertical-align: top
+  width: 5px
+
+  span
+    display: block
+    float: left
+    width: 5px
+    height: 5px
+    border: 1px solid transparent
+    border-radius: 100%
+    margin-left: 1px
+    margin-bottom: 1px
+
+  .red
+    background-color: #fd8b8c
+    border-color: #d56a6b
+  .orange
+    background-color: #fec74b
+    border-color: #fd9a2c
+  .yellow
+    background-color: #feee43
+    border-color: #e5d02e
+  .green
+    background-color: #bfee3f
+    border-color: #a1cb33
+  .blue
+    background-color: #98d3fd
+    border-color: #6ba1cb
+  .violet
+    background-color: #eab6fd
+    border-color: #d673fc
+
+
+.score-input
+  position: absolute
+  display: none
+  input[type="text"]
+    width: 100%
+
+
+.popover
+  margin-top: 10px
+  position: absolute
+  top: 43px
+  left: 0
+  z-index: 1024
+  max-width: 276px
+  padding: 1px
+  text-align: left
+  background-color: #fff
+  background-clip: padding-box
+  border: 1px solid #ccc
+  border: 1px solid rgba(0,0,0,.2)
+  border-radius: 6px
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2)
+  box-shadow: 0 5px 10px rgba(0,0,0,.2)
+  white-space: normal
+   
+  .arrow
+    $arrow-color: #999
+    position: absolute
+    top: -10px
+    left: 15px
+    width: 0px
+    height: 0px
+    border-style: solid
+    border-width: 0 10px 10px 10px
+    border-color: transparent transparent $arrow-color transparent
+    line-height: 0px
+    _border-color: #000000 #000000 $arrow-color #000000
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000')
+    
+    &:after
+      content: ""
+      position: absolute
+      margin-left: -10px
+      margin-top: 1px
+      width: 0px
+      height: 0px
+      border-style: solid
+      border-width: 0px 10px 10px 10px
+      border-color: transparent transparent #ffffff transparent
+      _border-color: #000000 #000000 #ffffff #000000
+      _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000')
+
+.popover-content
+  padding: 10px 0px
+  min-width: 120px
+  a
+    padding: 2px 14px
+    display: block
+    &:hover
+      text-decoration: none
+
+.popover-show
+  display: block
+
+.popover-hide 
+  display: none
+
+
+
+// state panel style
+$state-panel-width: 300px
+.state-panel
+  z-index: 100
+  position: fixed
+  top: 0
+  right: 0
+  background-color: $state-panel-color
+  height: 100%
+  width: $state-panel-width
+
+
+
+
+
